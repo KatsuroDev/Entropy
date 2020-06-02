@@ -1,0 +1,10 @@
+# Ignoring files so we don't push and pull useless file
+# Like the executable can be compile, so no need to push it or pull it
+
+# First we ignore all the build folder and then unignore some folder that are not built
+
+build/*
+!build/res/
+!build/log/
+!build/glew32.dll
+!build/glfw3.dll
