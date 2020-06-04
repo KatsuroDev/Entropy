@@ -1,8 +1,12 @@
+#pragma once
+
 // ENTRY POINT HERE
 // -----------------------------------
-#pragma once
+
 // This file contains the main() function
 // The engine creates an application
+
+#include "Application.h"
 
 extern Application* CreateApplication();
 
@@ -11,7 +15,7 @@ int main()
     // Init log class
 
     /* application creation */
-    Application* app = CreateApplication();
+    auto app = CreateApplication();
 
     app->Run();
 

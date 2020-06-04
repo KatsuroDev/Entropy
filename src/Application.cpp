@@ -10,14 +10,19 @@ Application::Application()
 {
     s_Instance = this;
 
-    // TODO: Create window for application here
+    // Create window for application here
+    // TODO: Call createWindow in Window
     m_Window = new Window(800, 600, "Entropy Engine");
-    // Init the renderer
+    
+    // TODO: Init the renderer
 }
 
 Application::~Application()
 {
-    // Shutdown the renderer
+    // TODO: Shutdown the renderer
+    
+    // Clearing ressources
+    delete m_Window;
 }
 
 void Application::Run()
@@ -31,13 +36,13 @@ void Application::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         int width, height;
-        window.GetDimensions(width, height);
+        m_Window->GetDimensions(width, height);
         std::cout << width << ", " << height << "\n";
 
         // Swap front and back buffers
-        window.SwapBuffers();
+        m_Window->SwapBuffers();
 
         // Poll and process events
-        window.PollEvents();
+        m_Window->PollEvents();
     }
 }
