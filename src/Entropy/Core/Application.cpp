@@ -1,22 +1,17 @@
 #include "Application.h"
 
-// TODO: include log
-// TODO: include renderer
-
 namespace Entro {
-
-    // TODO: Implement an event system for the application
 
     // Application instance
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
+    Application::Application(int width, int height, const char* title)
     {
         s_Instance = this;
 
         // Create window for application here
         // TODO: Call CreateWindow in Window
-        m_Window = new Window(800, 600, "Entropy Engine");
+        m_Window = new Window(width, height, title);
         
         // TODO: Init the renderer
     }
@@ -31,7 +26,7 @@ namespace Entro {
 
     void Application::Run()
     {
-        // TODO: Program loop here
+        // Program loop here
         while(!m_Window->ShouldClose())
         {
             // Render here
@@ -45,5 +40,10 @@ namespace Entro {
             // Poll and process events
             m_Window->PollEvents();
         }
+    }
+
+    void Application::Terminate()
+    {
+        m_Running = false;
     }
 }
