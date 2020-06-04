@@ -11,9 +11,9 @@ public:
     Window(int width, int height, const char* title);
     ~Window();
 
-    inline void GetDimentions(int& width, int& height) { glfwGetWindowSize(m_Window, &width, &height); }
+    inline void GetDimensions(int& width, int& height) { glfwGetWindowSize(m_Window, &width, &height); }
 
-    inline void SetDimentions(int width, int height) { glfwSetWindowSize(m_Window, width, height); }
+    inline void SetDimensions(int width, int height) { glfwSetWindowSize(m_Window, width, height); }
 
     inline bool ShouldClose() { return glfwWindowShouldClose(m_Window); }
 

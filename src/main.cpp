@@ -15,7 +15,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         int width, height;
-        window.GetDimentions(width, height);
+        window.GetDimensions(width, height);
         std::cout << width << ", " << height << "\n";
 
         /* Swap front and back buffers */
