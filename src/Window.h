@@ -1,36 +1,26 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 class Window
 {
 public:
-    Window(int width = 800, int height = 600, const char* title = "");
+    Window(int width, int height, const char* title);
     ~Window();
 
-    // GETTERS AND SETTERS
-    int GetWidth();
-    int GetHeight();
+    inline void GetDimentions(int& width, int& height) { glfwGetWindowSize(m_Window, &width, &height); }
 
-    /* returns the closing state of the window */
-    bool ShouldClose();
+    inline void SetDimentions(int width, int height) { glfwSetWindowSize(m_Window, width, height); }
 
-    /* swaps the screen buffers */
-    void SwapBuffers();
+    inline bool ShouldClose() { return glfwWindowShouldClose(m_Window); }
 
-    /* polls events */
-    void PollEvents();
+    inline void SwapBuffers() { glfwSwapBuffers(m_Window); }
 
+    inline void PollEvents() { glfwPollEvents(); }
 
 private:
     GLFWwindow* m_Window;
-    int m_Width;
-    int m_Height;
-    const char* m_Title;
 };
-
-#endif
