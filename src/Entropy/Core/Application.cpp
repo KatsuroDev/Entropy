@@ -12,14 +12,14 @@ namespace Entro {
         // Create window for application here
         // TODO: Call CreateWindow in Window
         m_Window = new Window(width, height, title);
-        
+
         // TODO: Init the renderer
     }
 
     Application::~Application()
     {
         // TODO: Shutdown the renderer
-        
+
         // Deleting window
         delete m_Window;
     }
@@ -40,6 +40,8 @@ namespace Entro {
             // Poll and process events
             m_Window->PollEvents();
         }
+
+        this->Terminate();
     }
 
     void Application::Terminate()
