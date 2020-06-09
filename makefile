@@ -35,7 +35,7 @@ ifeq ($(shell uname -s), Darwin)
 CPPFLAGS ?= $(INC_FLAGS) -std=c++14 -MMD -MP -g -Wall -Wextra -fpermissive
 endif
 ifeq ($(OS),Windows_NT)
-CPPFLAGS ?= $(INC_FLAGS) -g -std=c++14 -std=gnu++14 -MMD -MP -g -Wall -Wextra -03 -fpermissive -static -Wunused-parameter -Wstrict-aliasing
+CPPFLAGS ?= $(INC_FLAGS) -g -std=c++14 -std=gnu++14 -MMD -MP -g -Wall -Wextra -fpermissive -static -Wunused-parameter -Wstrict-aliasing
 endif
 
 # Defining the includes path and the libraries path and defining what library we are using outside the libraries path
