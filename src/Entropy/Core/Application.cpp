@@ -10,7 +10,6 @@ namespace Entro {
         s_Instance = this;
 
         // Create window for application here
-        // TODO: Call CreateWindow in Window
         m_Window = new Window(width, height, title);
 
         // TODO: Init the renderer
@@ -32,10 +31,12 @@ namespace Entro {
             if (m_Window->ShouldClose())
                 this->Terminate();
 
-            // Render here
             // User games color
             glClearColor(0.0f, 0.39f, 0.65f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            // Render here
+
 
             // Swap front and back buffers
             m_Window->SwapBuffers();

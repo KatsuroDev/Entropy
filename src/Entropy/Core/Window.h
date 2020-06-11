@@ -21,6 +21,8 @@ namespace Entro {
 
         inline void SetDimensions(int width, int height) { glfwSetWindowSize(m_Window, width, height); }
 
+        inline void SetTitle(const char* title) { glfwSetWindowTitle(m_Window, title); }
+
         inline bool ShouldClose() { return glfwWindowShouldClose(m_Window); }
 
         inline void SwapBuffers() { glfwSwapBuffers(m_Window); }
