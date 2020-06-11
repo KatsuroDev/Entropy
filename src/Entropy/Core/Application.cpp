@@ -27,8 +27,11 @@ namespace Entro {
     void Application::Run()
     {
         // Program loop here
-        while(!m_Window->ShouldClose())
+        while(m_Running)
         {
+            if (m_Window->ShouldClose())
+                this->Terminate();
+
             // Render here
             // User games color
             glClearColor(0.0f, 0.39f, 0.65f, 1.0f);
@@ -40,8 +43,6 @@ namespace Entro {
             // Poll and process events
             m_Window->PollEvents();
         }
-
-        this->Terminate();
     }
 
     void Application::Terminate()
