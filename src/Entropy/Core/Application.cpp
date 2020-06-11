@@ -1,6 +1,6 @@
 #include "Application.h"
 
-namespace Entro {
+namespace Entropy {
 
     // Application instance
     Application* Application::s_Instance = nullptr;

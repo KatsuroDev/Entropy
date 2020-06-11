@@ -1,6 +1,6 @@
 #include "Window.h"
 
-namespace Entro {
+namespace Entropy {
 
     // Provides a usefull callback for resizing the framebuffer
     // Re-drawing the buffer is done by default on resize

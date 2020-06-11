@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-namespace Entro {
+namespace Entropy {
 
     class Window
     {

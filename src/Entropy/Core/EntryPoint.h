@@ -11,7 +11,7 @@
 
 #include "Application.h"
 
-extern Entro::Application* Entro::CreateApplication();
+extern Entropy::Application* Entropy::CreateApplication();
 
 int main()
 {
@@ -19,7 +19,7 @@ int main()
     std::cout << "Hello from the logger! Warming transistors...\n";
 
     /* application creation */
-    auto app = Entro::CreateApplication();
+    auto app = Entropy::CreateApplication();
     app->Run();
     delete app;
     std::cout << "Hey! Come back next time.\n";

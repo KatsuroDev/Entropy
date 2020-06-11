@@ -4,7 +4,7 @@
 
 int main();
 
-namespace Entro {
+namespace Entropy {
 
     // Application class containing data
     class Application
