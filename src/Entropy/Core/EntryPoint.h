@@ -1,8 +1,5 @@
 #pragma once
 
-// Temp... TODO: implement logging
-#include <iostream>
-
 // ENTRY POINT HERE
 // -----------------------------------
 
@@ -10,19 +7,20 @@
 // The engine creates an application
 
 #include "Application.h"
+#include "Log.h"
 
 extern Entropy::Application* Entropy::CreateApplication();
 
 int main()
 {
     // Init log class
-    std::cout << "Hello from the logger! Warming transistors...\n";
+    Entropy::Logger::Trace("Hello from the logger! Warming transistors...\n");
 
     /* application creation */
     auto app = Entropy::CreateApplication();
     app->Run();
     delete app;
-    std::cout << "Hey! Come back next time.\n";
+    Entropy::Logger::Trace("Hey! Come back next time.\n");
 
     return 0;
 }
