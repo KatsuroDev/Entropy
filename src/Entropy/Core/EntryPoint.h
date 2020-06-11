@@ -20,10 +20,7 @@ int main()
 
     /* application creation */
     auto app = Entro::CreateApplication();
-
     app->Run();
-
-    // Destruction of the application
     delete app;
     std::cout << "Hey! Come back next time.\n";
 

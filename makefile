@@ -10,7 +10,7 @@ endif
 ifeq ($(shell uname -s), Darwin) # MacOS
 TARGET_EXEC ?= a.out
 endif
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS), Windows_NT)
 TARGET_EXEC ?= a.exe
 endif
 
@@ -34,7 +34,7 @@ endif
 ifeq ($(shell uname -s), Darwin)
 CPPFLAGS ?= $(INC_FLAGS) -std=c++14 -MMD -MP -g -Wall -Wextra -fpermissive
 endif
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS), Windows_NT)
 CPPFLAGS ?= $(INC_FLAGS) -g -std=c++14 -std=gnu++14 -MMD -MP -g -Wall -Wextra -O3 -fpermissive -static  -Wunused-parameter -Wstrict-aliasing
 endif
 
@@ -43,9 +43,9 @@ ifeq ($(shell uname -s), Linux)
 LINKER_FLAGS = -I./inc/ -L./lib/Linux/ -lGLEW -lGL -lglfw -lSOIL
 endif
 ifeq ($(shell uname -s), Darwin)
-LINKER_FLAGS = -I./inc/ -L./lib/macOS -L/opt/local/lib -framework OpenGL -lGLEW -lglfw -lSOIL
+LINKER_FLAGS = -I./inc/ -L./lib/macOS -framework OpenGL -lGLEW -lglfw -lSOIL
 endif
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS), Windows_NT)
 LINKER_FLAGS = -I"./inc/" -L"lib/Windows" -static -std=c++14 -std=gnu++14 -Wunused-parameter -Wstrict-aliasing -lmingw32 -lglew32 -lglfw3 -llibSOIL -lopengl32 -lglu32 -lgdi32 -dl #-I"./inc/steam/" -lsteam_api #-llua53 -dl
 endif
 

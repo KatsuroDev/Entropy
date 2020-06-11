@@ -5,29 +5,23 @@
 
 namespace Entro {
 
-    // inline functions are wrappers for the actual glfw function calls
-
-    // Provides a usefull callback for resizing the framebuffer
-    // Re-drawing the buffer is done by default on resize
-    void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
     class Window
     {
     public:
         Window(int width, int height, const char* title);
         ~Window();
 
-        inline void GetDimensions(int& width, int& height) { glfwGetWindowSize(m_Window, &width, &height); }
+        void GetDimensions(int& width, int& height);
 
-        inline void SetDimensions(int width, int height) { glfwSetWindowSize(m_Window, width, height); }
+        void SetDimensions(int width, int height);
 
-        inline void SetTitle(const char* title) { glfwSetWindowTitle(m_Window, title); }
+        void SetTitle(const char* title);
 
-        inline bool ShouldClose() { return glfwWindowShouldClose(m_Window); }
+        bool ShouldClose();
 
-        inline void SwapBuffers() { glfwSwapBuffers(m_Window); }
+        void SwapBuffers();
 
-        inline void PollEvents() { glfwPollEvents(); }
+        void PollEvents();
 
     private:
         // Contains the GLFWwindow ptr
