@@ -1,3 +1,6 @@
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 #include "Application.h"
 
 namespace Entropy {
@@ -11,6 +14,10 @@ namespace Entropy {
 
         // Create window for application here
         m_Window = new Window(width, height, title);
+
+        // Init glew
+        if(glewInit() != GLEW_OK)
+            glfwTerminate();
 
         // TODO: Init the renderer
     }

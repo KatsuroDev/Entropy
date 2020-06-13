@@ -41,10 +41,6 @@ namespace Entropy {
 
         /* V-sync */
         glfwSwapInterval(1);
-
-        /* Init glew */
-        if(glewInit() != GLEW_OK)
-            glfwTerminate();
     }
 
     void Window::GetDimensions(int& width, int& height)
