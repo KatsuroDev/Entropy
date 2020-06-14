@@ -1,15 +1,21 @@
-//
-//  Vector3f.cpp
-//  Complex Number Manip
-//
-//  Created by Thomas Lessard on 2020-06-10.
-//  Copyright © 2020 Thomas Lessard. All rights reserved.
-//
-
 #include "Vector3f.h"
 #include "Quaternion.h"
 
 #include <math.h>
+
+float Vector3f::Length()
+{
+    return sqrtf(X * X + Y * Y + Z * Z);
+}
+
+Vector3f& Vector3f::Normalize()
+{
+    float length = this->Length();
+    X /= length;
+    Y /= length;
+    Z /= length;
+    return *this;
+}
 
 Vector3f& Vector3f::Rotate(float angle, const Vector3f& axis)
 {

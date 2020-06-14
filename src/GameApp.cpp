@@ -1,4 +1,10 @@
 // This is our game using Entropy Engine
+// To be seperated into a seperated new project
+// Simply
+// 1. #include "Entropy.h"
+// 2. Create a game class that inherits from Entropy::Application
+// 3. Call Entropy::CreateApplication(width, height, title) that returns an Entropy::Application*
+// You're set!
 
 #include "Entropy.h"
 

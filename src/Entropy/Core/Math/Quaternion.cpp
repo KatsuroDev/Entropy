@@ -1,11 +1,3 @@
-//
-//  Quaternion.cpp
-//  Complex Number Manip
-//
-//  Created by Thomas Lessard on 2020-06-10.
-//  Copyright © 2020 Thomas Lessard. All rights reserved.
-//
-
 #include "Quaternion.h"
 
 #include <math.h>
@@ -46,6 +38,6 @@ Quaternion Quaternion::operator* (const Vector3f& r)
     float y = W * r.Y + Z * r.X - X * r.Z;
     float z = W * r.Z + X * r.Y - Y * r.X;
     float w = -X * r.X - Y * r.Y - Z * r.Z;
-    
+
     return Quaternion(x, y ,z ,w);
 }
