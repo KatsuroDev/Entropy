@@ -4,6 +4,8 @@ namespace Entropy {
 
     Application::Application(int width, int height, const char* title)
     {
+        Entropy::Logger::Trace("Hello from the logger! Warming transistors...");
+
         // Create window for application here
         m_Window = new Window(width, height, title);
 
@@ -18,6 +20,8 @@ namespace Entropy {
 
         // Deleting window
         delete m_Window;
+
+        Entropy::Logger::Trace("Hey! Come back next time.");
     }
 
     void Application::Run()
@@ -26,7 +30,7 @@ namespace Entropy {
         while(m_Running)
         {
             if (m_Window->ShouldClose())
-                this->Terminate();
+                this->Stop();
 
             // Render here
 
@@ -39,7 +43,7 @@ namespace Entropy {
         }
     }
 
-    void Application::Terminate()
+    void Application::Stop()
     {
         m_Running = false;
     }

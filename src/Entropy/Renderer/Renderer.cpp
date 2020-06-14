@@ -1,14 +1,5 @@
 #include "Renderer.h"
 
-// This renderer is currently using OpenGL ONLY
-// Support for DirectX, Metal, Vulkan could be implemented in future
-// In order to do so, this renderer class would need to be abtracted,
-// containing virtual declarations only. Implementations would be in
-// seperated classes inheriting this Renderer for working with specefic APIs
-
-#define GLEW_STATIC
-#include <GL/glew.h>
-
 #include "Logger.h"
 
 namespace Entropy {
@@ -16,11 +7,14 @@ namespace Entropy {
     unsigned int Renderer::m_VAO = 0;
     unsigned int Renderer::m_VBO = 0;
 
+    RenderingAPI* Renderer::s_RenderingAPI = nullptr;
+
     void Renderer::Init()
     {
-        // Init glew
-        if(glewInit() != GLEW_OK)
-            Logger::Fatal("Renderer could not init GLEW!");
+        // Constructor called here
+        s_RenderingAPI = CreateRenderingAPI(RenderingAPI::API::OpenGL);
+        s_RenderingAPI->Init();
+        s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.39f, 0.65f, 1.0f));
 
         // Screen limits
         float screenTexCoord[] =
@@ -35,6 +29,7 @@ namespace Entropy {
             1.0f,  1.0f,  1.0f, 0.0f  // Top right
         };
 
+        /*
         glGenVertexArrays(1, &m_VAO);
         glGenBuffers(1, &m_VBO);
 
@@ -49,10 +44,14 @@ namespace Entropy {
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2* sizeof(float)));
 
         glBindVertexArray(0);
+        */
     }
 
     void Renderer::Dispose()
     {
+        // Clearing ressources
+        delete s_RenderingAPI;
 
+        Logger::Info("Disposed of renderer ressources");
     }
 }

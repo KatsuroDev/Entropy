@@ -17,10 +17,10 @@ namespace Entropy {
     // Re-drawing the buffer is done by default on resize
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // make sure the viewport matches the new window dimensions; note that width and
         // height will be significantly larger than specified on retina displays.
-        glViewport(0, 0, width, height);
+        //glViewport(0, 0, width, height);
         // Re-render the scene because the current frame was drawn for the old resolution
         glfwSwapBuffers(window);
     }
@@ -52,8 +52,6 @@ namespace Entropy {
 
         /* V-sync */
         glfwSwapInterval(1);
-
-        glClearColor(0.0f, 0.39f, 0.65f, 1.0f);
     }
 
     void Window::GetDimensions(int& width, int& height)

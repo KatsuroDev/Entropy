@@ -11,12 +11,24 @@ namespace Entropy {
     class RenderingAPI
     {
     public:
-        // All pur virtual
+        // Supported APIs
+        enum class API
+		{
+            // None will cause an assertion
+            None = 0, OpenGL = 1
+		};
+
+        // All pure virtual
         virtual void Init() = 0;
-        virtual void Clear(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
-        virtual void SetClearColor(const Vector4f& RGBA);
+        virtual void SetClearColor(const Vector4f& rgba) = 0;
+        virtual void Clear() = 0;
+        virtual void SetViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
+
+        static API GetAPI() { return s_API; }
 
     private:
-        RenderingAPI m_RenderingAPI;
+        static API s_API;
     };
+
+    RenderingAPI* CreateRenderingAPI(RenderingAPI::API API);
 }

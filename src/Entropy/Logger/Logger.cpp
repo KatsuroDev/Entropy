@@ -1,6 +1,5 @@
 #include "Logger.h"
 
-// Temporairy include
 // TODO: Will use spdlog later
 #include <iostream>
 
@@ -26,8 +25,9 @@ namespace Entropy {
         std::cout << "[ERROR]: " << msg << '\n';
     }
 
-    void Logger::Fatal(const char* msg)
+    void Logger::FATAL(const char* msg, int code)
     {
         std::cout << "[FATAL ERROR]: " << msg << '\n';
+        exit(code);
     }
 }

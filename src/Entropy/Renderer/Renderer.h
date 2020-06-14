@@ -1,5 +1,8 @@
 #pragma once
 
+#include "RenderingAPI.h"
+#include "VertexArrayObject.h"
+
 namespace Entropy {
 
     class Renderer
@@ -13,7 +16,9 @@ namespace Entropy {
         static unsigned int m_VAO;
         static unsigned int m_VBO;
 
-    private:
+        static RenderingAPI::API GetAPI() { return s_RenderingAPI->GetAPI(); }
 
+    private:
+        static RenderingAPI* s_RenderingAPI;
     };
 }

@@ -22,7 +22,7 @@ namespace Entropy {
         Application& Get() { return *this; }
 
         // Public stopping
-        void Terminate();
+        void Stop();
 
     private:
         void Run();
