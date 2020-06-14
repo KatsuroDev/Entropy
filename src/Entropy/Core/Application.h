@@ -1,6 +1,10 @@
 #pragma once
 
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 #include "Window.h"
+#include "Log.h"
 
 int main();
 
@@ -11,14 +15,13 @@ namespace Entropy {
     {
     public:
         Application(int width, int height, const char* title);
-
         // Virtual because will be inherited
         virtual ~Application();
-
+        // Returns generic window reference
         inline Window& GetWindow() { return *m_Window; }
 
         // Getter for the application's instance (use of polymorphism)
-        static Application& Get() { return *s_Instance; }
+        Application& Get() { return *this; }
 
         // Public stopping
         void Terminate();
@@ -26,8 +29,6 @@ namespace Entropy {
     private:
         // Private only starting
         void Run();
-
-        static Application* s_Instance;
 
         // Friend function are PART of the class
         // They can have acces to private and protected data

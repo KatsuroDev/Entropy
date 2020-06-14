@@ -1,17 +1,11 @@
-#define GLEW_STATIC
-#include <GL/glew.h>
-
 #include "Application.h"
+
+#include "Renderer.h"
 
 namespace Entropy {
 
-    // Application instance
-    Application* Application::s_Instance = nullptr;
-
     Application::Application(int width, int height, const char* title)
     {
-        s_Instance = this;
-
         // Create window for application here
         m_Window = new Window(width, height, title);
 
@@ -19,12 +13,14 @@ namespace Entropy {
         if(glewInit() != GLEW_OK)
             glfwTerminate();
 
-        // TODO: Init the renderer
+        // Init the renderer
+        Renderer::Init();
     }
 
     Application::~Application()
     {
-        // TODO: Shutdown the renderer
+        // Shutdown the renderer
+        Renderer::Dispose();
 
         // Deleting window
         delete m_Window;

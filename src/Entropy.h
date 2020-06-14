@@ -4,8 +4,4 @@
 // Core
 #include "Entropy/Core/Application.h"
 
-// Entry point ----------------------
-#include "Entropy/Core/EntryPoint.h"
-// ----------------------------------
-
 // Rendering

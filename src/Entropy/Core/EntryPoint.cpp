@@ -1,5 +1,3 @@
-#pragma once
-
 // ENTRY POINT HERE
 // -----------------------------------
 
@@ -7,9 +5,8 @@
 // The engine creates an application
 
 #include "Application.h"
-#include "Log.h"
 
-extern Entropy::Application* Entropy::CreateApplication();
+Entropy::Application* Entropy::CreateApplication();
 
 int main()
 {
