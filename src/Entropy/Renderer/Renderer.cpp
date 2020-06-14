@@ -1,6 +1,13 @@
 #include "Renderer.h"
 
-#include "Application.h"
+// This renderer is currently using OpenGL ONLY
+// Support for DirectX, Metal, Vulkan could be implemented in future
+// In order to do so, this renderer class would need to be abtracted,
+// containing virtual declarations only. Implementations would be in
+// seperated classes inheriting this Renderer for working with specefic APIs
+
+#define GLEW_STATIC
+#include <GL/glew.h>
 
 namespace Entropy {
 
@@ -9,6 +16,10 @@ namespace Entropy {
 
     void Renderer::Init()
     {
+        // Init glew
+        if(glewInit() != GLEW_OK);
+
+        // Screen limits
         float screenTexCoord[] =
         {
             // Pos        // Tex Coord

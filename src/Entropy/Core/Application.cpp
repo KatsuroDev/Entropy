@@ -1,17 +1,11 @@
 #include "Application.h"
 
-#include "Renderer.h"
-
 namespace Entropy {
 
     Application::Application(int width, int height, const char* title)
     {
         // Create window for application here
         m_Window = new Window(width, height, title);
-
-        // Init glew
-        if(glewInit() != GLEW_OK)
-            glfwTerminate();
 
         // Init the renderer
         Renderer::Init();
