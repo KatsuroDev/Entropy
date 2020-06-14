@@ -58,4 +58,19 @@ namespace Entropy {
 
         Logger::Info("Disposed of renderer ressources");
     }
+
+    void Renderer::SetClearColor(const Vector4f& rgba)
+    {
+        s_RenderingAPI->SetClearColor(rgba);
+    }
+
+    void Renderer::Clear()
+    {
+        s_RenderingAPI->Clear();
+    }
+
+    void Renderer::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+    {
+        s_RenderingAPI->SetViewport(x, y, width, height);
+    }
 }

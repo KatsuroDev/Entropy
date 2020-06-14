@@ -10,6 +10,6 @@ namespace Entropy {
         virtual void Init() override;
         virtual void SetClearColor(const Vector4f& rgba) override;
         virtual void Clear() override;
-        virtual void SetViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
+        virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
     };
 }

@@ -27,7 +27,7 @@ namespace Entropy {
         glClearColor(rgba.X, rgba.Y, rgba.Z, rgba.W);
     }
 
-    void OpenGLRenderingAPI::SetViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+    void OpenGLRenderingAPI::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
     {
         glViewport(x, y, width, height);
     }

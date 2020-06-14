@@ -1,6 +1,7 @@
 #include "Window.h"
 
 #include "Logger.h"
+#include "Renderer.h"
 
 // We only use glfw for window creation
 // If we needed to use windows APIs to create a window,
@@ -17,10 +18,8 @@ namespace Entropy {
     // Re-drawing the buffer is done by default on resize
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // make sure the viewport matches the new window dimensions; note that width and
-        // height will be significantly larger than specified on retina displays.
-        //glViewport(0, 0, width, height);
+        Renderer::Clear();
+        Renderer::SetViewport(0, 0, width, height);
         // Re-render the scene because the current frame was drawn for the old resolution
         glfwSwapBuffers(window);
     }

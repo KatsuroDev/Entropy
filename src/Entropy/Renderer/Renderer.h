@@ -12,6 +12,11 @@ namespace Entropy {
         // Manages VAO and IBO
         static void Init();
         static void Dispose();
+        // All Renderer commands
+        static void SetClearColor(const Vector4f& rgba);
+        static void Clear();
+        static void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+        // TODO: Draw vertex array
 
         static unsigned int m_VAO;
         static unsigned int m_VBO;
