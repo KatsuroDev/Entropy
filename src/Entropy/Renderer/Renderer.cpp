@@ -11,8 +11,10 @@ namespace Entropy {
 
     void Renderer::Init()
     {
-        // Constructor called here
-        s_RenderingAPI = CreateRenderingAPI(RenderingAPI::API::OpenGL);
+        // We try to get our Rendering API (OpenGL)
+        s_RenderingAPI = RenderingAPI::Get(RenderingAPI::API::OpenGL);
+        // If the Rendering API was not set, s_RenderingAPI would be nullptr
+        // nullptr would crash severely
         s_RenderingAPI->Init();
         s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.39f, 0.65f, 1.0f));
 

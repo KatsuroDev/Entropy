@@ -7,7 +7,7 @@
 
 namespace Entropy {
 
-    RenderingAPI* CreateRenderingAPI(RenderingAPI::API API)
+    RenderingAPI* RenderingAPI::Get(RenderingAPI::API API)
     {
         Logger::Info("Setting up the right rendering API...");
 
@@ -19,6 +19,5 @@ namespace Entropy {
         case RenderingAPI::API::None:
             Logger::FATAL("Rendering API not supported");
         }
-        return nullptr;
     }
 }

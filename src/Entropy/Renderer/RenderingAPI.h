@@ -26,9 +26,9 @@ namespace Entropy {
 
         static API GetAPI() { return s_API; }
 
+        static RenderingAPI* Get(RenderingAPI::API API);
+
     private:
         static API s_API;
     };
-
-    RenderingAPI* CreateRenderingAPI(RenderingAPI::API API);
 }
