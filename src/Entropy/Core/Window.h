@@ -1,12 +1,5 @@
 #pragma once
 
-// We only use glfw for window creation
-// If we needed to use windows APIs to create a window,
-// we would not include platform specefic headers here
-// Rather create a new class inheriting this Window class
-// and making the entire class abstract
-#include <GLFW/glfw3.h>
-
 namespace Entropy {
 
     class Window
@@ -26,10 +19,5 @@ namespace Entropy {
         void SwapBuffers();
 
         void PollEvents();
-
-    private:
-        // Contains the GLFWwindow ptr
-        // Would not have this if window was more generic
-        GLFWwindow* m_Window;
     };
 }

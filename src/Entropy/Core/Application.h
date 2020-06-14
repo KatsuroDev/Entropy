@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer.h"
 #include "Window.h"
-#include "Log.h"
+#include "Renderer.h"
+#include "Logger.h"
 
 int main();
 
@@ -25,11 +25,9 @@ namespace Entropy {
         void Terminate();
 
     private:
-        // Private only starting
         void Run();
 
-        // Friend function are PART of the class
-        // They can have acces to private and protected data
+        // Friend function are part of the class
         friend int ::main();
 
         // Support for only one window per application at the moment

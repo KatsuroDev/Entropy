@@ -1,5 +1,16 @@
 #include "Window.h"
 
+#include "Logger.h"
+
+// We only use glfw for window creation
+// If we needed to use windows APIs to create a window,
+// we would not include platform specefic headers here
+// Rather create a new class inheriting this Window class
+// and making the entire class abstract
+#include <GLFW/glfw3.h>
+
+static GLFWwindow* s_Window;
+
 namespace Entropy {
 
     // Provides a usefull callback for resizing the framebuffer
@@ -29,43 +40,46 @@ namespace Entropy {
         #endif
 
         /* Create a windowed mode window and its OpenGL context */
-        m_Window = glfwCreateWindow(width, height, title, NULL, NULL);
-        if (!m_Window)
+        s_Window = glfwCreateWindow(width, height, title, NULL, NULL);
+        if (!s_Window)
             glfwTerminate();
 
         /* Make the window's context current */
-        glfwMakeContextCurrent(m_Window);
+        glfwMakeContextCurrent(s_Window);
 
         /* Linking the call back function for stretching */
-        glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+        glfwSetFramebufferSizeCallback(s_Window, framebuffer_size_callback);
 
         /* V-sync */
         glfwSwapInterval(1);
+
+        glClearColor(0.0f, 0.39f, 0.65f, 1.0f);
     }
 
     void Window::GetDimensions(int& width, int& height)
     {
-        glfwGetWindowSize(m_Window, &width, &height);
+        glfwGetWindowSize(s_Window, &width, &height);
     }
 
     void Window::SetDimensions(int width, int height)
     {
-        glfwSetWindowSize(m_Window, width, height);
+        glfwSetWindowSize(s_Window, width, height);
     }
 
     void Window::SetTitle(const char* title)
     {
-        glfwSetWindowTitle(m_Window, title);
+        glfwSetWindowTitle(s_Window, title);
     }
 
     bool Window::ShouldClose()
     {
-        return glfwWindowShouldClose(m_Window);
+        return glfwWindowShouldClose(s_Window);
     }
 
     void Window::SwapBuffers()
     {
-        glfwSwapBuffers(m_Window);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glfwSwapBuffers(s_Window);
     }
 
     void Window::PollEvents()

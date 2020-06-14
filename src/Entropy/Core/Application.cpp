@@ -28,10 +28,6 @@ namespace Entropy {
             if (m_Window->ShouldClose())
                 this->Terminate();
 
-            // User games color
-            glClearColor(0.0f, 0.39f, 0.65f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
             // Render here
 
 

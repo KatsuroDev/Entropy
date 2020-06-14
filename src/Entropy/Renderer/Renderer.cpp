@@ -9,6 +9,8 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
+#include "Logger.h"
+
 namespace Entropy {
 
     unsigned int Renderer::m_VAO = 0;
@@ -17,7 +19,8 @@ namespace Entropy {
     void Renderer::Init()
     {
         // Init glew
-        if(glewInit() != GLEW_OK);
+        if(glewInit() != GLEW_OK)
+            Logger::Fatal("Renderer could not init GLEW!");
 
         // Screen limits
         float screenTexCoord[] =
