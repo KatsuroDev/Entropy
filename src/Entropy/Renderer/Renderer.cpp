@@ -45,6 +45,8 @@ namespace Entropy {
 
         glBindVertexArray(0);
         */
+
+        Logger::Info("Initialized renderer");
     }
 
     void Renderer::Dispose()
