@@ -19,7 +19,7 @@ namespace Entropy {
         static void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
         // TODO: Draw vertex array
 
-        static void SetData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform);
+        static void AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform);
 
         static RenderingAPI::API GetAPI() { return RenderingAPI::GetAPI(); }
 

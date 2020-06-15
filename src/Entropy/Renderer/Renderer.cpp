@@ -71,7 +71,7 @@ namespace Entropy {
         s_RenderingAPI->SetViewport(x, y, width, height);
     }
 
-    void Renderer::SetData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
+    void Renderer::AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
     {
         // TODO: Attach shaders
         // set uniform the transformation matrix to the shader
