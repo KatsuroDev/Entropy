@@ -17,7 +17,9 @@ namespace Entropy {
 
         std::string ToString() const override
         {
-            return std::string("WindowResizeEvent: " + m_Width + ", " + m_Height);
+            std::stringstream ss;
+			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
+			return ss.str();
         }
 
         EVENT_CLASS_TYPE(WindowResize)

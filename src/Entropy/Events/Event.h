@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 namespace Entropy {
 
     // All event types supported by the application
@@ -19,6 +21,8 @@ namespace Entropy {
 								virtual const char* GetName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
+
+#define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
     enum EventCategory
     {

@@ -96,4 +96,9 @@ namespace Entropy {
     {
         return s_Window;
     }
+
+    void Window::OnUpdate()
+    {
+
+    }
 }

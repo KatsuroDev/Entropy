@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Window.h"
-#include "Renderer.h"
 #include "Logger.h"
+#include "Event.h"
+#include "ApplicationEvent.h"
 
 int main();
 
@@ -13,9 +14,10 @@ namespace Entropy {
     {
     public:
         Application(int width, int height, const char* title);
-        // Will be inherited
         virtual ~Application();
-        // Returns window reference
+
+        void OnEvent(Event& e);
+
         Window& GetWindow() { return *m_Window; }
 
         static Application& Get() { return *s_Instance; };
@@ -24,6 +26,10 @@ namespace Entropy {
 
     private:
         void Run();
+
+        // Events!
+        bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 
         // Friend function are part of the class
         friend int ::main();

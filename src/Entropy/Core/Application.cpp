@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "Renderer.h"
+
 namespace Entropy {
 
     Application* Application::s_Instance = nullptr;
@@ -36,11 +38,27 @@ namespace Entropy {
         Logger::Trace("Hey! Come back next time.");
     }
 
+    void Application::OnEvent(Event& e)
+    {
+        EventDispatcher dispatcher(e);
+        //dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        //dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+
+        // Handle all other events
+    }
+
+    void Application::Stop()
+    {
+        m_Running = false;
+    }
+
     void Application::Run()
     {
         // Program loop here
         while(m_Running)
         {
+            // TODO: setup timing
+
             if (m_Window->ShouldClose())
                 this->Stop();
 
@@ -53,10 +71,5 @@ namespace Entropy {
             // Poll and process events
             m_Window->PollEvents();
         }
-    }
-
-    void Application::Stop()
-    {
-        m_Running = false;
     }
 }
