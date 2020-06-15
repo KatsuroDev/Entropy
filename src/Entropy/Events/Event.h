@@ -12,7 +12,13 @@ namespace Entropy {
     	MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-    #define BIT(x) (1 << x)
+#define BIT(x) (1 << x)
+
+#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
+								virtual EventType GetType() const override { return GetStaticType(); }\
+								virtual const char* GetName() const override { return #type; }
+
+#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
     enum EventCategory
     {
