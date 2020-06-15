@@ -14,7 +14,8 @@ public:
     Game(int width, int height, const char* title)
         : Application(width, height, title)
     {
-
+        // Temp
+        //Entropy::Renderer::AttachData();
     }
 
     ~Game()

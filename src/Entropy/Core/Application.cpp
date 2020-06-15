@@ -41,7 +41,7 @@ namespace Entropy {
                 this->Stop();
 
             // Render here
-
+            
 
             // Swap front and back buffers
             m_Window->SwapBuffers();

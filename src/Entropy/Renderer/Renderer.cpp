@@ -71,6 +71,11 @@ namespace Entropy {
         s_RenderingAPI->SetViewport(x, y, width, height);
     }
 
+    void Renderer::Draw(const VertexArray& vertexArray, unsigned int count)
+    {
+        s_RenderingAPI->Draw(vertexArray, count);
+    }
+
     void Renderer::AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
     {
         // TODO: Attach shaders

@@ -5,3 +5,4 @@
 #include "Entropy/Core/Application.h"
 
 // Rendering
+#include "Entropy/Renderer/Renderer.h"

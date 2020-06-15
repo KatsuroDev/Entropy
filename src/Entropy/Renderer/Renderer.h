@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RenderingAPI.h"
-#include "VertexArray.h"
 
 #include "Matrix4f.h"
 //TODO: instead of matrix, include camera wich incldes matrix
@@ -17,7 +16,7 @@ namespace Entropy {
         static void SetClearColor(const Vector4f& rgba);
         static void Clear();
         static void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
-        // TODO: Draw vertex array
+        static void Draw(const VertexArray& vertexArray, unsigned int count = 0);
 
         static void AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform);
 

@@ -9,17 +9,20 @@
 
 namespace Entropy {
 
-    OpenGLRenderingAPI::~OpenGLRenderingAPI()
-    {
-
-    }
-
     void OpenGLRenderingAPI::Init()
     {
+        // TODO: move this
         // Init glew
         if(glewInit() != GLEW_OK)
             Logger::FATAL("Renderer could not init GLEW!");
         Logger::Info("Initialized OpenGL");
+
+
+        // Enabling alpha channel and blending
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void OpenGLRenderingAPI::Clear()
@@ -35,5 +38,12 @@ namespace Entropy {
     void OpenGLRenderingAPI::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
     {
         glViewport(x, y, width, height);
+    }
+
+    void OpenGLRenderingAPI::Draw(const VertexArray& vertexArray, unsigned int indexCount)
+    {
+        unsigned int count = indexCount ? indexCount : vertexArray.GetIndexBuffer().GetCount();
+        glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }
