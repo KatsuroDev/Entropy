@@ -8,13 +8,18 @@ namespace Entropy {
 
     void Renderer::Init()
     {
-        // We get our Rendering API (OpenGL)
+        // ---------------------------------------------------------
+        // Rendering API selection is done here
+        // ---------------------------------------------------------
         s_RenderingAPI = RenderingAPI::Get(RenderingAPI::API::OpenGL);
-        // If the Rendering API was not set, s_RenderingAPI would be nullptr
-        // nullptr would crash severely
+        // Calling these before Getting the Graphics API would result in a
+        // segmentation fault!
+        // We do NOT need to test if RenderingAPI::Get() returns nullptr.
+        // It's done internally and asserts the program if necessary
         s_RenderingAPI->Init();
         s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.39f, 0.65f, 1.0f));
 
+        /*
         // Screen limits
         float screenTexCoord[] =
         {
@@ -28,7 +33,6 @@ namespace Entropy {
             1.0f,  1.0f,  1.0f, 0.0f  // Top right
         };
 
-        /*
         glGenVertexArrays(1, &m_VAO);
         glGenBuffers(1, &m_VBO);
 

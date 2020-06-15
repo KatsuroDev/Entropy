@@ -8,6 +8,7 @@
 // we would not include platform specefic headers here
 // Rather create a new class inheriting this Window class
 // and making the entire class abstract
+
 #include <GLFW/glfw3.h>
 
 static GLFWwindow* s_Window;

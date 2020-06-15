@@ -13,15 +13,11 @@ namespace Entropy {
     {
     public:
         Application(int width, int height, const char* title);
-        // Virtual because will be inherited
+        // Will be inherited
         virtual ~Application();
-        // Returns generic window reference
-        inline Window& GetWindow() { return *m_Window; }
+        // Returns window reference
+        Window& GetWindow() { return *m_Window; }
 
-        // Getter for the application's instance (use of polymorphism)
-        Application& Get() { return *this; }
-
-        // Public stopping
         void Stop();
 
     private:
@@ -32,8 +28,6 @@ namespace Entropy {
 
         // Support for only one window per application at the moment
         Window* m_Window;
-
-        // Flag for the application state, defaults to true
         bool m_Running = true;
     };
 
