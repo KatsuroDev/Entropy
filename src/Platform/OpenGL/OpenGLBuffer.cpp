@@ -24,12 +24,12 @@ namespace Entropy {
         glDeleteBuffers(1, &m_RendererID);
     }
 
-    void OpenGLVertexBuffer::Attach()
+    void OpenGLVertexBuffer::Attach() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
     }
 
-    void OpenGLVertexBuffer::Detach()
+    void OpenGLVertexBuffer::Detach() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -57,12 +57,12 @@ namespace Entropy {
         glDeleteBuffers(1, &m_RendererID);
     }
 
-    void OpenGLIndexBuffer::Attach()
+    void OpenGLIndexBuffer::Attach() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
     }
 
-    void OpenGLIndexBuffer::Detach()
+    void OpenGLIndexBuffer::Detach() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }

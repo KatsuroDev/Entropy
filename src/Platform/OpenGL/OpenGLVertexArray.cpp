@@ -7,12 +7,12 @@ namespace Entropy {
 
     }
 
-    void OpenGLVertexArray::Attach()
+    void OpenGLVertexArray::Attach() const
     {
 
     }
 
-    void OpenGLVertexArray::Detach()
+    void OpenGLVertexArray::Detach() const
     {
 
     }

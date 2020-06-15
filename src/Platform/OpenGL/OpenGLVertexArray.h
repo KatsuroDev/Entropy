@@ -9,15 +9,15 @@ namespace Entropy {
     public:
         virtual ~OpenGLVertexArray();
 
-        virtual void Attach() override;
-        virtual void Detach() override;
+        virtual void Attach() const override;
+        virtual void Detach() const override;
 
         virtual void AddVertexBuffer(const VertexBuffer& vertexBuffer) override;
         virtual void SetIndexBuffer(const IndexBuffer& indexBuffer) override;
 
         // Getters
-        virtual const std::vector<VertexBuffer>& GetVertexBuffers() { return m_VertexBuffers; }
-        virtual const IndexBuffer& GetIndexBuffer() { return *m_IndexBuffer; }
+        virtual const std::vector<VertexBuffer>& GetVertexBuffers() const { return m_VertexBuffers; }
+        virtual const IndexBuffer& GetIndexBuffer() const { return *m_IndexBuffer; }
 
     private:
         std::vector<VertexBuffer> m_VertexBuffers;

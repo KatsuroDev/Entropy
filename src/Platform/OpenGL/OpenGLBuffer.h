@@ -12,8 +12,8 @@ namespace Entropy {
         OpenGLVertexBuffer(float* vertices, unsigned int size);
         virtual ~OpenGLVertexBuffer();
 
-        virtual void Attach() override;
-        virtual void Detach() override;
+        virtual void Attach() const override;
+        virtual void Detach() const override;
 
         virtual void Fill(const void* data, unsigned int size) override;
 
@@ -31,10 +31,10 @@ namespace Entropy {
         OpenGLIndexBuffer(unsigned int* indices, unsigned int count);
         virtual ~OpenGLIndexBuffer();
 
-        virtual void Attach() override;
-        virtual void Detach() override;
+        virtual void Attach() const override;
+        virtual void Detach() const override;
 
-        virtual unsigned int GetCount() { return m_Count; };
+        virtual unsigned int GetCount() const { return m_Count; };
 
     private:
         unsigned int m_RendererID;

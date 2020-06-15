@@ -1,7 +1,6 @@
 #include "Renderer.h"
 
 #include "Logger.h"
-#include "VertexArray.h"
 
 namespace Entropy {
 
@@ -70,5 +69,15 @@ namespace Entropy {
     void Renderer::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
     {
         s_RenderingAPI->SetViewport(x, y, width, height);
+    }
+
+    void Renderer::SetData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
+    {
+        // TODO: Attach shaders
+        // set uniform the transformation matrix to the shader
+        // set uniform the projection matrix to the shader
+
+        vertexArray.Attach();
+        // Draw the vertex array
     }
 }
