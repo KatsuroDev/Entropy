@@ -89,4 +89,11 @@ namespace Entropy {
     {
         glfwTerminate();
     }
+
+
+    // New code...
+    void* Window::GetNativeWindow() const
+    {
+        return s_Window;
+    }
 }

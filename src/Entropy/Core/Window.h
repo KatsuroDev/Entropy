@@ -19,5 +19,9 @@ namespace Entropy {
         void SwapBuffers();
 
         void PollEvents();
+
+
+        // New code implementation
+        void* GetNativeWindow() const;
     };
 }

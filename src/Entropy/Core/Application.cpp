@@ -2,9 +2,13 @@
 
 namespace Entropy {
 
+    Application* Application::s_Instance = nullptr;
+
     Application::Application(int width, int height, const char* title)
     {
         Logger::Trace("Hello from the logger! Warming transistors...");
+
+        s_Instance = this;
 
         // Create window for application here
         m_Window = new Window(width, height, title);
@@ -41,7 +45,7 @@ namespace Entropy {
                 this->Stop();
 
             // Render here
-            
+
 
             // Swap front and back buffers
             m_Window->SwapBuffers();

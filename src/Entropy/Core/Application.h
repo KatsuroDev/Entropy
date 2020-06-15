@@ -18,6 +18,8 @@ namespace Entropy {
         // Returns window reference
         Window& GetWindow() { return *m_Window; }
 
+        static Application& Get() { return *s_Instance; };
+
         void Stop();
 
     private:
@@ -27,6 +29,7 @@ namespace Entropy {
         friend int ::main();
 
         // Support for only one window per application at the moment
+        static Application* s_Instance;
         Window* m_Window;
         bool m_Running = true;
     };
