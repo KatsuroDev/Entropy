@@ -1,17 +1,15 @@
 #include "Renderer.h"
 
 #include "Logger.h"
+#include "VertexArray.h"
 
 namespace Entropy {
-
-    unsigned int Renderer::m_VAO = 0;
-    unsigned int Renderer::m_VBO = 0;
 
     RenderingAPI* Renderer::s_RenderingAPI = nullptr;
 
     void Renderer::Init()
     {
-        // We try to get our Rendering API (OpenGL)
+        // We get our Rendering API (OpenGL)
         s_RenderingAPI = RenderingAPI::Get(RenderingAPI::API::OpenGL);
         // If the Rendering API was not set, s_RenderingAPI would be nullptr
         // nullptr would crash severely

@@ -18,6 +18,8 @@ namespace Entropy {
             None = 0, OpenGL = 1
 		};
 
+        virtual ~RenderingAPI() {}
+
         // All pure virtual
         virtual void Init() = 0;
         virtual void SetClearColor(const Vector4f& rgba) = 0;

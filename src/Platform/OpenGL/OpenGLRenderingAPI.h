@@ -7,6 +7,8 @@ namespace Entropy {
     class OpenGLRenderingAPI : public RenderingAPI
     {
     public:
+        virtual ~OpenGLRenderingAPI();
+
         virtual void Init() override;
         virtual void SetClearColor(const Vector4f& rgba) override;
         virtual void Clear() override;

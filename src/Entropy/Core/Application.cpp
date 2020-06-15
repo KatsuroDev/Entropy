@@ -4,13 +4,20 @@ namespace Entropy {
 
     Application::Application(int width, int height, const char* title)
     {
-        Entropy::Logger::Trace("Hello from the logger! Warming transistors...");
+        Logger::Trace("Hello from the logger! Warming transistors...");
 
         // Create window for application here
         m_Window = new Window(width, height, title);
 
         // Init the renderer
         Renderer::Init();
+
+        // Printing the selected Graphics API for debugging
+        RenderingAPI::API api = Renderer::GetAPI();
+        if (api == RenderingAPI::API::OpenGL)
+            Logger::Info("Used Graphics API: OpenGL");
+        else
+            Logger::Info("None");
     }
 
     Application::~Application()
@@ -21,7 +28,8 @@ namespace Entropy {
         // Deleting window
         delete m_Window;
 
-        Entropy::Logger::Trace("Hey! Come back next time.");
+
+        Logger::Trace("Hey! Come back next time.");
     }
 
     void Application::Run()

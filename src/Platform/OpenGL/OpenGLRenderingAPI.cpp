@@ -9,6 +9,11 @@
 
 namespace Entropy {
 
+    OpenGLRenderingAPI::~OpenGLRenderingAPI()
+    {
+
+    }
+
     void OpenGLRenderingAPI::Init()
     {
         // Init glew

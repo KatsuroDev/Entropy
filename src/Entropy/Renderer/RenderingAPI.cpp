@@ -7,9 +7,12 @@
 
 namespace Entropy {
 
+    RenderingAPI::API RenderingAPI::s_API = RenderingAPI::API::None;
+
     RenderingAPI* RenderingAPI::Get(RenderingAPI::API API)
     {
-        Logger::Info("Setting up the right rendering API...");
+        // Setting the API type
+        RenderingAPI::s_API = API;
 
         switch(API)
         {
