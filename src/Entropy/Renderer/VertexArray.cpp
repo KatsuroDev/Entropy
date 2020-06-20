@@ -1,10 +1,10 @@
 #include "VertexArray.h"
 
 // include all supported vertex arrays here
-#include "OpenGLVertexArray.h"
+#include "../../Platform/OpenGL/OpenGLVertexArray.h"
 
 #include "Renderer.h"
-#include "Logger.h"
+#include "../Core/Logger.h"
 
 namespace Entropy {
 

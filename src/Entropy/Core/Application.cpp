@@ -1,6 +1,8 @@
 #include "Application.h"
 
-#include "Renderer.h"
+#include "../Renderer/Renderer.h"
+#include "Logger.h"
+#include "Input.h"
 
 namespace Entropy {
 
@@ -9,21 +11,15 @@ namespace Entropy {
     Application::Application(int width, int height, const char* title)
     {
         Logger::Trace("Hello from the logger! Warming transistors...");
-
         s_Instance = this;
 
-        // Create window for application here
-        m_Window = new Window(width, height, title);
+        m_Window = Window::Create(width, height, title);
+        m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+        m_Window->SetVSync(true);
 
-        // Init the renderer
         Renderer::Init();
-
-        // Printing the selected Graphics API for debugging
-        RenderingAPI::API api = Renderer::GetAPI();
-        if (api == RenderingAPI::API::OpenGL)
-            Logger::Info("Used Graphics API: OpenGL");
-        else
-            Logger::Info("None");
+        //Renderer::SetClearColor(Vector4f(0.0f, 0.39f, 0.65f, 1.0f));
+        //Renderer::Clear();
     }
 
     Application::~Application()
@@ -34,17 +30,32 @@ namespace Entropy {
         // Deleting window
         delete m_Window;
 
-
         Logger::Trace("Hey! Come back next time.");
     }
 
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        //dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-        //dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
         // Handle all other events
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent& e)
+    {
+        m_Running = false;
+        return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e)
+    {
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+        std::stringstream ss;
+        ss << "Resized window: (" << m_Window->GetWidth() << "x" << m_Window->GetHeight() << ")";
+        Logger::Info(ss.str());
+        return false;
     }
 
     void Application::Stop()
@@ -59,17 +70,8 @@ namespace Entropy {
         {
             // TODO: setup timing
 
-            if (m_Window->ShouldClose())
-                this->Stop();
-
             // Render here
-
-
-            // Swap front and back buffers
-            m_Window->SwapBuffers();
-
-            // Poll and process events
-            m_Window->PollEvents();
+            m_Window->OnUpdate();
         }
     }
 }

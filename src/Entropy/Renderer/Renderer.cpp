@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Logger.h"
+#include "../Core/Logger.h"
 
 namespace Entropy {
 
@@ -8,48 +8,14 @@ namespace Entropy {
 
     void Renderer::Init()
     {
-        // ---------------------------------------------------------
-        // Rendering API selection is done here
-        // ---------------------------------------------------------
-        s_RenderingAPI = RenderingAPI::Get(RenderingAPI::API::OpenGL);
+        s_RenderingAPI = RenderingAPI::Create();
         // Calling these before Getting the Graphics API would result in a
         // segmentation fault!
         // We do NOT need to test if RenderingAPI::Get() returns nullptr.
         // It's done internally and asserts the program if necessary
         s_RenderingAPI->Init();
-        s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.39f, 0.65f, 1.0f));
 
-        /*
-        // Screen limits
-        float screenTexCoord[] =
-        {
-            // Pos        // Tex Coord
-            1.0f,  1.0f,  1.0f, 0.0f, // Top right
-            1.0f, -1.0f,  1.0f, 1.0f, // Bottom right
-           -1.0f, -1.0f,  0.0f, 1.0f, // Bottom left
-
-           -1.0f, -1.0f,  0.0f, 1.0f, // Bottom left
-           -1.0f,  1.0f,  0.0f, 0.0f, // Top left
-            1.0f,  1.0f,  1.0f, 0.0f  // Top right
-        };
-
-        glGenVertexArrays(1, &m_VAO);
-        glGenBuffers(1, &m_VBO);
-
-        glBindVertexArray(m_VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(screenTexCoord), &screenTexCoord, GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2* sizeof(float)));
-
-        glBindVertexArray(0);
-        */
-
-        Logger::Info("Initialized renderer");
+        Logger::Info("Initialized renderer successfully!");
     }
 
     void Renderer::Dispose()
@@ -63,11 +29,15 @@ namespace Entropy {
     void Renderer::SetClearColor(const Vector4f& rgba)
     {
         s_RenderingAPI->SetClearColor(rgba);
+        std::stringstream ss;
+        ss << "RENDERER: Changed clear color to (" << rgba.X << ", " << rgba.Y << ", " << rgba.Z << ", " << rgba.W << ")";
+        Logger::Info(ss.str());
     }
 
     void Renderer::Clear()
     {
         s_RenderingAPI->Clear();
+        Logger::Info("RENDERER: Cleared");
     }
 
     void Renderer::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
@@ -78,6 +48,7 @@ namespace Entropy {
     void Renderer::Draw(const VertexArray& vertexArray, unsigned int count)
     {
         s_RenderingAPI->Draw(vertexArray, count);
+        Logger::Info("RENDERER: Drawn");
     }
 
     void Renderer::AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
@@ -88,5 +59,11 @@ namespace Entropy {
 
         vertexArray.Attach();
         // Draw the vertex array
+        Logger::Info("RENDERER: Attached data");
+    }
+
+    void Renderer::OnWindowResize(unsigned int width, unsigned int height)
+    {
+        SetViewport(0, 0, width, height);
     }
 }

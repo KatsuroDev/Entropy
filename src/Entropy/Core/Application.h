@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Window.h"
-#include "Logger.h"
-#include "Event.h"
-#include "ApplicationEvent.h"
+#include "../Events/Event.h"
+#include "../Events/ApplicationEvent.h"
 
 int main();
 
@@ -27,7 +26,6 @@ namespace Entropy {
     private:
         void Run();
 
-        // Events!
         bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
@@ -40,6 +38,5 @@ namespace Entropy {
         bool m_Running = true;
     };
 
-    // To implement in CLIENT
     Application* CreateApplication();
 }

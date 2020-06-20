@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Event.h"
-#include "Input.h"
+#include "../Core/Input.h"
 
 namespace Entropy {
 

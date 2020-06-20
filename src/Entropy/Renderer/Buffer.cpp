@@ -1,9 +1,9 @@
 #include "Buffer.h"
 
-#include "OpenGLBuffer.h"
+#include "../../Platform/OpenGL/OpenGLBuffer.h"
 
 #include "Renderer.h"
-#include "Logger.h"
+#include "../Core/Logger.h"
 
 namespace Entropy {
 

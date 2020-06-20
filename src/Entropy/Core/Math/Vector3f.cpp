@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+#define M_PI       3.14159265358979323846
+
 float Vector3f::Length()
 {
     return sqrtf(X * X + Y * Y + Z * Z);

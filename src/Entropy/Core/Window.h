@@ -1,66 +1,28 @@
 #pragma once
 
-#include "Event.h"
+#include "../Events/Event.h"
+#include <functional>
 
 namespace Entropy {
-
-    struct WindowProps
-	{
-		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
-
-		WindowProps(const std::string& title = "Entropy Engine",
-			        unsigned int width = 1280,
-			        unsigned int height = 720)
-			: Title(title), Width(width), Height(height)
-		{
-		}
-	};
 
     class Window
     {
     public:
-        Window(int width, int height, const char* title);
-        ~Window();
-
-        void GetDimensions(int& width, int& height);
-
-        void SetDimensions(int width, int height);
-
-        void SetTitle(const char* title);
-
-        bool ShouldClose();
-
-        void SwapBuffers();
-
-        void PollEvents();
-
-
-        // New code implementation
-
         using EventCallbackFn = std::function<void(Event&)>;
 
-        struct WindowData
-		{
-			std::string Title;
-			unsigned int Width, Height;
-			bool VSync;
+        virtual ~Window() {};
 
-			EventCallbackFn EventCallback;
-		};
+        virtual unsigned int GetWidth() const = 0;
+		virtual unsigned int GetHeight() const = 0;
 
-        void OnUpdate();
+        virtual void OnUpdate() = 0;
 
-        unsigned int GetWidth() const;
-		unsigned int GetHeight() const;
+        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+        virtual void SetVSync(bool enabled) = 0;
+        virtual bool IsVSync() const = 0;
 
-        void SetEventCallback(const EventCallbackFn& callback) { m_Data.EventCallback = callback; }
-        void SetVSync(bool enabled);
-        bool IsVSync() const;
+        virtual void* GetNativeWindow() const = 0;
 
-        void* GetNativeWindow() const;
-
-        WindowData m_Data;
+        static Window* Create(unsigned int width, unsigned int height, const char* title);
     };
 }

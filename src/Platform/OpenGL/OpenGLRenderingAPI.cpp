@@ -1,23 +1,12 @@
 #include "OpenGLRenderingAPI.h"
 
-#include "Logger.h"
-
-#define GLEW_STATIC
 #include <GL/glew.h>
-
-// Provides all declarations for OpenGL rendering API calls
 
 namespace Entropy {
 
+
     void OpenGLRenderingAPI::Init()
     {
-        // TODO: move this
-        // Init glew
-        if(glewInit() != GLEW_OK)
-            Logger::FATAL("Renderer could not init GLEW!");
-        Logger::Info("Initialized OpenGL");
-
-
         // Enabling alpha channel and blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

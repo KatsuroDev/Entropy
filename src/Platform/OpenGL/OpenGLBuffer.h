@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Buffer.h"
+#include "../../Entropy/Renderer/Buffer.h"
 
 namespace Entropy {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VertexArray.h"
+#include "../../Entropy/Renderer/VertexArray.h"
 
 namespace Entropy {
 

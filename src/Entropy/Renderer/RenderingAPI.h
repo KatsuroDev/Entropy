@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector4f.h"
+#include "../Core/Math/Vector4f.h"
 #include "VertexArray.h"
 
 // Provides generic methods communicating with all supported rendering APIs
@@ -30,7 +30,7 @@ namespace Entropy {
 
         static API GetAPI() { return s_API; }
 
-        static RenderingAPI* Get(RenderingAPI::API API);
+        static RenderingAPI* Create();
 
     private:
         static API s_API;
