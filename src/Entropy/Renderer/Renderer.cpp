@@ -14,6 +14,8 @@ namespace Entropy {
         // We do NOT need to test if RenderingAPI::Get() returns nullptr.
         // It's done internally and asserts the program if necessary
         s_RenderingAPI->Init();
+        s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
+        s_RenderingAPI->Clear();
 
         Logger::Info("Initialized renderer successfully!");
     }
@@ -58,7 +60,7 @@ namespace Entropy {
         // set uniform the projection matrix to the shader
 
         vertexArray.Attach();
-        // Draw the vertex array
+        Draw(vertexArray);
         Logger::Info("RENDERER: Attached data");
     }
 
