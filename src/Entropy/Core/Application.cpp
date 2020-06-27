@@ -31,6 +31,7 @@ namespace Entropy {
 
 		// Deleting window
 		delete m_Window;
+		NT_INFO("Disposed of application ressources");
 
 		NT_TRACE("Hey! Come back next time.");
 	}
