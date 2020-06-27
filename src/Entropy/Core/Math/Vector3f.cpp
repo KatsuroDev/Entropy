@@ -22,7 +22,7 @@ Vector3f& Vector3f::Normalize()
 Vector3f& Vector3f::Rotate(float angle, const Vector3f& axis)
 {
     // Convert to radians
-    angle = angle / 180.0f * (float)M_PI;
+    angle = float((double)angle / 180.0 * M_PI);
 
     float sinHalfAngle = sinf(angle / 2.0f);
     float cosHalfAngle = cosf(angle / 2.0f);

@@ -4,7 +4,7 @@
 
 float Quaternion::length()
 {
-    return (float)sqrt(X * X + Y * Y + Z * Z + W * W);
+    return (float)sqrtf(X * X + Y * Y + Z * Z + W * W);
 }
 
 Quaternion& Quaternion::normalize()

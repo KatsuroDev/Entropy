@@ -10,6 +10,6 @@ namespace Entropy {
         // Platform specefic window creation is done here:
         // Returns a defuult window instance
         return new DefaultWindow(width, height, title);
-        Logger::Info("Created a new window");
+        NT_INFO("Created a new window");
     }
 }

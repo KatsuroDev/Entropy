@@ -26,7 +26,7 @@ namespace Entropy {
         virtual void SetClearColor(const Vector4f& rgba) = 0;
         virtual void Clear() = 0;
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
-        virtual void Draw(const VertexArray& vertexArray, unsigned int indexCount = 0) = 0;
+        virtual void DrawPending(const VertexArray& vertexArray, unsigned int indexCount = 0) = 0;
 
         static API GetAPI() { return s_API; }
 

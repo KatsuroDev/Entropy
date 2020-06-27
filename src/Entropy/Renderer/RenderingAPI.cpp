@@ -16,11 +16,10 @@ namespace Entropy {
         switch(RenderingAPI::GetAPI())
         {
         case RenderingAPI::API::OpenGL:
+            NT_INFO("Created the OpenGL rendering API");
             return new OpenGLRenderingAPI();
-            Logger::Info("Created the OpenGL rendering API");
-        break;
         case RenderingAPI::API::None:
-            Logger::FATAL("Rendering API not supported");
+            NT_FATAL("Rendering API not supported");
         }
     }
 }

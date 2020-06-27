@@ -12,11 +12,11 @@ namespace Entropy {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RenderingAPI::API::OpenGL: return new OpenGLGraphicsContext((GLFWwindow*)window);
-			Logger::Info("Created OpenGL Graphics Context!");
-			break;
+		case RenderingAPI::API::OpenGL:
+			NT_INFO("Created OpenGL Graphics Context!");
+			return new OpenGLGraphicsContext((GLFWwindow*)window);
 		case RenderingAPI::API::None:
-			Logger::FATAL("Could not create graphics context");
+			NT_FATAL("Could not create graphics context");
 		}
 	}
 }

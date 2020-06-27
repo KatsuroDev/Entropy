@@ -17,7 +17,7 @@ namespace Entropy {
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
-		Logger::FATAL(description);
+		NT_FATAL(description);
 	}
 
 	DefaultWindow::DefaultWindow(unsigned int width, unsigned int height, const char* title)
@@ -39,8 +39,8 @@ namespace Entropy {
 		if (s_WindowCount == 0)
 		{
 			if (!glfwInit())
-				Logger::FATAL("Could not init GLFW");
-			Logger::Info("GLFW has been initialized successfully!");
+				NT_FATAL("Could not init GLFW");
+			NT_INFO("GLFW has been initialized successfully!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 

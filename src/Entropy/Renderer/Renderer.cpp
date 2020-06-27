@@ -4,53 +4,14 @@
 
 namespace Entropy {
 
-    RenderingAPI* Renderer::s_RenderingAPI = nullptr;
-
     void Renderer::Init()
     {
-        s_RenderingAPI = RenderingAPI::Create();
-        // Calling these before Getting the Graphics API would result in a
-        // segmentation fault!
-        // We do NOT need to test if RenderingAPI::Get() returns nullptr.
-        // It's done internally and asserts the program if necessary
-        s_RenderingAPI->Init();
-        s_RenderingAPI->SetClearColor(Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
-        s_RenderingAPI->Clear();
-
-        Logger::Info("Initialized renderer successfully!");
+        RenderCommand::Init();
     }
 
     void Renderer::Dispose()
     {
-        // Clearing ressources
-        delete s_RenderingAPI;
-
-        Logger::Info("Disposed of renderer ressources");
-    }
-
-    void Renderer::SetClearColor(const Vector4f& rgba)
-    {
-        s_RenderingAPI->SetClearColor(rgba);
-        std::stringstream ss;
-        ss << "RENDERER: Changed clear color to (" << rgba.X << ", " << rgba.Y << ", " << rgba.Z << ", " << rgba.W << ")";
-        Logger::Info(ss.str());
-    }
-
-    void Renderer::Clear()
-    {
-        s_RenderingAPI->Clear();
-        Logger::Info("RENDERER: Cleared");
-    }
-
-    void Renderer::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
-    {
-        s_RenderingAPI->SetViewport(x, y, width, height);
-    }
-
-    void Renderer::Draw(const VertexArray& vertexArray, unsigned int count)
-    {
-        s_RenderingAPI->Draw(vertexArray, count);
-        Logger::Info("RENDERER: Drawn");
+        NT_INFO("Disposed of renderer ressources");
     }
 
     void Renderer::AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform)
@@ -60,12 +21,13 @@ namespace Entropy {
         // set uniform the projection matrix to the shader
 
         vertexArray.Attach();
-        Draw(vertexArray);
-        Logger::Info("RENDERER: Attached data");
+        RenderCommand::DrawPending(vertexArray);
+        NT_TRACE("RENDERER: Attached data");
     }
 
     void Renderer::OnWindowResize(unsigned int width, unsigned int height)
     {
-        SetViewport(0, 0, width, height);
+        RenderCommand::SetViewport(0, 0, width, height);
+        NT_TRACE("RENDERER: Reset viewport");
     }
 }

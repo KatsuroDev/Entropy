@@ -29,7 +29,7 @@ namespace Entropy {
         glViewport(x, y, width, height);
     }
 
-    void OpenGLRenderingAPI::Draw(const VertexArray& vertexArray, unsigned int indexCount)
+    void OpenGLRenderingAPI::DrawPending(const VertexArray& vertexArray, unsigned int indexCount)
     {
         unsigned int count = indexCount ? indexCount : vertexArray.GetIndexBuffer().GetCount();
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
