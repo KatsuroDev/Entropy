@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <functional>
 
 namespace Entropy {
 
@@ -22,7 +23,7 @@ namespace Entropy {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-#define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+#define ATTACH_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
     enum EventCategory
     {

@@ -6,3 +6,6 @@
 
 // Rendering
 #include "Entropy/Renderer/Renderer.h"
+
+// Events
+#include "Entropy/Events/Event.h"

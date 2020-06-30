@@ -16,3 +16,17 @@ Vector4f& Vector4f::Normalize()
     W /= length;
     return *this;
 }
+
+Vector4f Vector4f::operator* (float scalar)
+{
+    return Vector4f(X * scalar, Y * scalar, Z * scalar, W * scalar);
+}
+
+Vector4f& Vector4f::operator*= (float scalar)
+{
+    X *= scalar;
+    Y *= scalar;
+    Z *= scalar;
+    W *= scalar;
+    return *this;
+}

@@ -4,6 +4,8 @@
 #include "../Events/Event.h"
 #include "../Events/ApplicationEvent.h"
 
+#include <vector>
+
 int main();
 
 namespace Entropy {
@@ -16,6 +18,8 @@ namespace Entropy {
         virtual ~Application();
 
         void OnEvent(Event& e);
+        virtual void OnUpdate(float deltaTime) = 0;
+        virtual void OnApplicationEvent(Event& e) = 0;
 
         Window& GetWindow() { return *m_Window; }
 
@@ -27,12 +31,11 @@ namespace Entropy {
         void Run();
 
         bool OnWindowClose(WindowCloseEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+		bool OnWindowResized(WindowResizeEvent& e);
 
         // Friend function are part of the class
         friend int ::main();
 
-        // Support for only one window per application at the moment
         static Application* s_Instance;
         Window* m_Window;
         bool m_Running = true;

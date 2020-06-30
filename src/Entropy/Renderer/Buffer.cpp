@@ -17,7 +17,10 @@ namespace Entropy {
             return new OpenGLVertexBuffer(vertices, size);
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
+            return nullptr;
         }
+
+        return nullptr;
     }
 
     VertexBuffer* VertexBuffer::Create(unsigned int size)
@@ -29,7 +32,10 @@ namespace Entropy {
             return new OpenGLVertexBuffer(size);
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
+            return nullptr;
         }
+
+        return nullptr;
     }
 
 
@@ -44,6 +50,9 @@ namespace Entropy {
             return new OpenGLIndexBuffer(indices, size);
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
+            return nullptr;
         }
+
+        return nullptr;
     }
 }

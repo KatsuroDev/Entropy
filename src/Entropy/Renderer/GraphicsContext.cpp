@@ -17,6 +17,9 @@ namespace Entropy {
 			return new OpenGLGraphicsContext((GLFWwindow*)window);
 		case RenderingAPI::API::None:
 			NT_FATAL("Could not create graphics context");
+			return nullptr;
 		}
+
+		return nullptr;
 	}
 }

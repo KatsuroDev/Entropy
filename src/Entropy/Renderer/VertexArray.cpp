@@ -17,6 +17,9 @@ namespace Entropy {
             return new OpenGLVertexArray();
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
+            return nullptr;
         }
+
+        return nullptr;
     }
 }

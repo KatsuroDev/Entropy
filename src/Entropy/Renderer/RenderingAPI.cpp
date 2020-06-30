@@ -20,6 +20,9 @@ namespace Entropy {
             return new OpenGLRenderingAPI();
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
+            return nullptr;
         }
+
+        return nullptr;
     }
 }

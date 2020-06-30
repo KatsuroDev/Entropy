@@ -2,9 +2,9 @@
 
 #include "RenderingAPI.h"
 #include "RenderCommand.h"
-
-#include "../Core/Math/Matrix4f.h"
-//TODO: instead of matrix, include camera wich incldes matrix
+#include "Shader.h"
+#include "Camera.h"
+#include "CameraController.h"
 
 namespace Entropy {
 
@@ -16,7 +16,7 @@ namespace Entropy {
 
         static void OnWindowResize(unsigned int width, unsigned int height);
 
-        static void AttachData(/* shader */ const VertexArray& vertexArray, const Matrix4f& transform);
+        static void DrawBatch(Shader* shader, VertexArray* vertexArray, const glm::mat4& transform, const Camera& camera);
 
         static RenderingAPI::API GetAPI() { return RenderingAPI::GetAPI(); }
     };

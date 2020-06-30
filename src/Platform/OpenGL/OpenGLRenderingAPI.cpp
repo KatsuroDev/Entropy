@@ -7,11 +7,13 @@ namespace Entropy {
 
     void OpenGLRenderingAPI::Init()
     {
+        // Gamma correction
+        glEnable(GL_FRAMEBUFFER_SRGB);
         // Enabling alpha channel and blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        glEnable(GL_DEPTH_TEST);
+        //glEnable(GL_DEPTH_TEST);
     }
 
     void OpenGLRenderingAPI::Clear()
@@ -29,9 +31,9 @@ namespace Entropy {
         glViewport(x, y, width, height);
     }
 
-    void OpenGLRenderingAPI::DrawPending(const VertexArray& vertexArray, unsigned int indexCount)
+    void OpenGLRenderingAPI::Draw(VertexArray* vertexArray, unsigned int indexCount)
     {
-        unsigned int count = indexCount ? indexCount : vertexArray.GetIndexBuffer().GetCount();
+        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer().GetCount();
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
