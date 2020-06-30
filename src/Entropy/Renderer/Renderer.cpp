@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "../../Entropy/Core/Application.h"
 
 #include "../Core/Logger.h"
 

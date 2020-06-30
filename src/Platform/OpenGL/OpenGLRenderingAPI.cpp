@@ -21,9 +21,9 @@ namespace Entropy {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void OpenGLRenderingAPI::SetClearColor(const Vector4f& rgba)
+    void OpenGLRenderingAPI::SetClearColor(const glm::vec4& rgba)
     {
-        glClearColor(rgba.X, rgba.Y, rgba.Z, rgba.W);
+        glClearColor(rgba.x, rgba.y, rgba.z, rgba.w);
     }
 
     void OpenGLRenderingAPI::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)

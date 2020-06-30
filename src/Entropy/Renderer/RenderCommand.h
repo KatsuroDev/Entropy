@@ -20,7 +20,7 @@ namespace Entropy {
 			s_RenderingAPI->SetViewport(x, y, width, height);
 		}
 
-		static void SetClearColor(const Vector4f& color)
+		static void SetClearColor(const glm::vec4& color)
 		{
 			s_RenderingAPI->SetClearColor(color);
 		}

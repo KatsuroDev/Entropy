@@ -4,8 +4,6 @@
 #include "../Events/Event.h"
 #include "../Events/ApplicationEvent.h"
 
-#include <vector>
-
 int main();
 
 namespace Entropy {

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Core/Math/Vector4f.h"
 #include "VertexArray.h"
+
+#include <GL/glm/vec4.hpp>
 
 // Provides generic methods communicating with all supported rendering APIs
 // Implementations are done in the corresponding
@@ -23,7 +24,7 @@ namespace Entropy {
 
         // All pure virtual
         virtual void Init() = 0;
-        virtual void SetClearColor(const Vector4f& rgba) = 0;
+        virtual void SetClearColor(const glm::vec4& rgba) = 0;
         virtual void Clear() = 0;
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
         virtual void Draw(VertexArray* vertexArray, unsigned int indexCount = 0) = 0;

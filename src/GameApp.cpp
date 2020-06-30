@@ -7,31 +7,6 @@
 
 #include "Entropy.h"
 
-#include "Entropy/Core/Logger.h"
-#include "Entropy/Events/KeyEvent.h"
-
-#include <iostream>
-
-Vector4f EncodeSRGB(const Vector4f& color)
-{
-	constexpr float gamma = 2.2;
-	return Vector4f(
-		pow(color.X, gamma),
-		pow(color.Y, gamma),
-		pow(color.Z, gamma),
-		pow(color.W, gamma));
-}
-
-Vector4f DecodeSRGB(const Vector4f& color)
-{
-	constexpr float gamma = 2.2;
-	return Vector4f(
-		pow(color.X, 1.0f / gamma),
-		pow(color.Y, 1.0f / gamma),
-		pow(color.Z, 1.0f / gamma),
-		pow(color.W, 1.0f / gamma));
-}
-
 class Game : public Entropy::Application
 {
 public:
@@ -42,16 +17,10 @@ public:
 		m_VertexArray = Entropy::VertexArray::Create();
 
 		// Geometry data
-		//float vertices[3 * 7] = {
-		//-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // Bottom left
-		// 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // Bottom right
-		// 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f  // Middle top
-		//};
-
 		float vertices[4 * 7] = {
 		// position 		   color 
-		-0.5f, -0.5f, -0.5f,   1.0f, 0.0f,  0.0f, 1.0f, // Bottom left
-		 0.5f, -0.5f, -0.5f,   0.0f, 1.0f,  0.0f, 1.0f, // Bottom right
+		-0.5f, -0.5f,  0.0f,   1.0f, 0.0f,  0.0f, 1.0f, // Bottom left
+		 0.5f, -0.5f,  0.0f,   0.0f, 1.0f,  0.0f, 1.0f, // Bottom right
 		 0.5f,  0.5f,  0.0f,   1.0f, 1.0f,  0.0f, 1.0f, // Top right
 		-0.5f,  0.5f,  0.0f,   1.0f, 0.0f,  1.0f, 1.0f  // Top left
 		};
@@ -91,7 +60,7 @@ public:
 		float cost = cosf(elapsedTime);
 
 		// Gamma correction encoding
-		Entropy::RenderCommand::SetClearColor(EncodeSRGB(Vector4f(0.0862f, 0.3764f, 0.6549f, 1.0f)) * abs(sint));
+		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f)) * abs(sint));
 
 		// Draw call in this function
 		glm::mat4 transform = glm::mat4(1.0f);
