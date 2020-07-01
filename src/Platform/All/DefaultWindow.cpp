@@ -53,6 +53,18 @@ namespace Entropy {
 		#endif
 		}
 
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+		glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+		glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
+
+		//m_Window = glfwCreateWindow(mode->width, mode->height, title, monitor, NULL);
+
 		m_Window = glfwCreateWindow((int)width, (int)height, title, nullptr, nullptr);
 		++s_WindowCount;
 
@@ -61,6 +73,12 @@ namespace Entropy {
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
+
+
+
+		// Experimental
+		glfwSetCursorPos(m_Window, 0.0f, 0.0f);
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		// -----------------------------------------------------------------------
 		// CALLBACKS

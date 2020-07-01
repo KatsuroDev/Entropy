@@ -18,7 +18,7 @@ namespace Entropy {
         virtual const BufferLayout& GetLayout() const override { return m_layout; }
         virtual void SetLayout(const BufferLayout& layout) override { m_layout = layout; }
 
-        virtual void Fill(const void* data, unsigned int size) override;
+        virtual void SetData(const void* data, unsigned int size) override;
 
     private:
         unsigned int m_RendererID;

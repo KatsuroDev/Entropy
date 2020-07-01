@@ -36,7 +36,7 @@ namespace Entropy {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void OpenGLVertexBuffer::Fill(const void* data, unsigned int size)
+    void OpenGLVertexBuffer::SetData(const void* data, unsigned int size)
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);

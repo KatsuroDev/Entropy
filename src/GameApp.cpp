@@ -11,19 +11,10 @@ class Game : public Entropy::Application
 {
 public:
 	Game(int width, int height, const char* title)
-		: Application(width, height, title), m_CameraController(width, height)
+		: Application(width, height, title), m_CameraController()
 	{
 		// Vao
 		m_VertexArray = Entropy::VertexArray::Create();
-
-		// Geometry data
-		float vertices[4 * 7] = {
-		// position 		   color 
-		-0.5f, -0.5f,  0.0f,   1.0f, 0.0f,  0.0f, 1.0f, // Bottom left
-		 0.5f, -0.5f,  0.0f,   0.0f, 1.0f,  0.0f, 1.0f, // Bottom right
-		 0.5f,  0.5f,  0.0f,   1.0f, 1.0f,  0.0f, 1.0f, // Top right
-		-0.5f,  0.5f,  0.0f,   1.0f, 0.0f,  1.0f, 1.0f  // Top left
-		};
 
 		// Vbo
 		m_VertexBuffer = Entropy::VertexBuffer::Create(vertices, sizeof(vertices));
@@ -41,7 +32,13 @@ public:
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
 		// Shader
+#ifdef _WIN32
+		// Visual studio project
+		m_Shader = Entropy::Shader::Create("assets/shaders/default.glsl");
+#else
+		// For building on makefiles
 		m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
+#endif
 	}
 
 	~Game()
@@ -56,15 +53,13 @@ public:
 	{
 		m_CameraController.OnUpdate(elapsedTime);
 
-		float sint = sinf(elapsedTime);
-		float cost = cosf(elapsedTime);
-
 		// Gamma correction encoding
-		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f)) * abs(sint));
+		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f)));
 
 		// Draw call in this function
 		glm::mat4 transform = glm::mat4(1.0f);
-		transform = glm::translate(transform, glm::vec3(0.5f * sint, 0.5f * cost, -2.0f));
+		transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, -2.0f));
+		transform = glm::rotate(transform, glm::radians(10.0f * elapsedTime), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		Entropy::Renderer::DrawBatch(m_Shader, m_VertexArray, transform, m_CameraController.GetCamera());
 	}
@@ -81,6 +76,15 @@ private:
 	Entropy::Shader* m_Shader;
 
 	Entropy::CameraController m_CameraController;
+
+	// Geometry data
+	float vertices[4 * 7] = {
+		// position 		   color 
+		-0.5f, -0.5f,  0.0f,   1.0f, 0.0f,  0.0f, 1.0f, // Bottom left
+		 0.5f, -0.5f,  0.0f,   0.0f, 1.0f,  0.0f, 1.0f, // Bottom right
+		 0.5f,  0.5f,  0.0f,   1.0f, 1.0f,  0.0f, 1.0f, // Top right
+		-0.5f,  0.5f,  0.0f,   1.0f, 0.0f,  1.0f, 1.0f  // Top left
+	};
 };
 
 Entropy::Application* Entropy::CreateApplication()

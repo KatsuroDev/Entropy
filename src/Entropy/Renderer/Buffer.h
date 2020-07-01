@@ -114,7 +114,7 @@ namespace Entropy {
         virtual void Detach() const = 0;
 
         // Void ptr because it's an undefined array
-        virtual void Fill(const void* data, unsigned int size) = 0;
+        virtual void SetData(const void* data, unsigned int size) = 0;
 
         virtual const BufferLayout& GetLayout() const = 0;
         virtual void SetLayout(const BufferLayout& layout) = 0;
