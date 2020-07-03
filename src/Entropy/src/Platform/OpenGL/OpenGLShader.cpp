@@ -210,7 +210,7 @@ namespace Entropy {
 		UploadUniformInt(name, value);
 	}
 
-	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::SetIntArray(const std::string& name, int* values, unsigned int count)
 	{
 		UploadUniformIntArray(name, values, count);
 	}
@@ -235,6 +235,11 @@ namespace Entropy {
 		UploadUniformFloat4(name, value);
 	}
 
+	void OpenGLShader::SetFloatArray(const std::string& name, float* values, unsigned int count)
+	{
+		UploadUniformFloatArray(name, values, count);
+	}
+
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
 		UploadUniformMat4(name, value);
@@ -246,7 +251,7 @@ namespace Entropy {
 		glUniform1i(location, value);
 	}
 
-	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, unsigned int count)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1iv(location, count, values);
@@ -274,6 +279,12 @@ namespace Entropy {
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::UploadUniformFloatArray(const std::string& name, float* values, unsigned int count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1fv(location, count, values);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)

@@ -15,14 +15,21 @@ namespace Entropy {
 	void CameraController::OnUpdate(float elapsedTime)
 	{
 		// Getting the time between this and the last frame
-		static float lastTime = 0.0f;
+		static float lastTime = elapsedTime;
 		float frameTime = elapsedTime - lastTime;
 
 		const float frictionCoeff = 4.0f;
 
+		static float lastMouseX = Input::GetMouseX();
+		static float lastMouseY = Input::GetMouseY();
+		float mouseMoveX = Input::GetMouseX() - lastMouseX;
+		float mouseMoveY = Input::GetMouseY() - lastMouseY;
+
 		// View
-		m_Camera.SetYaw(Input::GetMouseX() * m_Camera.GetMouseSensitivity());
-		m_Camera.SetPitch(-Input::GetMouseY() * m_Camera.GetMouseSensitivity());
+		m_Camera.SetYaw(m_Camera.GetYaw() + mouseMoveX * m_Camera.GetMouseSensitivity());
+		m_Camera.SetPitch(m_Camera.GetPitch() - mouseMoveY * m_Camera.GetMouseSensitivity());
+		lastMouseX = Input::GetMouseX();
+		lastMouseY = Input::GetMouseY();
 
 		// Clamping pitch
 		if (m_Camera.GetPitch() > 89.0f)
@@ -77,6 +84,8 @@ namespace Entropy {
 		{
 			m_Camera.SetVelocity(glm::vec3());
 			m_Camera.SetPosition(glm::vec3());
+			m_Camera.SetYaw(-90.0f);
+			m_Camera.SetPitch(0.0f);
 		}
 
 		// Calculating friction loss

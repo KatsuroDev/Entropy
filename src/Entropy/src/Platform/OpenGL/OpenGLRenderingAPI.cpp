@@ -38,4 +38,11 @@ namespace Entropy {
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+
+    void OpenGLRenderingAPI::DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount)
+    {
+        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer().GetCount();
+        glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr, repeatCount);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 }

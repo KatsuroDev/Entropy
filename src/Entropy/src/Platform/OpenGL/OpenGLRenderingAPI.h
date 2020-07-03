@@ -12,5 +12,6 @@ namespace Entropy {
         virtual void Clear() override;
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
         virtual void Draw(VertexArray* vertexArray, unsigned int indexCount = 0) override;
+        virtual void DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount = 0);
     };
 }

@@ -30,9 +30,14 @@ namespace Entropy {
 			s_RenderingAPI->Clear();
 		}
 
-		static void Draw(VertexArray* vertexArray, unsigned int count = 0)
+		static void Draw(VertexArray* vertexArray, unsigned int indexCount = 0)
 		{
-			s_RenderingAPI->Draw(vertexArray, count);
+			s_RenderingAPI->Draw(vertexArray, indexCount);
+		}
+
+		static void DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount = 0)
+		{
+			s_RenderingAPI->DrawInstanced(vertexArray, repeatCount, indexCount);
 		}
 
 	private:

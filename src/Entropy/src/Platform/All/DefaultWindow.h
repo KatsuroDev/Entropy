@@ -19,6 +19,10 @@ namespace Entropy {
 
 		virtual void OnUpdate() override;
 
+		virtual const std::string& GetTitle() override;
+		virtual void SetTitle(const char* title) override;
+		virtual void SetTitle(const std::string& title) override;
+
 		virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		virtual void SetVSync(bool enabled) override;
 		virtual bool IsVSync() const override;

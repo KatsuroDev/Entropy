@@ -191,6 +191,23 @@ namespace Entropy {
 		m_Context->SwapBuffers();
 	}
 
+	const std::string& DefaultWindow::GetTitle()
+	{
+		return m_Data.Title;
+	}
+
+	void DefaultWindow::SetTitle(const char* title)
+	{
+		glfwSetWindowTitle(m_Window, title);
+		m_Data.Title = title;
+	}
+
+	void DefaultWindow::SetTitle(const std::string& title)
+	{
+		glfwSetWindowTitle(m_Window, title.c_str());
+		m_Data.Title = title;
+	}
+
 	void DefaultWindow::SetVSync(bool enabled)
 	{
 		if (enabled)

@@ -28,6 +28,7 @@ namespace Entropy {
         virtual void Clear() = 0;
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
         virtual void Draw(VertexArray* vertexArray, unsigned int indexCount = 0) = 0;
+        virtual void DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount = 0) = 0;
 
         static API GetAPI() { return s_API; }
 

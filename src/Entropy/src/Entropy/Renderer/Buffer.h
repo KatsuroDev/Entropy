@@ -11,7 +11,7 @@ namespace Entropy {
         None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
     };
 
-    static uint32_t ShaderDataTypeSize(ShaderDataType type)
+    static unsigned int ShaderDataTypeSize(ShaderDataType type)
     {
         switch (type)
         {
@@ -114,7 +114,7 @@ namespace Entropy {
         virtual void Detach() const = 0;
 
         // Void ptr because it's an undefined array
-        virtual void SetData(const void* data, unsigned int size) = 0;
+        virtual void SetData(const void* data, unsigned int offset, unsigned int size) = 0;
 
         virtual const BufferLayout& GetLayout() const = 0;
         virtual void SetLayout(const BufferLayout& layout) = 0;

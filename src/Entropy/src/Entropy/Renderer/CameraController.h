@@ -16,7 +16,7 @@ namespace Entropy {
 		void OnEvent(Event& e);
 		void OnUpdate(float elapsedTime);
 
-		const Camera& GetCamera() const { return m_Camera; }
+		Camera& GetCamera() { return m_Camera; }
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);

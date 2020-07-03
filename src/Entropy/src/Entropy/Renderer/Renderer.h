@@ -16,7 +16,8 @@ namespace Entropy {
 
         static void OnWindowResize(unsigned int width, unsigned int height);
 
-        static void DrawBatch(Shader* shader, VertexArray* vertexArray, const glm::mat4& transform, const Camera& camera);
+        static void Draw(Shader* shader, VertexArray* vertexArray, const glm::mat4& transform, const Camera& camera);
+        static void DrawInstanced(Shader* shader, VertexArray* vertexArray, const glm::mat4& transform, const Camera& camera, unsigned int repeatCount);
 
         static RenderingAPI::API GetAPI() { return RenderingAPI::GetAPI(); }
     };
