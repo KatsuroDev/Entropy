@@ -30,7 +30,6 @@ namespace Entropy {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		//glCreateVertexArrays(1, &m_RendererID);
         glGenVertexArrays(1, &m_RendererID);
 	}
 
