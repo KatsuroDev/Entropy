@@ -1,6 +1,7 @@
 #pragma once
 
-#include <sstream>
+#include "../Core/Core.h"
+
 #include <functional>
 
 namespace Entropy {
@@ -15,15 +16,11 @@ namespace Entropy {
     	MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-#define BIT(x) (1 << x)
-
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
 								virtual EventType GetType() const override { return GetStaticType(); }\
 								virtual const char* GetName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
-
-#define ATTACH_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
     enum EventCategory
     {

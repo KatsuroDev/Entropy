@@ -11,7 +11,7 @@ namespace Entropy {
 
 	void Renderer::Dispose()
 	{
-		NT_INFO("Disposed of renderer's ressources");
+
 	}
 
 	void Renderer::Draw(Shader* shader, VertexArray* vertexArray, const glm::mat4& transform, const Camera& camera)

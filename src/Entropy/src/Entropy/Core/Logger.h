@@ -21,7 +21,7 @@ namespace Entropy {
     };
 }
 
-#if _DEBUG
+#ifdef _DEBUG
 #define NT_TRACE(...) Logger::Trace(__VA_ARGS__)
 #define NT_INFO(...) Logger::Info(__VA_ARGS__)
 #define NT_WARN(...) Logger::Warn(__VA_ARGS__)

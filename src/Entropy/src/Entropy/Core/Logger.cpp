@@ -7,12 +7,12 @@ namespace Entropy {
 
     void Logger::Trace(const char* msg)
     {
-        std::cout << msg << '\n';
+        std::cout << "[Trace]: " <<  msg << '\n';
     }
 
     void Logger::Trace(std::string msg)
     {
-        std::cout << msg << '\n';
+        std::cout << "[Trace]: " << msg << '\n';
     }
 
     void Logger::Info(const char* msg)
@@ -22,7 +22,7 @@ namespace Entropy {
 
     void Logger::Info(std::string msg)
     {
-        std::cout << msg << '\n';
+        std::cout << "[Info]: " << msg << '\n';
     }
 
     void Logger::Warn(const char* msg)
@@ -32,7 +32,7 @@ namespace Entropy {
 
     void Logger::Warn(std::string msg)
     {
-        std::cout << msg << '\n';
+        std::cout << "[Warning]: " << msg << '\n';
     }
 
     void Logger::Error(const char* msg)
@@ -42,7 +42,7 @@ namespace Entropy {
 
     void Logger::Error(std::string msg)
     {
-        std::cout << msg << '\n';
+        std::cout << "[ERROR]: " << msg << '\n';
     }
 
     void Logger::FATAL(const char* msg, int code)

@@ -22,7 +22,7 @@ void main()
 	gl_Position = u_ViewProjection * transformedModelPosition;
 
 	// Calculate the transformed normal                      w = 0!
-	vec4 transformedModelNormal = u_Transform * vec4(a_Normal, 0.0);
+	vec4 transformedModelNormal = normalize(u_Transform * vec4(a_Normal, 0.0));
 
 	u_MaterialDiffuseColor = a_MaterialDiffuseColor;
 
@@ -38,18 +38,15 @@ layout(location = 0) out vec4 color;
 uniform vec3 u_AmbiantLight;
 uniform vec3 u_PointLightPosition;
 uniform vec3 u_PointLight;
-
 uniform vec3 u_CameraPosition;
 
 in vec3 u_MaterialDiffuseColor;
-
 in vec3 v_Position;
 in vec3 v_Normal;
 
 void main()
 {
-	// Calculate the length of the distance from the light source
-	// Use this to simulate rolloff
+	// Calculate the distance from the light source
 	float pointLightDistance = length(u_PointLightPosition - v_Position);
 
 	// Calculate the vector from the vertex position to the eye
@@ -62,15 +59,13 @@ void main()
 	vec3 reflectedLightVector = reflect(-vertexToLightVector, v_Normal);
 
 	// Calculate the amount of specular light coming to the eye
-	float specularity = pow(clamp(dot(reflectedLightVector, vertexToEyeVector), 0.0, 1.0), 32.0);
+	float specularity = pow(clamp(dot(reflectedLightVector, vertexToEyeVector), 0.0, 1.0), 64.0);
 
 	// Calculate the diffusion factor for the vertex
-	float diffusibility = dot(v_Normal, vertexToLightVector);
+	float diffusibility = clamp(dot(v_Normal, vertexToLightVector), 0.0, 1.0);
 
-	vec3 specularLight = clamp(vec3(specularity, specularity, specularity) * u_PointLight, 0.0, 1.0);
-	vec3 diffuseLight = clamp(vec3(diffusibility, diffusibility, diffusibility) * u_PointLight, 0.0, 1.0);
+	vec3 specularLight = vec3(specularity, specularity, specularity) * u_PointLight;
+	vec3 diffuseLight = vec3(diffusibility, diffusibility, diffusibility) * u_PointLight;
 
-	//color = vec4(u_AmbiantLightColor * u_MaterialDiffuseColor + u_MaterialDiffuseColor * u_PointLightColor * diffuseIndex / (pointLightDistance * pointLightDistance), 1.0f);
-
-	color = vec4((specularLight + u_AmbiantLight + diffuseLight) * u_MaterialDiffuseColor, 1.0);
+	color = vec4(u_AmbiantLight + specularLight + (diffuseLight * u_MaterialDiffuseColor) / (pointLightDistance * pointLightDistance), 1.0);
 }
