@@ -9,7 +9,7 @@
 namespace Entropy {
 
 	Mesh::Mesh()
-		: m_ShineDamper(1.0f), m_Reflectivity(1.0f)
+		: m_ShineDamper(64.0f), m_Reflectivity(0.5f)
 	{
 
 	}
@@ -236,7 +236,7 @@ namespace Entropy {
 			// executes 2 times
 			if (line.substr(0, 2) == "f ")
 			{
-				// Contains data about how to link position, texture coords and normals 
+				// Contains data about how to link position, texture coords and normals
 				unsigned int vertex0[3]; // pos_ptr // tex_ptr // norm_ptr
 				unsigned int vertex1[3];
 				unsigned int vertex2[3];
@@ -288,24 +288,6 @@ namespace Entropy {
 		}
 
 		in.close();
-
-		/*std::stringstream ss;
-		ss << '\n';
-		for (int i = 0; i < vertexBufferCount; i++)
-		{
-			if (i % 8 == 0)
-				ss << '\n';
-			ss << vertexBuffer[i] << ", ";
-		}
-
-		for (int i = 0; i < indexBuffer.size(); i++)
-		{
-			if (i % 3 == 0)
-				ss << '\n';
-			ss << indexBuffer[i] << ", ";
-		}
-
-		NT_INFO(ss.str());*/
 
 		// Init buffers
 		m_VertexArray = VertexArray::Create();

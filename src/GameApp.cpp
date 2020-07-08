@@ -15,18 +15,25 @@ public:
 	{
 		m_CameraController.GetCamera().SetPosition(glm::vec3(0.0f, 1.0f, 1.0f));
 
+		Application::GetWindow().SetVSync(true);
+
 #ifdef NT_PLATFORM_WINDOWS
 		m_Model.LoadOBJFromFile("assets/models/BrandenburgGate.obj");
-		m_Plane.LoadOBJFromFile("assets/models/plane.obj");
-		m_Cube.LoadOBJFromFile("assets/models/cube.obj");
+		m_Plane.LoadOBJFromFile("assets/models/Plane.obj");
+		m_Cube.LoadOBJFromFile("assets/models/Cube.obj");
+		m_Bunny.LoadOBJFromFile("assets/models/Bunny.obj");
 #else
 		m_Model.LoadOBJFromFile("../assets/models/BrandenburgGate.obj");
-		m_Plane.LoadOBJFromFile("../assets/models/plane.obj");
-		m_Cube.LoadOBJFromFile("../assets/models/cube.obj");
+		m_Plane.LoadOBJFromFile("../assets/models/Plane.obj");
+		m_Cube.LoadOBJFromFile("../assets/models/Cube.obj");
+		m_Bunny.LoadOBJFromFile("../assets/models/Bunny.obj");
 #endif
 
-		m_Model.SetReflectivity(10.0f);
-		m_Model.SetShineDamper(128.0f);
+		m_Model.SetReflectivity(300.0f);
+		m_Model.SetShineDamper(256.0f);
+
+		m_Bunny.SetReflectivity(200.0f);
+		m_Bunny.SetShineDamper(128.0f);
 	}
 
 	~Game()
@@ -39,12 +46,14 @@ public:
 		m_CameraController.OnUpdate(elapsedTime);
 
 		// Gamma correction encoding
-		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f) * sinf(0.1f * elapsedTime)));
+		//Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f) * sinf(0.1f * elapsedTime)));
+		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(
+			glm::vec4(0.3f, 0.5f, 0.8f, 1.0f)));
 		Entropy::RenderCommand::Clear();
 
 		// Moving the light over time
-		m_PointLightPosition.x = 3.0f * sinf(elapsedTime);
-		m_PointLightPosition.z = 3.0f * cosf(elapsedTime);
+		//m_PointLightPosition.x = 20.0f * sinf(elapsedTime);
+		//m_PointLightPosition.z = 20.0f * cosf(elapsedTime);
 
 		// Attaching uniforms
 		m_Shader->Attach();
@@ -57,9 +66,11 @@ public:
 		m_Shader->SetFloat("u_Light.linear", 0.09f);
 		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
 
-		Entropy::Renderer::Draw(m_Shader, m_Model, m_Identity, m_CameraController.GetCamera());
+		Entropy::Renderer::Draw(m_Shader, m_Model, m_ModelTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Plane, m_PlaneTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Cube, glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
+		Entropy::Renderer::Draw(m_Shader, m_Bunny, m_Identity, m_CameraController.GetCamera());
+		//Entropy::Renderer::Draw(m_Shader, m_Cube, m_Identity, m_CameraController.GetCamera());
 	}
 
 	virtual void OnApplicationEvent(Entropy::Event& e) override
@@ -73,11 +84,13 @@ private:
 	Entropy::Mesh m_Plane = Entropy::Mesh();
 	Entropy::Mesh m_Cube = Entropy::Mesh();
 	Entropy::Mesh m_Model = Entropy::Mesh();
+	Entropy::Mesh m_Bunny = Entropy::Mesh();
 #else
 	Entropy::Shader* m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
 	Entropy::Mesh m_Plane = Entropy::Mesh();
 	Entropy::Mesh m_Cube = Entropy::Mesh();
 	Entropy::Mesh m_Model = Entropy::Mesh();
+	Entropy::Mesh m_Bunny = Entropy::Mesh();
 #endif
 
 	// Model transforms
@@ -89,8 +102,8 @@ private:
 	glm::mat4 m_Identity = glm::mat4(1.0f);
 
 	// Lights
-	glm::vec3 m_PointLightPosition = glm::vec3(-2.0f, 2.0f, 3.0f);
-	float m_PointLightPower = 0.8f;
+	glm::vec3 m_PointLightPosition = glm::vec3(-2.0f, 12.0f, 3.0f);
+	float m_PointLightPower = 2.0f;
 	glm::vec3 m_PointLightColor = glm::vec3(1.0f, 1.0f, 1.0f) * m_PointLightPower;
 
 	// Camera controller

@@ -21,8 +21,6 @@ namespace Entropy {
 		void SetShineDamper(float shineDamper) { m_ShineDamper = shineDamper; }
 		void SetReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
 
-		//bool LoadFromFile(const char* filepath);
-
 		bool LoadOBJFromFile(const char* filepath);
 
 	private:
