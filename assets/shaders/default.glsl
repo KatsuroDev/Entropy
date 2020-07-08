@@ -8,8 +8,15 @@ layout(location = 2) in vec3 a_Normal;
 uniform mat4 u_Transform;
 uniform mat4 u_ViewProjection;
 
+#define SMOOTH
+
+#ifdef SMOOTH
+	out vec3 v_Normal;
+#else
+	flat out vec3 v_Normal;
+#endif
+
 out vec3 v_Position;
-out vec3 v_Normal;
 
 void main()
 {
@@ -37,8 +44,15 @@ uniform float u_ShineDamper;
 uniform float u_Reflectivity;
 uniform vec3 u_MaterialColor;
 
+#define SMOOTH
+
+#ifdef SMOOTH
+	in vec3 v_Normal;
+#else
+	flat in vec3 v_Normal;
+#endif
+
 in vec3 v_Position;
-in vec3 v_Normal;
 
 struct Light
 {
