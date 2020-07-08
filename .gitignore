@@ -8,3 +8,5 @@ build/*
 !build/log/
 !build/glew32.dll
 !build/glfw3.dll
+
+.DS_Store
