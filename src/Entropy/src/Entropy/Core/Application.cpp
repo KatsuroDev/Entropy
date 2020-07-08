@@ -71,8 +71,6 @@ namespace Entropy {
 			OnUpdate(glfwGetTime());
 
 			m_Window->OnUpdate();
-
-			RenderCommand::Clear();
 		}
 	}
 }

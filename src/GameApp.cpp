@@ -15,12 +15,18 @@ public:
 	{
 		m_CameraController.GetCamera().SetPosition(glm::vec3(0.0f, 1.0f, 1.0f));
 
-		// Shader
 #ifdef NT_PLATFORM_WINDOWS
-		m_Shader = Entropy::Shader::Create("assets/shaders/default.glsl");
+		m_Model.LoadOBJFromFile("assets/models/BrandenburgGate.obj");
+		m_Plane.LoadOBJFromFile("assets/models/plane.obj");
+		m_Cube.LoadOBJFromFile("assets/models/cube.obj");
 #else
-		m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
+		m_Model.LoadOBJFromFile("../assets/models/BrandenburgGate.obj");
+		m_Plane.LoadOBJFromFile("../assets/models/plane.obj");
+		m_Cube.LoadOBJFromFile("../assets/models/cube.obj");
 #endif
+
+		m_Model.SetReflectivity(10.0f);
+		m_Model.SetShineDamper(128.0f);
 	}
 
 	~Game()
@@ -34,22 +40,26 @@ public:
 
 		// Gamma correction encoding
 		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f) * sinf(0.1f * elapsedTime)));
+		Entropy::RenderCommand::Clear();
 
 		// Moving the light over time
-		m_PointLightPosition.x = 6.0f * sinf(elapsedTime);
-		m_PointLightPosition.z = 6.0f * cosf(elapsedTime);
+		m_PointLightPosition.x = 3.0f * sinf(elapsedTime);
+		m_PointLightPosition.z = 3.0f * cosf(elapsedTime);
 
 		// Attaching uniforms
 		m_Shader->Attach();
-		m_Shader->SetFloat3("u_AmbiantLight", m_AmbiantLightColor);
-		m_Shader->SetFloat3("u_PointLightPosition", m_PointLightPosition);
-		m_Shader->SetFloat3("u_PointLight", m_PointLightColor);
 		m_Shader->SetFloat3("u_CameraPosition", m_CameraController.GetCamera().GetPosition());
 
-		// Draw calls
-		Entropy::Renderer::Draw(m_Shader, m_Plane.GetVertexArray(), m_PlaneTransform, m_CameraController.GetCamera());
-		Entropy::Renderer::Draw(m_Shader, m_Nanosuit.GetVertexArray(), m_NanosuitTransform, m_CameraController.GetCamera());
-		Entropy::Renderer::Draw(m_Shader, m_Cube.GetVertexArray(), glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
+		m_Shader->SetFloat3("u_Light.position", m_PointLightPosition);
+		m_Shader->SetFloat3("u_Light.color", m_PointLightColor);
+		// Light will cover a distance of 50 meters
+		m_Shader->SetFloat("u_Light.constant", 1.0f);
+		m_Shader->SetFloat("u_Light.linear", 0.09f);
+		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
+
+		Entropy::Renderer::Draw(m_Shader, m_Model, m_Identity, m_CameraController.GetCamera());
+		Entropy::Renderer::Draw(m_Shader, m_Plane, m_PlaneTransform, m_CameraController.GetCamera());
+		Entropy::Renderer::Draw(m_Shader, m_Cube, glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
 	}
 
 	virtual void OnApplicationEvent(Entropy::Event& e) override
@@ -58,28 +68,29 @@ public:
 	}
 
 private:
-	Entropy::Shader* m_Shader;
-
 #ifdef NT_PLATFORM_WINDOWS
-	Entropy::Mesh m_Plane = Entropy::Mesh("assets/models/plane.obj");
-	Entropy::Mesh m_Nanosuit = Entropy::Mesh("assets/models/nanosuit.obj");
-	Entropy::Mesh m_Cube = Entropy::Mesh("assets/models/cube.obj");
+	Entropy::Shader* m_Shader = Entropy::Shader::Create("assets/shaders/default.glsl");
+	Entropy::Mesh m_Plane = Entropy::Mesh();
+	Entropy::Mesh m_Cube = Entropy::Mesh();
+	Entropy::Mesh m_Model = Entropy::Mesh();
 #else
-    Entropy::Mesh m_Plane = Entropy::Mesh("../assets/models/plane.obj");
-    Entropy::Mesh m_Nanosuit = Entropy::Mesh("../assets/models/nanosuit.obj");
-    Entropy::Mesh m_Cube = Entropy::Mesh("../assets/models/cube.obj");
+	Entropy::Shader* m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
+	Entropy::Mesh m_Plane = Entropy::Mesh();
+	Entropy::Mesh m_Cube = Entropy::Mesh();
+	Entropy::Mesh m_Model = Entropy::Mesh();
 #endif
 
 	// Model transforms
 	float scale = 100.0f;
 	glm::mat4 m_PlaneTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f) * scale);
-	glm::mat4 m_NanosuitTransform = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
 	glm::mat4 m_CubeTransform = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
+	glm::mat4 m_ModelTransform = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+
+	glm::mat4 m_Identity = glm::mat4(1.0f);
 
 	// Lights
-	glm::vec3 m_AmbiantLightColor = glm::vec3(0.01f, 0.01f, 0.01f);
 	glm::vec3 m_PointLightPosition = glm::vec3(-2.0f, 2.0f, 3.0f);
-	float m_PointLightPower = 3.0f;
+	float m_PointLightPower = 0.8f;
 	glm::vec3 m_PointLightColor = glm::vec3(1.0f, 1.0f, 1.0f) * m_PointLightPower;
 
 	// Camera controller
