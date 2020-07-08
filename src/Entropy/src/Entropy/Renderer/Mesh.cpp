@@ -9,6 +9,7 @@
 namespace Entropy {
 
 	Mesh::Mesh()
+	// TODO: make proper materials
 		: m_ShineDamper(64.0f), m_Reflectivity(0.5f)
 	{
 

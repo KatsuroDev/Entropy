@@ -21,6 +21,8 @@ namespace Entropy {
 		void SetShineDamper(float shineDamper) { m_ShineDamper = shineDamper; }
 		void SetReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
 
+		// Smooth lighting enabled by default
+		// TODO: support sharp edges and sharp angle threshold detector
 		bool LoadOBJFromFile(const char* filepath);
 
 	private:

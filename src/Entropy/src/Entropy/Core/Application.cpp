@@ -6,6 +6,7 @@
 
 #include <math.h>
 
+// Only to get time
 #include <GLFW/glfw3.h>
 
 namespace Entropy {

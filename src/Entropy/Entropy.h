@@ -9,7 +9,6 @@
 #include "src/Entropy/Renderer/Renderer.h"
 #include "src/Entropy/Renderer/RenderCommand.h" // TODO: remove
 #include "src/Entropy/Renderer/CameraController.h"
-#include "src/Entropy/Renderer/Mesh.h"
 
 // Events
 #include "src/Entropy/Events/ApplicationEvent.h"

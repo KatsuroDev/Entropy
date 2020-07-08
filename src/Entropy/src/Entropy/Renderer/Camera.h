@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glm/glm.hpp>
+// includes matrix transform and operators
 #include <GL/glm/gtc/matrix_transform.hpp>
 
 namespace Entropy {
@@ -42,7 +43,7 @@ namespace Entropy {
 
 		void SetPosition(const glm::vec3& pos)
 		{
-			m_Position = pos; 
+			m_Position = pos;
 			RecalculateLookAtMatrix();
 			RecalculateViewProjectionMatrix();
 		}
@@ -103,7 +104,7 @@ namespace Entropy {
 		void RecalculateViewProjectionMatrix();
 		void RecalculateLookAtMatrix();
 		void UpdateCameraVectors();
-		
+
 	private:
 		// Attributes
 		glm::vec3 m_Velocity;

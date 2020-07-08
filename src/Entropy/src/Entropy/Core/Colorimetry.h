@@ -2,6 +2,7 @@
 
 namespace Entropy {
 
+	// Converting between SRGB and linear colors
 	glm::vec4 EncodeSRGB(const glm::vec4& color)
 	{
 		constexpr float gamma = 2.2;

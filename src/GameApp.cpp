@@ -70,7 +70,6 @@ public:
 		Entropy::Renderer::Draw(m_Shader, m_Plane, m_PlaneTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Cube, glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Bunny, m_Identity, m_CameraController.GetCamera());
-		//Entropy::Renderer::Draw(m_Shader, m_Cube, m_Identity, m_CameraController.GetCamera());
 	}
 
 	virtual void OnApplicationEvent(Entropy::Event& e) override

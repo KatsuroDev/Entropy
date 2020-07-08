@@ -23,11 +23,6 @@ namespace Entropy {
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
-		// per mesh uniforms
-		//shader->SetFloat("u_ShineDamper", mesh.GetShineDamper());
-		//shader->SetFloat("u_Reflectivity", mesh.GetReflectivity());
-
-		//VertexArray* va = mesh.GetVertexArray();
 		va->Attach();
 		RenderCommand::Draw(va);
 	}
@@ -39,11 +34,6 @@ namespace Entropy {
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
-		// per mesh uniforms
-		//shader->SetFloat("u_ShineDamper", mesh.GetShineDamper());
-		//shader->SetFloat("u_Reflectivity", mesh.GetReflectivity());
-
-		//VertexArray* va = mesh.GetVertexArray();
 		va->Attach();
 		RenderCommand::DrawInstanced(va, repeatCount);
 	}

@@ -2,8 +2,6 @@
 
 #include "Buffer.h"
 
-#include <vector>
-
 // Contains the vertex and index buffers
 // Interface or abstract class
 namespace Entropy {
