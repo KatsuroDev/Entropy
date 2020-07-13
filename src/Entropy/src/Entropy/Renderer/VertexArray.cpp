@@ -13,7 +13,6 @@ namespace Entropy {
         switch(Renderer::GetAPI())
         {
         case RenderingAPI::API::OpenGL:
-            NT_TRACE("Created a new OpenGL vertex array");
             return new OpenGLVertexArray();
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");

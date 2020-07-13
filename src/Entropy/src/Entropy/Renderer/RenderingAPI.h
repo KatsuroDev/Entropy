@@ -32,6 +32,8 @@ namespace Entropy {
 
         static API GetAPI() { return s_API; }
 
+        static const char* GetName() { return s_API == API::OpenGL ? "OpenGL" : "None"; }
+
         static RenderingAPI* Create();
 
     private:

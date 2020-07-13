@@ -44,7 +44,7 @@ namespace Entropy {
 	void Camera::RecalculateViewProjectionMatrix()
 	{
 		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspectRatio, 0.01f, 1000.0f);
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspectRatio, 0.001f, 1000.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
