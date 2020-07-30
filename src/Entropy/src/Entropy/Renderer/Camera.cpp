@@ -3,8 +3,6 @@
 #include "../../Entropy/Core/Application.h"
 #include "../../Entropy/Core/Logger.h"
 
-#include <chrono>
-
 namespace Entropy {
 
 	Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, float fov)
@@ -12,7 +10,7 @@ namespace Entropy {
 	{
 		UpdateCameraVectors();
 
-		RecalculateLookAtMatrix();
+		RecalculateViewMatrix();
 		RecalculateViewProjectionMatrix();
 	}
 
@@ -24,7 +22,7 @@ namespace Entropy {
 		m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
 		m_Up = glm::normalize(glm::cross(m_Right, m_Front));
 
-		RecalculateLookAtMatrix();
+		RecalculateViewMatrix();
 		RecalculateViewProjectionMatrix();
 	}
 
@@ -48,7 +46,7 @@ namespace Entropy {
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void Camera::RecalculateLookAtMatrix()
+	void Camera::RecalculateViewMatrix()
 	{
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 	}

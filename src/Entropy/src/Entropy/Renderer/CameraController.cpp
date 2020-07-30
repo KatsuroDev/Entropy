@@ -14,11 +14,7 @@ namespace Entropy {
 
 	void CameraController::OnUpdate(float elapsedTime)
 	{
-		// Getting the time between this and the last frame
-		static float lastTime = elapsedTime;
-		float frameTime = elapsedTime - lastTime;
-
-		const float frictionCoeff = 4.0f;
+		const static float frictionCoeff = 4.0f;
 
 		static float lastMouseX = Input::GetMouseX();
 		static float lastMouseY = Input::GetMouseY();
@@ -52,32 +48,32 @@ namespace Entropy {
 
 		if (Input::IsKeyPressed(KeyCode::W))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetFrontVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetFrontVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::A))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetRightVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetRightVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::S))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetFrontVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetFrontVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::D))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetRightVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetRightVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::Space))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetUpVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetUpVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::LeftShift))
 		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetUpVec() * frameTime * m_Camera.GetMovementSpeed());
+			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetUpVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::Delete))
@@ -89,11 +85,10 @@ namespace Entropy {
 		}
 
 		// Calculating friction loss
-		m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetVelocity() * frameTime * frictionCoeff);
+		m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetVelocity() * elapsedTime * frictionCoeff);
 
 		// Setting new position
-		m_Camera.SetPosition(m_Camera.GetPosition() + m_Camera.GetVelocity() * frameTime);
-		lastTime = elapsedTime;
+		m_Camera.SetPosition(m_Camera.GetPosition() + m_Camera.GetVelocity() * elapsedTime);
 	}
 
 	void CameraController::OnEvent(Event& e)

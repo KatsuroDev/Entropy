@@ -20,6 +20,7 @@ namespace Entropy {
 	{
 		shader->Attach();
 		// camera uniforms
+		shader->SetFloat3("u_CameraPosition", camera.GetPosition());
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
@@ -31,6 +32,7 @@ namespace Entropy {
 	{
 		shader->Attach();
 		// camera uniforms
+		shader->SetFloat3("u_CameraPosition", camera.GetPosition());
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
@@ -42,6 +44,7 @@ namespace Entropy {
 	{
 		shader->Attach();
 		// camera uniforms
+		shader->SetFloat3("u_CameraPosition", camera.GetPosition());
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
@@ -58,6 +61,7 @@ namespace Entropy {
 	{
 		shader->Attach();
 		// camera uniforms
+		shader->SetFloat3("u_CameraPosition", camera.GetPosition());
 		shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 

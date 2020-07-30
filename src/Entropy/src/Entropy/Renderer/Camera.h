@@ -37,14 +37,14 @@ namespace Entropy {
 		void SetPosition(float x, float y, float z)
 		{
 			m_Position = glm::vec3(x, y, z);
-			RecalculateLookAtMatrix();
+			RecalculateViewMatrix();
 			RecalculateViewProjectionMatrix();
 		}
 
 		void SetPosition(const glm::vec3& pos)
 		{
 			m_Position = pos;
-			RecalculateLookAtMatrix();
+			RecalculateViewMatrix();
 			RecalculateViewProjectionMatrix();
 		}
 
@@ -102,7 +102,7 @@ namespace Entropy {
 		void ProcessWindowResize();
 
 		void RecalculateViewProjectionMatrix();
-		void RecalculateLookAtMatrix();
+		void RecalculateViewMatrix();
 		void UpdateCameraVectors();
 
 	private:

@@ -69,11 +69,16 @@ namespace Entropy {
 
 	void Application::Run()
 	{
+		float fStartTime = 0.0f;
+
 		// Program loop here
 		while (m_Running)
 		{
 			// Render here
-			OnUpdate(glfwGetTime());
+			// Pass in the elapsed time between frames
+			float fEndTime = glfwGetTime();
+			OnUpdate(fEndTime - fStartTime);
+			fStartTime = fEndTime;
 
 			m_Window->OnUpdate();
 		}

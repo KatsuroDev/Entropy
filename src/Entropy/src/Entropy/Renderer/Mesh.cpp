@@ -10,7 +10,7 @@ namespace Entropy {
 
 	Mesh::Mesh()
 	// TODO: make proper materials
-		: m_ShineDamper(64.0f), m_Reflectivity(0.5f)
+		: m_ShineDamper(256.0f), m_Reflectivity(64.0f)
 	{
 	}
 
@@ -19,6 +19,70 @@ namespace Entropy {
 		delete m_IndexBuffer;
 		delete m_VertexBuffer;
 		delete m_VertexArray;
+	}
+
+	void Mesh::GenerateTerrain()
+	{
+		int terrainGridSize = 2;
+		float* vertexBuffer = new float[terrainGridSize * terrainGridSize];
+
+		for (int y = 0; y < terrainGridSize; y++)
+		{
+			for (int x = 0; x < terrainGridSize; x++)
+			{
+				// Positions
+				int pos = (y * terrainGridSize + x) * 8;
+
+				vertexBuffer[pos] = x;
+				vertexBuffer[pos + 1] = 0.0f; // Affect this with perlin noise
+				vertexBuffer[pos + 2] = y;
+
+				// Tex coords
+				vertexBuffer[pos + 3] = 0.0f;
+				vertexBuffer[pos + 4] = 0.0f;
+
+				// Normals
+				vertexBuffer[pos + 5] = 0.0f;
+				vertexBuffer[pos + 6] = 1.0f;
+				vertexBuffer[pos + 7] = 0.0f;
+			}
+		}
+
+		unsigned int indexBuffer[6] = {
+			0, 2, 1,
+			3, 1, 2
+		};
+
+		std::stringstream ss;
+		for (size_t i = 0; i < terrainGridSize * terrainGridSize * 8; i++)
+		{
+			if (i % 8 == 0)
+				ss << '\n';
+			ss << vertexBuffer[i];
+		}
+
+		NT_INFO(ss.str());
+
+		// Init buffers
+		m_VertexArray = VertexArray::Create();
+
+		// Init default layout
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_TextCoord" },
+			{ ShaderDataType::Float3, "a_Normal" }
+		};
+
+		// Takes size in bytes
+		m_VertexBuffer = VertexBuffer::Create(vertexBuffer, terrainGridSize * terrainGridSize * 8 * sizeof(float));
+		m_VertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+		// Takes index count
+		m_IndexBuffer = IndexBuffer::Create(indexBuffer, 6);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+		delete[] vertexBuffer;
 	}
 
 	void Tokenize(const std::string& str, const char delim, std::vector<std::string>& out)
