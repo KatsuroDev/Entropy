@@ -12,7 +12,7 @@ namespace Entropy {
 		: m_WindowHandle(windowHandle)
 	{
 		if (windowHandle == nullptr)
-			NT_FATAL(0, "Window handle is null");
+			NT_FATAL("Window handle is null");
 	}
 
 	void OpenGLGraphicsContext::Init()
@@ -21,7 +21,7 @@ namespace Entropy {
 		glfwMakeContextCurrent(m_WindowHandle);
 
 		if (glewInit() != GLEW_OK)
-			NT_FATAL(0, "Could not init glew");
+			NT_FATAL("Could not init glew");
 		NT_INFO("Initialized glew successfully!");
 
 		NT_INFO("OpenGL Info:\n");

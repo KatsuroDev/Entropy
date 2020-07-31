@@ -29,7 +29,7 @@ namespace Entropy {
         case ShaderDataType::Bool:     return 1;
         }
 
-        NT_FATAL(0, "Unknown ShaderDataType");
+        NT_FATAL("Unknown ShaderDataType");
         return 0;
     }
 
@@ -65,7 +65,7 @@ namespace Entropy {
             case ShaderDataType::Bool:    return 1;
             }
 
-            NT_FATAL(0, "Unknown ShaderDataType");
+            NT_FATAL("Unknown ShaderDataType");
             return 0;
         }
     };

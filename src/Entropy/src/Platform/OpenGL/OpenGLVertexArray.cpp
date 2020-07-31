@@ -24,7 +24,7 @@ namespace Entropy {
 		case ShaderDataType::Bool:     return GL_BOOL;
 		}
 
-		NT_FATAL(0, "Unknown ShaderDataType");
+		NT_FATAL("Unknown ShaderDataType");
 
 		return 0;
 	}
@@ -52,7 +52,7 @@ namespace Entropy {
 	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
 	{
 		if (vertexBuffer->GetLayout().GetElements().size() == 0)
-			NT_FATAL(0, "Vertex buffer has no layout");
+			NT_FATAL("Vertex buffer has no layout");
 
 		glBindVertexArray(m_RendererID);
 
@@ -105,7 +105,7 @@ namespace Entropy {
 				break;
 			}
 			default:
-				NT_FATAL(0, "Unknown ShaderDataType");
+				NT_FATAL("Unknown ShaderDataType");
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace Entropy {
 	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
-		
+
 		NT_ASSERT(indexBuffer != nullptr, "Index Buffer is empty");
 		indexBuffer->Attach();
 

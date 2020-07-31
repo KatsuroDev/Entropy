@@ -15,7 +15,7 @@ namespace Entropy {
         case RenderingAPI::API::OpenGL:
             return new OpenGLVertexBuffer(vertices, size);
         case RenderingAPI::API::None:
-            NT_FATAL(0, "Rendering API not supported");
+            NT_FATAL("Rendering API not supported");
             return nullptr;
         }
 
@@ -29,7 +29,7 @@ namespace Entropy {
         case RenderingAPI::API::OpenGL:
             return new OpenGLVertexBuffer(size);
         case RenderingAPI::API::None:
-            NT_FATAL(0, "Rendering API not supported");
+            NT_FATAL("Rendering API not supported");
             return nullptr;
         }
 
@@ -46,7 +46,7 @@ namespace Entropy {
         case RenderingAPI::API::OpenGL:
             return new OpenGLIndexBuffer(indices, size);
         case RenderingAPI::API::None:
-            NT_FATAL(0, "Rendering API not supported");
+            NT_FATAL("Rendering API not supported");
             return nullptr;
         }
 

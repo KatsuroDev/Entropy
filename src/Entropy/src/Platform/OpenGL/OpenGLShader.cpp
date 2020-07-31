@@ -17,7 +17,7 @@ namespace Entropy {
 		if (type == "fragment" || type == "pixel")
 			return GL_FRAGMENT_SHADER;
 
-		NT_FATAL(0, "Unknown shader type");
+		NT_FATAL("Unknown shader type");
 		return 0;
 	}
 
@@ -92,16 +92,16 @@ namespace Entropy {
 		{
 			size_t eol = source.find_first_of("\r\n", pos); //End of shader type declaration line
 			if (eol == std::string::npos)
-				NT_FATAL(0, "Syntax error in shader");
+				NT_FATAL("Syntax error in shader");
 
 			size_t begin = pos + typeTokenLength + 1; //Start of shader type name (after "#type " keyword)
 			std::string type = source.substr(begin, eol - begin);
 			if (!ShaderTypeFromString(type))
-				NT_FATAL(0, "Invalid shader type specified");
+				NT_FATAL("Invalid shader type specified");
 
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
 			if (nextLinePos == std::string::npos)
-				NT_FATAL(0, "Syntax error in shader");
+				NT_FATAL("Syntax error in shader");
 
 			pos = source.find(typeToken, nextLinePos); //Start of next shader type declaration line
 
@@ -117,7 +117,7 @@ namespace Entropy {
 
 		GLuint program = glCreateProgram();
 		if (shaderSources.size() > SHADER_COUNT_MAX)
-			NT_FATAL(0, "Entropy only support 2 shaders at the moment");
+			NT_FATAL("Entropy only support 2 shaders at the moment");
 
 		GLenum glShaderIDs[SHADER_COUNT_MAX];
 		int glShaderIDIndex = 0;
@@ -148,7 +148,7 @@ namespace Entropy {
 				std::stringstream ss;
 				ss << infoLog.data();
 				NT_ERROR(ss.str());
-				NT_FATAL(0, "Shader compilation failure");
+				NT_FATAL("Shader compilation failure");
 
 				break;
 			}
@@ -183,7 +183,7 @@ namespace Entropy {
 			std::stringstream ss;
 			ss << infoLog.data();
 			NT_ERROR(ss.str());
-			NT_FATAL(0, "Shader link failure");
+			NT_FATAL("Shader link failure");
 
 			return;
 		}

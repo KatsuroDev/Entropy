@@ -18,7 +18,7 @@ namespace Entropy {
             NT_TRACE("Created the OpenGL rendering API");
             return new OpenGLRenderingAPI();
         case RenderingAPI::API::None:
-            NT_FATAL(0, "Rendering API not supported");
+            NT_FATAL("Rendering API not supported");
             return nullptr;
         }
 

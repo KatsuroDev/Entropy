@@ -40,9 +40,9 @@
 #endif
 
 
-#define NT_FATAL(code, ...) { NT_ERROR("FATAL ERROR OCCURED"); exit(code); }
+#define NT_FATAL(str) { NT_ERROR(strcat("FATAL ERROR OCCURED: ", str)); NT_DEBUGBREAK(); }
 
-#define NT_ASSERT(x, ...) { if(!(x)) { NT_ERROR("Assertion Failed"); NT_DEBUGBREAK(); } }
+#define NT_ASSERT(x, str) { if(!(x)) { NT_ERROR(strcat("Assertion Failed:", str)); NT_DEBUGBREAK(); } }
 
 #define NT_ATTACH_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
