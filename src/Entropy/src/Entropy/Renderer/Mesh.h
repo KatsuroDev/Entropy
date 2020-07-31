@@ -25,14 +25,14 @@ namespace Entropy {
 		// TODO: support sharp edges and sharp angle threshold detector
 		bool LoadOBJFromFile(const char* filepath);
 
-		void GenerateTerrain();
+		void GenerateTerrain(unsigned int scale, unsigned int seed);
 
 	private:
+		float m_ShineDamper;
+		float m_Reflectivity;
+
 		VertexArray* m_VertexArray;
 		VertexBuffer* m_VertexBuffer;
 		IndexBuffer* m_IndexBuffer;
-
-		float m_ShineDamper;
-		float m_Reflectivity;
 	};
 }

@@ -16,4 +16,4 @@
 #include "src/Entropy/Events/MouseEvent.h"
 
 // Utils
-#include "src/Entropy/Core/Colorimetry.h"
+#include "src/Entropy/Tools/Colorimetry.h"

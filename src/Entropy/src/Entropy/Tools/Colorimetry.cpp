@@ -1,4 +1,6 @@
-#pragma once
+#include "Colorimetry.h"
+
+#include <cmath>
 
 namespace Entropy {
 

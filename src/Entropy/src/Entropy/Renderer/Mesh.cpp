@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "../Core/Logger.h"
+#include "../Tools/Noise.h"
 
 #include <fstream>
 #include <vector>
@@ -9,8 +10,8 @@
 namespace Entropy {
 
 	Mesh::Mesh()
-	// TODO: make proper materials
-		: m_ShineDamper(256.0f), m_Reflectivity(64.0f)
+		// TODO: make proper materials
+		: m_ShineDamper(256.0f), m_Reflectivity(512.0f), m_VertexArray(0), m_VertexBuffer(0), m_IndexBuffer(0)
 	{
 	}
 
@@ -21,47 +22,62 @@ namespace Entropy {
 		delete m_VertexArray;
 	}
 
-	void Mesh::GenerateTerrain()
+	void Mesh::GenerateTerrain(unsigned int scale, unsigned int seed)
 	{
-		int terrainGridSize = 2;
-		float* vertexBuffer = new float[terrainGridSize * terrainGridSize];
+		// We want the number of vertices, not grids, therefore +1
+		unsigned int size = scale + 1;
+		size_t vertexBufferCount = (size_t)size * size * 8;
+		float* vertexBuffer = new float[vertexBufferCount];
 
-		for (int y = 0; y < terrainGridSize; y++)
-		{
-			for (int x = 0; x < terrainGridSize; x++)
+		std::vector<unsigned int> indexBuffer;
+
+		// filling the vertex buffer
+		for (int y = 0; y < size; y++)
+			for (int x = 0; x < size; x++)
 			{
-				// Positions
-				int pos = (y * terrainGridSize + x) * 8;
+				int pos = 8 * (y * size + x);
+				// TODO: have a correlation between these
+				float height = 0.0f;
 
-				vertexBuffer[pos] = x;
-				vertexBuffer[pos + 1] = 0.0f; // Affect this with perlin noise
-				vertexBuffer[pos + 2] = y;
+				const float centerOffset = (size - 1) * 0.5f;
 
-				// Tex coords
-				vertexBuffer[pos + 3] = 0.0f;
-				vertexBuffer[pos + 4] = 0.0f;
+				// position
+				vertexBuffer[pos + 0] = x - centerOffset;
+				vertexBuffer[pos + 1] = height;
+				vertexBuffer[pos + 2] = y - centerOffset;
 
-				// Normals
-				vertexBuffer[pos + 5] = 0.0f;
-				vertexBuffer[pos + 6] = 1.0f;
-				vertexBuffer[pos + 7] = 0.0f;
+				// texCoord
+				vertexBuffer[pos + 3] = x;
+				vertexBuffer[pos + 4] = y;
+
+				// normal
+				// TODO: compute height of surrounding vertices of triangle using perlin noise and position as seed offset
+				float height1 = 0.0f;
+				float height2 = 0.0f;
+
+				glm::vec3 line1(glm::vec3(x, height1, y + 1) - glm::vec3(x, height, y));
+				glm::vec3 line2(glm::vec3(x + 1, height2, y) - glm::vec3(x, height, y));
+				glm::vec3 normal = glm::normalize(glm::cross(line1, line2));
+
+				vertexBuffer[pos + 5] = normal.x;
+				vertexBuffer[pos + 6] = normal.y;
+				vertexBuffer[pos + 7] = normal.z;
 			}
-		}
 
-		unsigned int indexBuffer[6] = {
-			0, 2, 1,
-			3, 1, 2
-		};
+		// filling the index buffer
+		for (int y = 0; y < size - 1; y++)
+			for (int x = 0; x < size - 1; x++)
+			{
+				// face #1
+				indexBuffer.push_back((y + 0) * size + (x + 0));
+				indexBuffer.push_back((y + 1) * size + (x + 0));
+				indexBuffer.push_back((y + 0) * size + (x + 1));
 
-		std::stringstream ss;
-		for (size_t i = 0; i < terrainGridSize * terrainGridSize * 8; i++)
-		{
-			if (i % 8 == 0)
-				ss << '\n';
-			ss << vertexBuffer[i];
-		}
-
-		NT_INFO(ss.str());
+				// face #2
+				indexBuffer.push_back((y + 1) * size + (x + 1));
+				indexBuffer.push_back((y + 0) * size + (x + 1));
+				indexBuffer.push_back((y + 1) * size + (x + 0));
+			}
 
 		// Init buffers
 		m_VertexArray = VertexArray::Create();
@@ -74,12 +90,12 @@ namespace Entropy {
 		};
 
 		// Takes size in bytes
-		m_VertexBuffer = VertexBuffer::Create(vertexBuffer, terrainGridSize * terrainGridSize * 8 * sizeof(float));
+		m_VertexBuffer = VertexBuffer::Create(vertexBuffer, vertexBufferCount * sizeof(float));
 		m_VertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 
 		// Takes index count
-		m_IndexBuffer = IndexBuffer::Create(indexBuffer, 6);
+		m_IndexBuffer = IndexBuffer::Create(&indexBuffer[0], indexBuffer.size());
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
 		delete[] vertexBuffer;

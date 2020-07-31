@@ -28,14 +28,15 @@ public:
 #endif
 
 		// Generate plane terrain from perlin noise
-		m_Plane.GenerateTerrain();
+		// size representing grid size in a direction
+		m_Plane.GenerateTerrain(10, 0);
 
 
 		//m_Model.SetReflectivity(300.0f);
 		//m_Model.SetShineDamper(256.0f);
 
-		//m_Bunny.SetReflectivity(200.0f);
-		//m_Bunny.SetShineDamper(128.0f);
+		m_Bunny.SetReflectivity(200.0f);
+		m_Bunny.SetShineDamper(128.0f);
 
 		// Setting title to Render API used
 		Application::GetWindow().SetTitle(Application::GetWindow().GetTitle() + " - " + Entropy::RenderingAPI::GetName());
@@ -45,6 +46,7 @@ public:
 	~Game()
 	{
 		delete m_Shader;
+		delete m_Unlit;
 	}
 
 	virtual void OnUpdate(float elapsedTime) override
@@ -72,6 +74,8 @@ public:
 		m_Shader->SetFloat("u_Light.linear", 0.09f);
 		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
 
+		m_PlaneTransform = glm::rotate(m_PlaneTransform, 0.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+
 		Entropy::Renderer::Draw(m_Shader, m_Model, m_ModelTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Plane, m_PlaneTransform, m_CameraController.GetCamera());
 		Entropy::Renderer::Draw(m_Shader, m_Cube, glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
@@ -86,12 +90,16 @@ public:
 private:
 #ifdef NT_PLATFORM_WINDOWS
 	Entropy::Shader* m_Shader = Entropy::Shader::Create("assets/shaders/default.glsl");
+	Entropy::Shader* m_Unlit = Entropy::Shader::Create("assets/shaders/unlitPosGradient.glsl");
+
 	Entropy::Mesh m_Plane = Entropy::Mesh();
 	Entropy::Mesh m_Cube = Entropy::Mesh();
 	Entropy::Mesh m_Model = Entropy::Mesh();
 	Entropy::Mesh m_Bunny = Entropy::Mesh();
 #else
 	Entropy::Shader* m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
+	Entropy::Shader* m_Unlit = Entropy::Shader::Create("../assets/shaders/unlitPosGradient.glsl");
+
 	Entropy::Mesh m_Plane = Entropy::Mesh();
 	Entropy::Mesh m_Cube = Entropy::Mesh();
 	Entropy::Mesh m_Model = Entropy::Mesh();
@@ -106,7 +114,7 @@ private:
 	glm::mat4 m_Identity = glm::mat4(1.0f);
 
 	// Lights
-	glm::vec3 m_PointLightPosition = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 m_PointLightPosition = glm::vec3(0.0f, 2.0f, 0.0f);
 	float m_PointLightPower = 1.0f;
 	glm::vec3 m_PointLightColor = glm::vec3(1.0f, 0.9f, 0.8f) * m_PointLightPower;
 

@@ -39,7 +39,7 @@ namespace Entropy {
 		// Boost key
 		if (Input::IsKeyPressed(KeyCode::LeftControl))
 		{
-			m_Camera.SetMovementSpeed(50.0f);
+			m_Camera.SetMovementSpeed(200.0f);
 		}
 		else
 		{
