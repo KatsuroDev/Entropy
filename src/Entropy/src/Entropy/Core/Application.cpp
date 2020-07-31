@@ -1,10 +1,11 @@
 #include "Application.h"
 
-#include "../Renderer/Renderer.h"
-#include "Logger.h"
+#include "Core.h"
 #include "Input.h"
 
-#include <math.h>
+#include "../Renderer/Renderer.h"
+
+#include <cmath>
 
 // Only to get time
 #include <GLFW/glfw3.h>

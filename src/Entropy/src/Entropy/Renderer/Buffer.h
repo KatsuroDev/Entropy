@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../Entropy/Core/Logger.h"
+#include "../../Entropy/Core/Core.h"
 
 namespace Entropy {
 
@@ -29,7 +29,7 @@ namespace Entropy {
         case ShaderDataType::Bool:     return 1;
         }
 
-        NT_FATAL("Unknown ShaderDataType");
+        NT_FATAL(0, "Unknown ShaderDataType");
         return 0;
     }
 
@@ -65,7 +65,7 @@ namespace Entropy {
             case ShaderDataType::Bool:    return 1;
             }
 
-            NT_FATAL("Unknown ShaderDataType");
+            NT_FATAL(0, "Unknown ShaderDataType");
             return 0;
         }
     };

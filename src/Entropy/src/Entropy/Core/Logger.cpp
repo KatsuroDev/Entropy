@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-// TODO: Will use spdlog later
+// TODO: use spdlog
 #include <iostream>
 
 namespace Entropy {
@@ -43,23 +43,5 @@ namespace Entropy {
     void Logger::Error(std::string msg)
     {
         std::cout << "[ERROR]: " << msg << '\n';
-    }
-
-    void Logger::FATAL(const char* msg, int code)
-    {
-        std::cout << "[FATAL ERROR]: " << msg << '\n';
-
-        std::cin.get();
-
-        exit(code);
-    }
-
-    void Logger::FATAL(std::string msg, int code)
-    {
-        std::cout << "[FATAL ERROR]: " << msg << '\n';
-
-        std::cin.get();
-
-        exit(code);
     }
 }

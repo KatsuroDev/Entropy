@@ -2,10 +2,10 @@
 
 #include "Renderer.h"
 
+#include "../../Entropy/Core/Core.h"
+
 // Include all API's shader
 #include "../../Platform/OpenGL/OpenGLShader.h"
-
-#include "../../Entropy/Core/Logger.h"
 
 namespace Entropy {
 
@@ -17,7 +17,7 @@ namespace Entropy {
 			return new OpenGLShader(filepath);
 			break;
 		case RenderingAPI::API::None:
-			NT_FATAL("Rendering API not supported");
+			NT_FATAL(0, "Rendering API not supported");
 			return nullptr;
 		}
 
@@ -32,7 +32,7 @@ namespace Entropy {
 			return new OpenGLShader(name, vertexSource, fragmentSource);
 			break;
 		case RenderingAPI::API::None:
-			NT_FATAL("Rendering API not supported");
+			NT_FATAL(0, "Rendering API not supported");
 			return nullptr;
 		}
 
@@ -42,7 +42,7 @@ namespace Entropy {
 	void ShaderLibrary::Add(const std::string& name, Shader* shader)
 	{
 		if (Exists(name))
-			NT_FATAL("Shader already exists!");
+			NT_FATAL(0, "Shader already exists!");
 		m_Shaders[name] = shader;
 	}
 
@@ -69,7 +69,7 @@ namespace Entropy {
 	Shader* ShaderLibrary::Get(const std::string& name)
 	{
 		if (!Exists(name))
-			NT_FATAL("Shader not found!");
+			NT_FATAL(0, "Shader not found!");
 
 		return m_Shaders[name];
 	}

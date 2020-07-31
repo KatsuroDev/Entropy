@@ -1,7 +1,6 @@
 #include "CameraController.h"
 
-#include "../../Entropy/Core/Logger.h"
-
+#include "../../Entropy/Core/Core.h"
 #include "../../Entropy/Core/Input.h"
 #include "../../Entropy/Core/KeyCodes.h"
 

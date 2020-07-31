@@ -1,10 +1,10 @@
 #include "GraphicsContext.h"
 
+#include "../../Entropy/Core/Core.h"
 #include "../../Entropy/Renderer/Renderer.h"
+
 // Include all supported APIs context
 #include "../../Platform/OpenGL/OpenGLGraphicsContext.h"
-
-#include "../../Entropy/Core/Logger.h"
 
 namespace Entropy {
 
@@ -16,7 +16,7 @@ namespace Entropy {
 			NT_INFO("Created OpenGL Graphics Context!");
 			return new OpenGLGraphicsContext((GLFWwindow*)window);
 		case RenderingAPI::API::None:
-			NT_FATAL("Could not create graphics context");
+			NT_FATAL(0, "Could not create graphics context");
 			return nullptr;
 		}
 

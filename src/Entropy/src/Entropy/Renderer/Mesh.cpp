@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include "../Core/Logger.h"
+
 #include "../Tools/Noise.h"
 
 #include <fstream>

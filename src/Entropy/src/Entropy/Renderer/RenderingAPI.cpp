@@ -1,9 +1,8 @@
 #include "RenderingAPI.h"
 
+#include "../Core/Core.h"
 // include all supported APIs here
 #include "../../Platform/OpenGL/OpenGLRenderingAPI.h"
-
-#include "../Core/Logger.h"
 
 namespace Entropy {
 
@@ -19,7 +18,7 @@ namespace Entropy {
             NT_TRACE("Created the OpenGL rendering API");
             return new OpenGLRenderingAPI();
         case RenderingAPI::API::None:
-            NT_FATAL("Rendering API not supported");
+            NT_FATAL(0, "Rendering API not supported");
             return nullptr;
         }
 

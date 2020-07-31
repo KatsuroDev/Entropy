@@ -1,5 +1,6 @@
 #include "DefaultWindow.h"
 
+#include "../../Entropy/Core/Core.h"
 #include "../../Entropy/Core/Input.h"
 #include "../../Entropy/Events/ApplicationEvent.h"
 #include "../../Entropy/Events/KeyEvent.h"
@@ -9,15 +10,13 @@
 
 #include "../../Platform/OpenGL/OpenGLGraphicsContext.h"
 
-#include "../../Entropy/Core/Logger.h"
-
 namespace Entropy {
 
 	static unsigned int s_WindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
-		NT_FATAL(description);
+		NT_FATAL(0, description);
 	}
 
 	DefaultWindow::DefaultWindow(unsigned int width, unsigned int height, const char* title)
@@ -39,7 +38,7 @@ namespace Entropy {
 		if (s_WindowCount == 0)
 		{
 			if (!glfwInit())
-				NT_FATAL("Could not init GLFW");
+				NT_FATAL(0, "Could not init GLFW");
 			NT_INFO("GLFW has been initialized successfully!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);

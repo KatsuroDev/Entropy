@@ -1,10 +1,11 @@
 #include "VertexArray.h"
 
-// include all supported vertex arrays here
-#include "../../Platform/OpenGL/OpenGLVertexArray.h"
+#include "../Core/Core.h"
 
 #include "Renderer.h"
-#include "../Core/Logger.h"
+
+// include all supported vertex arrays here
+#include "../../Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Entropy {
 
@@ -15,7 +16,7 @@ namespace Entropy {
         case RenderingAPI::API::OpenGL:
             return new OpenGLVertexArray();
         case RenderingAPI::API::None:
-            NT_FATAL("Rendering API not supported");
+            NT_FATAL(0, "Rendering API not supported");
             return nullptr;
         }
 

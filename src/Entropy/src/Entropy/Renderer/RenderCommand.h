@@ -1,8 +1,8 @@
 #pragma once
 
-#include "RenderingAPI.h"
+#include "../Core/Core.h"
 
-#include "../Core/Logger.h"
+#include "RenderingAPI.h"
 
 namespace Entropy {
 

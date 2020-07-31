@@ -16,21 +16,17 @@ namespace Entropy {
         static void Warn(std::string msg);
         static void Error(const char* msg);
         static void Error(std::string msg);
-        static void FATAL(const char* msg, int code = 0);
-        static void FATAL(std::string msg, int code = 0);
     };
 }
 
 #ifdef _DEBUG
 #define NT_TRACE(...) Logger::Trace(__VA_ARGS__)
-#define NT_INFO(...) Logger::Info(__VA_ARGS__)
-#define NT_WARN(...) Logger::Warn(__VA_ARGS__)
+#define NT_INFO(...)  Logger::Info(__VA_ARGS__)
+#define NT_WARN(...)  Logger::Warn(__VA_ARGS__)
 #define NT_ERROR(...) Logger::Error(__VA_ARGS__)
-#define NT_FATAL(...) Logger::FATAL(__VA_ARGS__)
 #else
 #define NT_TRACE(...)
-#define NT_INFO(...) Logger::Info(__VA_ARGS__)
-#define NT_WARN(...) Logger::Warn(__VA_ARGS__)
+#define NT_INFO(...)  Logger::Info(__VA_ARGS__)
+#define NT_WARN(...)  Logger::Warn(__VA_ARGS__)
 #define NT_ERROR(...) Logger::Error(__VA_ARGS__)
-#define NT_FATAL(...) Logger::FATAL(__VA_ARGS__)
 #endif

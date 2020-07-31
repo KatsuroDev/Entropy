@@ -1,7 +1,5 @@
 #include "Renderer.h"
 
-#include "../Core/Logger.h"
-
 #include "RenderCommand.h"
 
 namespace Entropy {
