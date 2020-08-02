@@ -9,19 +9,19 @@ namespace Entropy {
     class VertexArray
     {
     public:
-        virtual ~VertexArray() {}
+        virtual ~VertexArray() = default;
 
         // Pure virtual methods
         virtual void Attach() const = 0;
         virtual void Detach() const = 0;
 
-        virtual void AddVertexBuffer(VertexBuffer* vertexBuffer) = 0;
-        virtual void SetIndexBuffer(IndexBuffer* indexBuffer) = 0;
+        virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) = 0;
+        virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) = 0;
 
-        virtual const std::vector<VertexBuffer*>& GetVertexBuffers() const = 0;
-        virtual const IndexBuffer& GetIndexBuffer() const = 0;
+        virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const = 0;
+        virtual const Ref<IndexBuffer>& GetIndexBuffer() const = 0;
 
         // API is the default Rendering API
-        static VertexArray* Create();
+        static Ref<VertexArray> Create();
     };
 }

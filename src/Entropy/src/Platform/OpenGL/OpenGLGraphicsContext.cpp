@@ -1,7 +1,5 @@
 #include "OpenGLGraphicsContext.h"
 
-#include "../../Entropy/Core/Core.h"
-
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

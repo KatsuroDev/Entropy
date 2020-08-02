@@ -11,15 +11,12 @@ namespace Entropy {
 
 	Mesh::Mesh()
 		// TODO: make proper materials
-		: m_ShineDamper(256.0f), m_Reflectivity(512.0f), m_VertexArray(0), m_VertexBuffer(0), m_IndexBuffer(0)
+		: m_VertexArray(0), m_VertexBuffer(0), m_IndexBuffer(0)
 	{
 	}
 
 	Mesh::~Mesh()
 	{
-		delete m_IndexBuffer;
-		delete m_VertexBuffer;
-		delete m_VertexArray;
 	}
 
 	void Mesh::GenerateTerrain(unsigned int scale, unsigned int seed)
@@ -36,14 +33,15 @@ namespace Entropy {
 			for (int x = 0; x < size; x++)
 			{
 				int pos = 8 * (y * size + x);
-				// TODO: have a correlation between these
-				float height = 0.0f;
+				float height0 = rand() % 8 / 256.0f;
+				float height1 = rand() % 8 / 256.0f;
+				float height2 = rand() % 8 / 256.0f;
 
 				const float centerOffset = (size - 1) * 0.5f;
 
 				// position
 				vertexBuffer[pos + 0] = x - centerOffset;
-				vertexBuffer[pos + 1] = height;
+				vertexBuffer[pos + 1] = height0;
 				vertexBuffer[pos + 2] = y - centerOffset;
 
 				// texCoord
@@ -51,12 +49,8 @@ namespace Entropy {
 				vertexBuffer[pos + 4] = y;
 
 				// normal
-				// TODO: compute height of surrounding vertices of triangle using perlin noise and position as seed offset
-				float height1 = 0.0f;
-				float height2 = 0.0f;
-
-				glm::vec3 line1(glm::vec3(x, height1, y + 1) - glm::vec3(x, height, y));
-				glm::vec3 line2(glm::vec3(x + 1, height2, y) - glm::vec3(x, height, y));
+				glm::vec3 line1(glm::vec3(x, height1, y + 1) - glm::vec3(x, height0, y));
+				glm::vec3 line2(glm::vec3(x + 1, height2, y) - glm::vec3(x, height0, y));
 				glm::vec3 normal = glm::normalize(glm::cross(line1, line2));
 
 				vertexBuffer[pos + 5] = normal.x;
@@ -85,7 +79,7 @@ namespace Entropy {
 		// Init default layout
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TextCoord" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float3, "a_Normal" }
 		};
 
@@ -157,6 +151,8 @@ namespace Entropy {
 		std::string line;
 		std::vector<std::string> tokens;
 
+		bool smoothShaded = true;
+
 		// LOADING SECTION -------------------------------------------
 		while (true)
 		{
@@ -188,6 +184,15 @@ namespace Entropy {
 				normal.y = std::stof(tokens[2]);
 				normal.z = std::stof(tokens[3]);
 				normals.push_back(normal);
+			}
+			else if (line.substr(0, 2) == "s ")
+			{
+				// smooth shading flag
+				if (line.substr(2, 3) == "off")
+				{
+					smoothShaded = false;
+					NT_INFO("Model has smooth shading disabled");
+				}
 			}
 			else if (line.substr(0, 2) == "f ")
 				break;
@@ -263,7 +268,7 @@ namespace Entropy {
 		// Init default layout
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TextCoord" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float3, "a_Normal" }
 		};
 

@@ -1,15 +1,17 @@
 #pragma once
 
+#include "../Core/Core.h"
+
 namespace Entropy {
 
 	class GraphicsContext
 	{
 	public:
-		virtual ~GraphicsContext() {}
+		virtual ~GraphicsContext() = default;
 
 		virtual void Init() = 0;
 		virtual void SwapBuffers() = 0;
 
-		static GraphicsContext* Create(void* window);
+		static Scope<GraphicsContext> Create(void* window);
 	};
 }

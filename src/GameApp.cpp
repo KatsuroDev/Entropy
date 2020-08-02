@@ -11,115 +11,97 @@ class Game : public Entropy::Application
 {
 public:
 	Game(int width, int height, const char* title)
-		: Application(width, height, title), m_CameraController()
+		: Application(width, height, title) {}
+
+	virtual void OnCreate() override
 	{
 		m_CameraController.GetCamera().SetPosition(glm::vec3(0.0f, 1.0f, 1.0f));
 
-#ifdef NT_PLATFORM_WINDOWS
-		m_Model.LoadOBJFromFile("assets/models/BrandenburgGate.obj");
-		//m_Plane.LoadOBJFromFile("assets/models/Plane.obj");
-		m_Cube.LoadOBJFromFile("assets/models/Cube.obj");
-		m_Bunny.LoadOBJFromFile("assets/models/Bunny.obj");
-#else
 		m_Model.LoadOBJFromFile("../assets/models/BrandenburgGate.obj");
-		//m_Plane.LoadOBJFromFile("../assets/models/Plane.obj");
-		m_Cube.LoadOBJFromFile("../assets/models/Cube.obj");
-		m_Bunny.LoadOBJFromFile("../assets/models/Bunny.obj");
-#endif
+		m_Bunny.LoadOBJFromFile("../assets/models/bunny.obj");
+		m_Sphere.LoadOBJFromFile("../assets/models/sphere.obj");
 
-		// Generate plane terrain from perlin noise
 		// size representing grid size in a direction
-		m_Plane.GenerateTerrain(10, 0);
+		m_Plane.GenerateTerrain(100, 0);
 
+		// static uniforms
+		m_Shader->Attach();
+		m_Shader->SetInt("u_Material.diffuse", 0);
+		m_Shader->SetInt("u_Material.specular", 1);
 
-		//m_Model.SetReflectivity(300.0f);
-		//m_Model.SetShineDamper(256.0f);
+		float power = 3.0f;
+		m_Shader->SetFloat3("u_Light.ambient", glm::vec3(0.01f, 0.01f, 0.01f) * power);
+		m_Shader->SetFloat3("u_Light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f) * power);
+		m_Shader->SetFloat3("u_Light.specular", glm::vec3(1.0f, 1.0f, 1.0f) * power);
+		// Light will cover a distance of 50 meters
+		m_Shader->SetFloat("u_Light.constant", 1.0f);
+		m_Shader->SetFloat("u_Light.linear", 0.09f);
+		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
 
-		m_Bunny.SetReflectivity(200.0f);
-		m_Bunny.SetShineDamper(128.0f);
-
-		// Setting title to Render API used
-		Application::GetWindow().SetTitle(Application::GetWindow().GetTitle() + " - " + Entropy::RenderingAPI::GetName());
-		Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.3f, 0.5f, 0.8f, 1.0f)));
-	}
-
-	~Game()
-	{
-		delete m_Shader;
-		delete m_Unlit;
+		m_Shader->SetFloat("u_Material.shininess", 128.0f);
 	}
 
 	virtual void OnUpdate(float elapsedTime) override
 	{
 		m_CameraController.OnUpdate(elapsedTime);
 
-		// Gamma correction encoding
-		//Entropy::RenderCommand::SetClearColor(Entropy::EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f) * sinf(0.1f * elapsedTime)));
-		Entropy::RenderCommand::Clear();
-
 		// Current time of simulation
 		static float continousTime = 0.0f;
 		continousTime += elapsedTime;
 
 		// Moving the light over time
-		m_PointLightPosition.x = 2.0f * sinf(continousTime * 1.0f);
-		m_PointLightPosition.z = 2.0f * cosf(continousTime * 1.0f);
+		m_PointLightPosition.x = 2.0f * sinf(continousTime);
+		m_PointLightPosition.z = 2.0f * cosf(continousTime);
 
-		// Attaching uniforms
-		m_Shader->Attach();
+		// dynamic uniforms
 		m_Shader->SetFloat3("u_Light.position", m_PointLightPosition);
-		m_Shader->SetFloat3("u_Light.color", m_PointLightColor);
-		// Light will cover a distance of 50 meters
-		m_Shader->SetFloat("u_Light.constant", 1.0f);
-		m_Shader->SetFloat("u_Light.linear", 0.09f);
-		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
 
 		m_PlaneTransform = glm::rotate(m_PlaneTransform, 0.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		Entropy::Renderer::Draw(m_Shader, m_Model, m_ModelTransform, m_CameraController.GetCamera());
-		Entropy::Renderer::Draw(m_Shader, m_Plane, m_PlaneTransform, m_CameraController.GetCamera());
-		Entropy::Renderer::Draw(m_Shader, m_Cube, glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_CubeTransform, m_CameraController.GetCamera());
-		Entropy::Renderer::Draw(m_Shader, m_Bunny, m_Identity, m_CameraController.GetCamera());
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Draw(m_Shader, m_Plane.GetVertexArray(), m_PlaneTransform, m_CameraController.GetCamera());
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Draw(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera());
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Draw(m_Shader, m_Bunny.GetVertexArray(), m_Identity, m_CameraController.GetCamera());
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), m_SphereTransform, m_CameraController.GetCamera());
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_SphereTransform, m_CameraController.GetCamera());
 	}
 
-	virtual void OnApplicationEvent(Entropy::Event& e) override
+	virtual void OnApplicationEvent(Event& e) override
 	{
 		m_CameraController.OnEvent(e);
 	}
 
 private:
-#ifdef NT_PLATFORM_WINDOWS
-	Entropy::Shader* m_Shader = Entropy::Shader::Create("assets/shaders/default.glsl");
-	Entropy::Shader* m_Unlit = Entropy::Shader::Create("assets/shaders/unlitPosGradient.glsl");
+	Ref<Texture2D> diffuseMap = Texture2D::Create("../assets/textures/container.png");
+	Ref<Texture2D> specularMap = Texture2D::Create("../assets/textures/container_specular.png");
 
-	Entropy::Mesh m_Plane = Entropy::Mesh();
-	Entropy::Mesh m_Cube = Entropy::Mesh();
-	Entropy::Mesh m_Model = Entropy::Mesh();
-	Entropy::Mesh m_Bunny = Entropy::Mesh();
-#else
-	Entropy::Shader* m_Shader = Entropy::Shader::Create("../assets/shaders/default.glsl");
-	Entropy::Shader* m_Unlit = Entropy::Shader::Create("../assets/shaders/unlitPosGradient.glsl");
+	Ref<Shader> m_Shader = Shader::Create("../assets/shaders/default.glsl");
 
-	Entropy::Mesh m_Plane = Entropy::Mesh();
-	Entropy::Mesh m_Cube = Entropy::Mesh();
-	Entropy::Mesh m_Model = Entropy::Mesh();
-	Entropy::Mesh m_Bunny = Entropy::Mesh();
-#endif
+	Mesh m_Plane = Mesh();
+	Mesh m_Model = Mesh();
+	Mesh m_Bunny = Mesh();
+	Mesh m_Sphere = Mesh();
 
 	// Model transforms
-	float scale = 1.0f;
-	glm::mat4 m_PlaneTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f) * scale);
-	glm::mat4 m_CubeTransform = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
+	glm::mat4 m_PlaneTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+	glm::mat4 m_SphereTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 0.01f));
 	glm::mat4 m_ModelTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	glm::mat4 m_Identity = glm::mat4(1.0f);
 
 	// Lights
-	glm::vec3 m_PointLightPosition = glm::vec3(0.0f, 2.0f, 0.0f);
-	float m_PointLightPower = 1.0f;
-	glm::vec3 m_PointLightColor = glm::vec3(1.0f, 0.9f, 0.8f) * m_PointLightPower;
+	glm::vec3 m_PointLightPosition = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	// Camera controller
-	Entropy::CameraController m_CameraController;
+	CameraController m_CameraController = CameraController();
 };
 
 Entropy::Application* Entropy::CreateApplication()

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
+#include "../Core/Core.h"
 
-#include "../../Entropy/Core/Core.h"
+#include <vector>
 
 namespace Entropy {
 
@@ -109,19 +109,18 @@ namespace Entropy {
     class VertexBuffer
     {
     public:
-        virtual ~VertexBuffer() {}
+        virtual ~VertexBuffer() = default;
 
         virtual void Attach() const = 0;
         virtual void Detach() const = 0;
 
-        // Void ptr because it's an undefined array
         virtual void SetData(const void* data, unsigned int offset, unsigned int size) = 0;
 
         virtual const BufferLayout& GetLayout() const = 0;
         virtual void SetLayout(const BufferLayout& layout) = 0;
 
-        static VertexBuffer* Create(float* vertices, unsigned int size);
-        static VertexBuffer* Create(unsigned int size);
+        static Ref<VertexBuffer> Create(float* vertices, unsigned int size);
+        static Ref<VertexBuffer> Create(unsigned int size);
     };
 
 
@@ -130,13 +129,13 @@ namespace Entropy {
     class IndexBuffer
     {
     public:
-        virtual ~IndexBuffer() {}
+        virtual ~IndexBuffer() = default;
 
         virtual void Attach() const = 0;
         virtual void Detach() const = 0;
 
         virtual unsigned int GetCount() const = 0;
 
-        static IndexBuffer* Create(unsigned int* indices, unsigned int count);
+        static Ref<IndexBuffer> Create(unsigned int* indices, unsigned int count);
     };
 }

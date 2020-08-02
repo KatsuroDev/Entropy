@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Core/Core.h"
+
 #include "VertexArray.h"
 
 #include <GL/glm/vec4.hpp>
@@ -20,21 +22,21 @@ namespace Entropy {
             None = 0, OpenGL = 1
 		};
 
-        virtual ~RenderingAPI() {}
+        virtual ~RenderingAPI() = default;
 
         // All pure virtual
         virtual void Init() = 0;
         virtual void SetClearColor(const glm::vec4& rgba) = 0;
         virtual void Clear() = 0;
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
-        virtual void Draw(VertexArray* vertexArray, unsigned int indexCount = 0) = 0;
-        virtual void DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount = 0) = 0;
+        virtual void Draw(const Ref<VertexArray>& vertexArray, unsigned int indexCount = 0) = 0;
+        virtual void DrawInstanced(const Ref<VertexArray>& vertexArray, unsigned int repeatCount, unsigned int indexCount = 0) = 0;
 
         static API GetAPI() { return s_API; }
 
         static const char* GetName() { return s_API == API::OpenGL ? "OpenGL" : "None"; }
 
-        static RenderingAPI* Create();
+        static Scope<RenderingAPI> Create();
 
     private:
         static API s_API;

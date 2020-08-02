@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Core/Core.h"
+
 #include <GL/glm/glm.hpp>
 // includes matrix transform and operators
 #include <GL/glm/gtc/matrix_transform.hpp>

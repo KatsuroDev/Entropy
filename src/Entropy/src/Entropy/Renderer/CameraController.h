@@ -1,17 +1,19 @@
 #pragma once
 
+#include "../Core/Core.h"
+
 #include "Camera.h"
 
-#include "../../Entropy/Events/ApplicationEvent.h"
-#include "../../Entropy/Events/MouseEvent.h"
-#include "../../Entropy/Events/KeyEvent.h"
+#include "../Events/ApplicationEvent.h"
+#include "../Events/MouseEvent.h"
+#include "../Events/KeyEvent.h"
 
 namespace Entropy {
 
 	class CameraController
 	{
 	public:
-		CameraController();
+		CameraController() {};
 
 		void OnEvent(Event& e);
 		void OnUpdate(float elapsedTime);
@@ -22,6 +24,6 @@ namespace Entropy {
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 
-		Camera m_Camera;
+		Camera m_Camera = Camera();
 	};
 }

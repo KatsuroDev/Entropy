@@ -23,6 +23,11 @@ namespace Entropy {
 		virtual void SetTitle(const char* title) override;
 		virtual void SetTitle(const std::string& title) override;
 
+		virtual void SetCursorDisabled() override;
+		virtual void SetCursorNormal() override;
+		virtual bool GetCursorDisabled() const override;
+		virtual bool GetCursorNormal() const override;
+
 		virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		virtual void SetVSync(bool enabled) override;
 		virtual bool IsVSync() const override;
@@ -42,7 +47,7 @@ namespace Entropy {
 			EventCallbackFn EventCallback;
 		};
 
-		GraphicsContext* m_Context;
+		Scope<GraphicsContext> m_Context;
 		GLFWwindow* m_Window;
 		WindowData m_Data;
 	};

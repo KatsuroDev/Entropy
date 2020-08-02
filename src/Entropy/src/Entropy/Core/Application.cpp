@@ -4,6 +4,9 @@
 #include "Input.h"
 
 #include "../Renderer/Renderer.h"
+#include "../Renderer/RenderCommand.h"
+
+#include "../Tools/Colorimetry.h"
 
 #include <cmath>
 
@@ -25,7 +28,10 @@ namespace Entropy {
 
 		m_Window = Window::Create(width, height, title);
 		m_Window->SetEventCallback(NT_ATTACH_EVENT_FN(Application::OnEvent));
-		m_Window->SetVSync(false);
+		m_Window->SetVSync(true);
+
+		// Setting title to Render API used
+		Application::GetWindow().SetTitle(Application::GetWindow().GetTitle() + " - " + RenderingAPI::GetName());
 
 		Renderer::Init();
 	}
@@ -35,8 +41,6 @@ namespace Entropy {
 		// Shutdown the renderer
 		Renderer::Dispose();
 
-		// Deleting window
-		delete m_Window;
 		NT_TRACE("Hey! Come back next time.");
 	}
 
@@ -70,11 +74,23 @@ namespace Entropy {
 
 	void Application::Run()
 	{
+		OnCreate();
+
+		RenderCommand::SetClearColor(EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f)));
+
 		float fStartTime = 0.0f;
 
 		// Program loop here
 		while (m_Running)
 		{
+			RenderCommand::Clear();
+
+			if (Input::IsKeyPressed(KeyCode::Escape))
+				Application::GetWindow().SetCursorNormal();
+
+			if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
+				Application::GetWindow().SetCursorDisabled();
+
 			// Render here
 			// Pass in the elapsed time between frames
 			float fEndTime = glfwGetTime();

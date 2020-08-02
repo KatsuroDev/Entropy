@@ -34,16 +34,16 @@ namespace Entropy {
         glViewport(x, y, width, height);
     }
 
-    void OpenGLRenderingAPI::Draw(VertexArray* vertexArray, unsigned int indexCount)
+    void OpenGLRenderingAPI::Draw(const Ref<VertexArray>& vertexArray, unsigned int indexCount)
     {
-        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer().GetCount();
+        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    void OpenGLRenderingAPI::DrawInstanced(VertexArray* vertexArray, unsigned int repeatCount, unsigned int indexCount)
+    void OpenGLRenderingAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, unsigned int repeatCount, unsigned int indexCount)
     {
-        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer().GetCount();
+        unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
         glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr, repeatCount);
         glBindTexture(GL_TEXTURE_2D, 0);
     }

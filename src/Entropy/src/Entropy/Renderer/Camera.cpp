@@ -1,7 +1,6 @@
 #include "Camera.h"
 
-#include "../../Entropy/Core/Core.h"
-#include "../../Entropy/Core/Application.h"
+#include "../Core/Application.h"
 
 namespace Entropy {
 

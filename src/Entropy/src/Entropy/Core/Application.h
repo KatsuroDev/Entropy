@@ -15,8 +15,8 @@ namespace Entropy {
         Application(int width, int height, const char* title);
         virtual ~Application();
 
-        void OnEvent(Event& e);
         virtual void OnUpdate(float deltaTime) = 0;
+        virtual void OnCreate() = 0;
         virtual void OnApplicationEvent(Event& e) = 0;
 
         Window& GetWindow() { return *m_Window; }
@@ -28,6 +28,7 @@ namespace Entropy {
     private:
         void Run();
 
+        void OnEvent(Event& e);
         bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 
@@ -35,7 +36,7 @@ namespace Entropy {
         friend int ::main();
 
         static Application* s_Instance;
-        Window* m_Window;
+        std::unique_ptr<Window> m_Window;
         bool m_Running = true;
     };
 

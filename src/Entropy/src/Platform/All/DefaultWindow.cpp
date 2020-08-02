@@ -1,11 +1,5 @@
 #include "DefaultWindow.h"
 
-#include "../../Entropy/Core/Core.h"
-#include "../../Entropy/Core/Input.h"
-#include "../../Entropy/Events/ApplicationEvent.h"
-#include "../../Entropy/Events/KeyEvent.h"
-#include "../../Entropy/Events/MouseEvent.h"
-
 #include "../../Entropy/Renderer/Renderer.h"
 
 #include "../../Platform/OpenGL/OpenGLGraphicsContext.h"
@@ -48,7 +42,7 @@ namespace Entropy {
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 			// MSAA anti-aliasing
-			glfwWindowHint(GLFW_SAMPLES, 8);
+			glfwWindowHint(GLFW_SAMPLES, 4);
 
 		#ifdef __APPLE__
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -75,8 +69,6 @@ namespace Entropy {
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-
-
 
 		// Experimental
 		glfwSetCursorPos(m_Window, 0.0f, 0.0f);
@@ -208,6 +200,26 @@ namespace Entropy {
 	{
 		glfwSetWindowTitle(m_Window, title.c_str());
 		m_Data.Title = title;
+	}
+
+	void DefaultWindow::SetCursorDisabled()
+	{
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
+	void DefaultWindow::SetCursorNormal()
+	{
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+
+	bool DefaultWindow::GetCursorDisabled() const
+	{
+		return glfwGetInputMode(m_Window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
+	}
+
+	bool DefaultWindow::GetCursorNormal() const
+	{
+		return glfwGetInputMode(m_Window, GLFW_CURSOR) == GLFW_CURSOR_NORMAL;
 	}
 
 	void DefaultWindow::SetVSync(bool enabled)

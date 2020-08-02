@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Core/Core.h"
+
 #include <string>
 #include <unordered_map>
 #include <GL/glm/glm.hpp>
@@ -9,7 +11,7 @@ namespace Entropy {
 	class Shader
 	{
 	public:
-		virtual ~Shader() {}
+		virtual ~Shader() = default;
 
 		virtual void Attach() const = 0;
 		virtual void Detach() const = 0;
@@ -25,22 +27,22 @@ namespace Entropy {
 
 		virtual const std::string& GetName() const = 0;
 
-		static Shader* Create(const std::string& filepath);
-		static Shader* Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
+		static Ref<Shader> Create(const std::string& filepath);
+		static Ref<Shader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 	};
 
 	class ShaderLibrary
 	{
 	public:
-		void Add(const std::string& name, Shader* shader);
-		void Add(Shader* shader);
-		Shader* Load(const std::string& filepath);
-		Shader* Load(const std::string& name, const std::string& filepath);
+		void Add(const std::string& name, Ref<Shader> shader);
+		void Add(Ref<Shader> shader);
+		Ref<Shader> Load(const std::string& filepath);
+		Ref<Shader> Load(const std::string& name, const std::string& filepath);
 
-		Shader* Get(const std::string& name);
+		Ref<Shader> Get(const std::string& name);
 
 		bool Exists(const std::string& name) const;
 	private:
-		std::unordered_map<std::string, Shader*> m_Shaders;
+		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 	};
 }

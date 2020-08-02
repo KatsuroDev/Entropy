@@ -2,71 +2,71 @@
 
 #include "Renderer.h"
 
-#include "../../Entropy/Core/Core.h"
-
 // Include all API's shader
 #include "../../Platform/OpenGL/OpenGLShader.h"
 
 namespace Entropy {
 
-	Shader* Shader::Create(const std::string& filepath)
+	Ref<Shader> Shader::Create(const std::string& filepath)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RenderingAPI::API::OpenGL:
-			return new OpenGLShader(filepath);
+			return CreateRef<OpenGLShader>(filepath);
 			break;
 		case RenderingAPI::API::None:
 			NT_FATAL("Rendering API not supported");
 			return nullptr;
 		}
 
+		NT_FATAL("Unknown Rendering API");
 		return nullptr;
 	}
 
-	Shader* Shader::Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
+	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RenderingAPI::API::OpenGL:
-			return new OpenGLShader(name, vertexSource, fragmentSource);
+			return CreateRef<OpenGLShader>(name, vertexSource, fragmentSource);
 			break;
 		case RenderingAPI::API::None:
 			NT_FATAL("Rendering API not supported");
 			return nullptr;
 		}
 
+		NT_FATAL("Unknown Rendering API");
 		return nullptr;
 	}
 
-	void ShaderLibrary::Add(const std::string& name, Shader* shader)
+	void ShaderLibrary::Add(const std::string& name, Ref<Shader> shader)
 	{
 		if (Exists(name))
 			NT_FATAL("Shader already exists!");
 		m_Shaders[name] = shader;
 	}
 
-	void ShaderLibrary::Add(Shader* shader)
+	void ShaderLibrary::Add(Ref<Shader> shader)
 	{
 		const std::string& name = shader->GetName();
 		Add(name, shader);
 	}
 
-	Shader* ShaderLibrary::Load(const std::string& filepath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& filepath)
 	{
 		auto shader = Shader::Create(filepath);
 		Add(shader);
 		return shader;
 	}
 
-	Shader* ShaderLibrary::Load(const std::string& name, const std::string& filepath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
 	{
 		auto shader = Shader::Create(filepath);
 		Add(name, shader);
 		return shader;
 	}
 
-	Shader* ShaderLibrary::Get(const std::string& name)
+	Ref<Shader> ShaderLibrary::Get(const std::string& name)
 	{
 		if (!Exists(name))
 			NT_FATAL("Shader not found!");

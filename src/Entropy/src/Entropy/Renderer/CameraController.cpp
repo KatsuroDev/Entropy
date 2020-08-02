@@ -1,28 +1,28 @@
 #include "CameraController.h"
 
-#include "../../Entropy/Core/Core.h"
-#include "../../Entropy/Core/Input.h"
-#include "../../Entropy/Core/KeyCodes.h"
+#include "../Core/Input.h"
+#include "../Core/KeyCodes.h"
+#include "../Core/Application.h"
 
 namespace Entropy {
-
-	CameraController::CameraController()
-		: m_Camera(Camera())
-	{
-	}
 
 	void CameraController::OnUpdate(float elapsedTime)
 	{
 		const static float frictionCoeff = 4.0f;
 
-		static float lastMouseX = Input::GetMouseX();
-		static float lastMouseY = Input::GetMouseY();
+		static float lastMouseX = 0.0f;
+		static float lastMouseY = 0.0f;
+
 		float mouseMoveX = Input::GetMouseX() - lastMouseX;
 		float mouseMoveY = Input::GetMouseY() - lastMouseY;
 
 		// View
-		m_Camera.SetYaw(m_Camera.GetYaw() + mouseMoveX * m_Camera.GetMouseSensitivity());
-		m_Camera.SetPitch(m_Camera.GetPitch() - mouseMoveY * m_Camera.GetMouseSensitivity());
+		if (Application::Get().GetWindow().GetCursorDisabled())
+		{
+			m_Camera.SetYaw(m_Camera.GetYaw() + mouseMoveX * m_Camera.GetMouseSensitivity());
+			m_Camera.SetPitch(m_Camera.GetPitch() - mouseMoveY * m_Camera.GetMouseSensitivity());
+		}
+
 		lastMouseX = Input::GetMouseX();
 		lastMouseY = Input::GetMouseY();
 

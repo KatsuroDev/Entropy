@@ -49,7 +49,7 @@ namespace Entropy {
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
 		if (vertexBuffer->GetLayout().GetElements().size() == 0)
 			NT_FATAL("Vertex buffer has no layout");
@@ -112,7 +112,7 @@ namespace Entropy {
 		m_VertexBuffers.push_back(vertexBuffer);
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
 

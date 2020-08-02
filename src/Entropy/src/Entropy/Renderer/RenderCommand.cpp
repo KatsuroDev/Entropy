@@ -3,5 +3,5 @@
 namespace Entropy {
 
 	// Creates the rendering API
-	RenderingAPI* RenderCommand::s_RenderingAPI = RenderingAPI::Create();
+	Scope<RenderingAPI> RenderCommand::s_RenderingAPI = RenderingAPI::Create();
 }

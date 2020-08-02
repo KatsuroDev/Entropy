@@ -1,7 +1,5 @@
 #include "VertexArray.h"
 
-#include "../Core/Core.h"
-
 #include "Renderer.h"
 
 // include all supported vertex arrays here
@@ -9,17 +7,18 @@
 
 namespace Entropy {
 
-    VertexArray* VertexArray::Create()
+    Ref<VertexArray> VertexArray::Create()
     {
         switch(Renderer::GetAPI())
         {
         case RenderingAPI::API::OpenGL:
-            return new OpenGLVertexArray();
+            return CreateRef<OpenGLVertexArray>();
         case RenderingAPI::API::None:
             NT_FATAL("Rendering API not supported");
             return nullptr;
         }
 
+        NT_FATAL("Unknown Rendering API");
         return nullptr;
     }
 }
