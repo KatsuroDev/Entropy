@@ -5,4 +5,4 @@ build/*
 !build/glfw3.dll
 
 # macOS files
-.DS_Store
+./.DS_Store

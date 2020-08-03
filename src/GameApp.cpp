@@ -61,7 +61,7 @@ public:
 
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
-		Renderer::DrawInstanced(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera(), 10);
+		Renderer::DrawInstanced(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera(), 1000);
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
 		normalMap->Attach(2);
