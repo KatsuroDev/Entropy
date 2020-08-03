@@ -1,6 +1,7 @@
 #include "DefaultWindow.h"
 
 #include "../../Entropy/Renderer/Renderer.h"
+#include "../../Entropy/Core/Application.h"
 
 #include "../../Platform/OpenGL/OpenGLGraphicsContext.h"
 
@@ -44,9 +45,9 @@ namespace Entropy {
 			// MSAA anti-aliasing
 			glfwWindowHint(GLFW_SAMPLES, 4);
 
-		#ifdef __APPLE__
+#ifdef NT_PLATFORM_APPLE
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-		#endif
+#endif
 		}
 
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -57,7 +58,7 @@ namespace Entropy {
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
+		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_TRUE);
 
 		//m_Window = glfwCreateWindow(mode->width, mode->height, title, monitor, NULL);
 

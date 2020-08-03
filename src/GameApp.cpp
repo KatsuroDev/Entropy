@@ -17,7 +17,7 @@ public:
 	{
 		m_CameraController.GetCamera().SetPosition(glm::vec3(0.0f, 1.0f, 1.0f));
 
-		m_Model.LoadOBJFromFile("../assets/models/BrandenburgGate.obj");
+		m_Model.LoadOBJFromFile("../assets/models/nanosuit.obj");
 		m_Bunny.LoadOBJFromFile("../assets/models/bunny.obj");
 		m_Sphere.LoadOBJFromFile("../assets/models/sphere.obj");
 
@@ -28,8 +28,9 @@ public:
 		m_Shader->Attach();
 		m_Shader->SetInt("u_Material.diffuse", 0);
 		m_Shader->SetInt("u_Material.specular", 1);
+		m_Shader->SetInt("u_Material.normalMap", 2);
 
-		float power = 3.0f;
+		float power = 10.0f;
 		m_Shader->SetFloat3("u_Light.ambient", glm::vec3(0.01f, 0.01f, 0.01f) * power);
 		m_Shader->SetFloat3("u_Light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f) * power);
 		m_Shader->SetFloat3("u_Light.specular", glm::vec3(1.0f, 1.0f, 1.0f) * power);
@@ -38,7 +39,7 @@ public:
 		m_Shader->SetFloat("u_Light.linear", 0.09f);
 		m_Shader->SetFloat("u_Light.quadratic", 0.032f);
 
-		m_Shader->SetFloat("u_Material.shininess", 128.0f);
+		m_Shader->SetFloat("u_Material.shininess", 512.0f);
 	}
 
 	virtual void OnUpdate(float elapsedTime) override
@@ -60,16 +61,17 @@ public:
 
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
+		Renderer::DrawInstanced(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera(), 10);
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		normalMap->Attach(2);
 		Renderer::Draw(m_Shader, m_Plane.GetVertexArray(), m_PlaneTransform, m_CameraController.GetCamera());
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
-		Renderer::Draw(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera());
-		diffuseMap->Attach(0);
-		specularMap->Attach(1);
 		Renderer::Draw(m_Shader, m_Bunny.GetVertexArray(), m_Identity, m_CameraController.GetCamera());
-		diffuseMap->Attach(0);
-		specularMap->Attach(1);
-		Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), m_SphereTransform, m_CameraController.GetCamera());
+		//diffuseMap->Attach(0);
+		//specularMap->Attach(1);
+		//Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), m_SphereTransform, m_CameraController.GetCamera());
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
 		Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_SphereTransform, m_CameraController.GetCamera());
@@ -83,6 +85,7 @@ public:
 private:
 	Ref<Texture2D> diffuseMap = Texture2D::Create("../assets/textures/container.png");
 	Ref<Texture2D> specularMap = Texture2D::Create("../assets/textures/container_specular.png");
+	Ref<Texture2D> normalMap = Texture2D::Create("../assets/textures/normal_map.png");
 
 	Ref<Shader> m_Shader = Shader::Create("../assets/shaders/default.glsl");
 
@@ -93,7 +96,7 @@ private:
 
 	// Model transforms
 	glm::mat4 m_PlaneTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	glm::mat4 m_SphereTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 0.01f));
+	glm::mat4 m_SphereTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 0.01f));
 	glm::mat4 m_ModelTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	glm::mat4 m_Identity = glm::mat4(1.0f);
 
@@ -106,5 +109,5 @@ private:
 
 Entropy::Application* Entropy::CreateApplication()
 {
-	return new Game(1024, 720, "Entropy Engine Demo");
+	return new Game(1280, 720, "Entropy Engine Demo");
 }

@@ -1,6 +1,7 @@
 #include "Window.h"
 
-#include "Logger.h"
+#include "Core.h"
+
 #include "../../Platform/All/DefaultWindow.h"
 
 namespace Entropy {

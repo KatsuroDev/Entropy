@@ -36,7 +36,7 @@ namespace Entropy {
 		static float defaultMovementSpeed = m_Camera.GetMovementSpeed();
 
 		// Boost key
-		if (Input::IsKeyPressed(KeyCode::LeftControl))
+		if (Input::IsKeyPressed(KeyCode::LeftShift))
 		{
 			m_Camera.SetMovementSpeed(200.0f);
 		}
@@ -63,16 +63,6 @@ namespace Entropy {
 		if (Input::IsKeyPressed(KeyCode::D))
 		{
 			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetRightVec() * elapsedTime * m_Camera.GetMovementSpeed());
-		}
-
-		if (Input::IsKeyPressed(KeyCode::Space))
-		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetUpVec() * elapsedTime * m_Camera.GetMovementSpeed());
-		}
-
-		if (Input::IsKeyPressed(KeyCode::LeftShift))
-		{
-			m_Camera.SetVelocity(m_Camera.GetVelocity() - m_Camera.GetUpVec() * elapsedTime * m_Camera.GetMovementSpeed());
 		}
 
 		if (Input::IsKeyPressed(KeyCode::Delete))

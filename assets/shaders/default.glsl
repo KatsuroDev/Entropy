@@ -15,7 +15,7 @@ out vec3 v_Normal;
 void main()
 {
 	// Calculate the transformed vertex
-	vec4 transformedModelPosition = u_Model * vec4(a_Position, 1.0);
+	vec4 transformedModelPosition = u_Model * vec4(a_Position.x + gl_InstanceID, a_Position.yz, 1.0);
 
 	// Calculate the projected vertex
 	gl_Position = u_ViewProjection * transformedModelPosition;
@@ -79,6 +79,7 @@ struct Material
 {
 	sampler2D diffuse;
 	sampler2D specular;
+    sampler2D normalMap;
     float shininess;
 };
 
@@ -125,7 +126,7 @@ void main()
 	vec3 norm = normalize(v_Normal);
 	vec3 viewDir = normalize(u_CameraPosition - v_Position);
 	vec3 lightDir = normalize(u_Light.position - v_Position);
-	vec3 reflectDir = reflect(-lightDir, norm);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
 
 	// Calculate the distance from the light source
 	float distance = length(u_Light.position - v_Position);
@@ -140,7 +141,7 @@ void main()
 	vec3 diffuse = u_Light.diffuse * diff * vec3(texture(u_Material.diffuse, v_TexCoord));
 
 	// specular
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
+	float spec = pow(max(dot(norm, halfwayDir), 0.0), u_Material.shininess);
 	vec3 specular = u_Light.specular * spec * vec3(texture(u_Material.specular, v_TexCoord));
 
 	vec3 result = (ambient + diffuse + specular) * attenuation;
