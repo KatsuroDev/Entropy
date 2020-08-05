@@ -86,10 +86,10 @@ namespace Entropy {
 			RenderCommand::Clear();
 
 			if (Input::IsKeyPressed(KeyCode::Escape))
-				Application::Get().GetWindow().SetCursorNormal();
+				GetWindow().SetCursorNormal();
 
 			if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
-				Application::Get().GetWindow().SetCursorDisabled();
+				GetWindow().SetCursorDisabled();
 
 			// Render here
 			// Pass in the elapsed time between frames

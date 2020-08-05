@@ -25,7 +25,7 @@ DEPS := $(OBJS:.o=.d)
 
 # Defining the includes' path and their flags
 INC_DIRS := $(shell find $(SRC_DIR) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+# INC_FLAGS := $(addprefix -I,$(INC_DIRS))------------------
 
 # Depending on the OS we tell the compiler which version of C++ we wan to compile for and other things
 ifeq ($(shell uname -s), Linux)

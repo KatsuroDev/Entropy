@@ -33,9 +33,9 @@ namespace Entropy {
 			for (int x = 0; x < size; x++)
 			{
 				int pos = 8 * (y * size + x);
-				float height0 = rand() % 8 / 256.0f;
-				float height1 = rand() % 8 / 256.0f;
-				float height2 = rand() % 8 / 256.0f;
+				float height0 = rand() % 16 / 256.0f;
+				float height1 = rand() % 16 / 256.0f;
+				float height2 = rand() % 16 / 256.0f;
 
 				const float centerOffset = (size - 1) * 0.5f;
 
