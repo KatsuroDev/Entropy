@@ -13,7 +13,7 @@ namespace Entropy {
 	class CameraController
 	{
 	public:
-		CameraController() {};
+		CameraController();
 
 		void OnEvent(Event& e);
 		void OnUpdate(float elapsedTime);
@@ -24,6 +24,6 @@ namespace Entropy {
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 
-		Camera m_Camera = Camera();
+		Camera m_Camera;
 	};
 }

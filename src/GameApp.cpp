@@ -17,12 +17,8 @@ public:
 	{
 		m_CameraController.GetCamera().SetPosition(glm::vec3(0.0f, 1.0f, 1.0f));
 
-		m_Model.LoadOBJFromFile("../assets/models/nanosuit.obj");
-		m_Bunny.LoadOBJFromFile("../assets/models/bunny.obj");
-		m_Sphere.LoadOBJFromFile("../assets/models/sphere.obj");
-
-		// size representing grid size in a direction
-		m_Plane.GenerateTerrain(100, 0);
+		// shaders
+		m_Shader = m_ShaderLibrary.Load("../assets/shaders/default.glsl");
 
 		// static uniforms
 		m_Shader->Attach();
@@ -30,6 +26,15 @@ public:
 		m_Shader->SetInt("u_Material.specular", 1);
 		m_Shader->SetInt("u_Material.normalMap", 2);
 
+		// meshes
+		m_Model.LoadOBJFromFile("../assets/models/nanosuit.obj");
+		m_Bunny.LoadOBJFromFile("../assets/models/bunny.obj");
+		m_Sphere.LoadOBJFromFile("../assets/models/sphere.obj");
+
+		// size representing grid size in a direction
+		m_Plane.GenerateTerrain(100, 0);
+
+		// lights & materials
 		float power = 10.0f;
 		m_Shader->SetFloat3("u_Light.ambient", glm::vec3(0.01f, 0.01f, 0.01f) * power);
 		m_Shader->SetFloat3("u_Light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f) * power);
@@ -59,22 +64,26 @@ public:
 
 		m_PlaneTransform = glm::rotate(m_PlaneTransform, 0.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
+		Renderer::BeginScene(m_CameraController.GetCamera());
+
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
-		Renderer::DrawInstanced(m_Shader, m_Model.GetVertexArray(), m_ModelTransform, m_CameraController.GetCamera(), 1000);
+		Renderer::Submit(m_Shader, m_Model.GetVertexArray(), m_ModelTransform);
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
 		normalMap->Attach(2);
-		Renderer::Draw(m_Shader, m_Plane.GetVertexArray(), m_PlaneTransform, m_CameraController.GetCamera());
+		Renderer::Submit(m_Shader, m_Plane.GetVertexArray(), m_PlaneTransform);
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
-		Renderer::Draw(m_Shader, m_Bunny.GetVertexArray(), m_Identity, m_CameraController.GetCamera());
-		//diffuseMap->Attach(0);
-		//specularMap->Attach(1);
-		//Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), m_SphereTransform, m_CameraController.GetCamera());
+		Renderer::Submit(m_Shader, m_Bunny.GetVertexArray(), m_Identity);
 		diffuseMap->Attach(0);
 		specularMap->Attach(1);
-		Renderer::Draw(m_Shader, m_Sphere.GetVertexArray(), glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_SphereTransform, m_CameraController.GetCamera());
+		Renderer::Submit(m_Shader, m_Sphere.GetVertexArray(), m_SphereTransform);
+		diffuseMap->Attach(0);
+		specularMap->Attach(1);
+		Renderer::Submit(m_Shader, m_Sphere.GetVertexArray(), glm::translate(glm::mat4(1.0f), m_PointLightPosition) * m_SphereTransform);
+
+		Renderer::EndScene();
 	}
 
 	virtual void OnApplicationEvent(Event& e) override
@@ -83,27 +92,31 @@ public:
 	}
 
 private:
+	// textures
 	Ref<Texture2D> diffuseMap = Texture2D::Create("../assets/textures/container.png");
 	Ref<Texture2D> specularMap = Texture2D::Create("../assets/textures/container_specular.png");
 	Ref<Texture2D> normalMap = Texture2D::Create("../assets/textures/normal_map.png");
 
-	Ref<Shader> m_Shader = Shader::Create("../assets/shaders/default.glsl");
+	// shaders
+	ShaderLibrary m_ShaderLibrary;
+	Ref<Shader> m_Shader;
 
+	// meshes
 	Mesh m_Plane = Mesh();
 	Mesh m_Model = Mesh();
 	Mesh m_Bunny = Mesh();
 	Mesh m_Sphere = Mesh();
 
-	// Model transforms
+	// model transforms
 	glm::mat4 m_PlaneTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	glm::mat4 m_SphereTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 0.01f));
 	glm::mat4 m_ModelTransform = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	glm::mat4 m_Identity = glm::mat4(1.0f);
 
-	// Lights
+	// lights
 	glm::vec3 m_PointLightPosition = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	// Camera controller
+	// camera controller
 	CameraController m_CameraController = CameraController();
 };
 

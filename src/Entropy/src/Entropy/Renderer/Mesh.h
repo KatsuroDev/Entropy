@@ -14,9 +14,9 @@ namespace Entropy {
 		Mesh();
 		~Mesh();
 
-		std::shared_ptr<VertexArray> GetVertexArray() const { return m_VertexArray; }
-		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_VertexBuffer; }
-		std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return m_IndexBuffer; }
+		const Ref<VertexArray>& GetVertexArray() const { return m_VertexArray; }
+		const Ref<VertexBuffer>& GetVertexBuffer() const { return m_VertexBuffer; }
+		const Ref<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; }
 
 		// Smooth lighting enabled by default
 		// TODO: support sharp edges and sharp angle threshold detector

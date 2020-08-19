@@ -28,7 +28,7 @@ namespace Entropy {
 		const glm::vec3& GetRightVec() const { return m_Right; }
 		const glm::vec3& GetWorldUpVec() const { return m_WorldUp; }
 
-		const float GetYaw() const { return m_Yaw; }
+		float GetYaw() const { return m_Yaw; }
 		float GetPitch() const { return m_Pitch; }
 		float GetMovementSpeed() const { return m_MovementSpeed; }
 		float GetMouseSensitivity() const { return m_MouseSensitivity; }

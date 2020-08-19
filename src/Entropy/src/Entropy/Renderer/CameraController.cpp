@@ -6,6 +6,11 @@
 
 namespace Entropy {
 
+	CameraController::CameraController()
+		: m_Camera(Camera())
+	{
+	}
+
 	void CameraController::OnUpdate(float elapsedTime)
 	{
 		const static float frictionCoeff = 4.0f;
