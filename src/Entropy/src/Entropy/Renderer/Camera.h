@@ -97,17 +97,18 @@ namespace Entropy {
 		void SetFov(float fov)
 		{
 			m_Fov = fov;
-			RecalculateViewProjectionMatrix();
+			RecalculateProjectionMatrix();
 		}
 
 		void ProcessMouseScroll(float value);
 		void ProcessWindowResize();
 
+	private:
 		void RecalculateViewProjectionMatrix();
 		void RecalculateViewMatrix();
+		void RecalculateProjectionMatrix();
 		void UpdateCameraVectors();
 
-	private:
 		// Attributes
 		glm::vec3 m_Velocity;
 		glm::vec3 m_Position;

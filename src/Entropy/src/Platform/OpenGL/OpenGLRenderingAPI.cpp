@@ -4,7 +4,6 @@
 
 namespace Entropy {
 
-
     void OpenGLRenderingAPI::Init()
     {
         // Gamma correction
@@ -38,13 +37,45 @@ namespace Entropy {
     {
         unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-        glBindTexture(GL_TEXTURE_2D, 0);
+
+        // Unbind all textures
+        int textureSlots = GetTextureSlotsCount();
+        for (int i = 0; i < textureSlots; i++)
+        {
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
     }
 
     void OpenGLRenderingAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, unsigned int repeatCount, unsigned int indexCount)
     {
         unsigned int count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
         glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr, repeatCount);
-        glBindTexture(GL_TEXTURE_2D, 0);
+
+        // Unbind all textures
+        int textureSlots = GetTextureSlotsCount();
+        for (int i = 0; i < textureSlots; i++)
+        {
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+    }
+
+    int OpenGLRenderingAPI::GetTextureSlotsCount() const
+    {
+        int textureSlots;
+        // Gets number of texture slots
+        glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &textureSlots);
+        //NT_INFO("Hardware supports " + std::to_string(textureSlots) + " slots");
+        return textureSlots;
+    }
+
+    const char* OpenGLRenderingAPI::GetSpecification() const
+    {
+        std::stringstream ss;
+        ss << "OpenGL Info:\n\n";
+        ss << glGetString(GL_VENDOR) << '\n' << glGetString(GL_RENDERER) << '\n' << glGetString(GL_VERSION) << '\n';
+        ss << "Hardware texture slots available: " << GetTextureSlotsCount() << '\n';
+        return ss.str().c_str();
     }
 }

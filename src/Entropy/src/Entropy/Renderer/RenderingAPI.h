@@ -32,8 +32,10 @@ namespace Entropy {
         virtual void Draw(const Ref<VertexArray>& vertexArray, unsigned int indexCount = 0) = 0;
         virtual void DrawInstanced(const Ref<VertexArray>& vertexArray, unsigned int repeatCount, unsigned int indexCount = 0) = 0;
 
-        static API GetAPI() { return s_API; }
+        virtual int GetTextureSlotsCount() const = 0;
+        virtual const char* GetSpecification() const = 0;
 
+        static API GetAPI() { return s_API; }
         static const char* GetName() { return s_API == API::OpenGL ? "OpenGL" : "None"; }
 
         static Scope<RenderingAPI> Create();

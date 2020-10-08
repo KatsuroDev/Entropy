@@ -13,5 +13,8 @@ namespace Entropy {
         virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
         virtual void Draw(const Ref<VertexArray>& vertexArray, unsigned int indexCount = 0) override;
         virtual void DrawInstanced(const Ref<VertexArray>& vertexArray, unsigned int repeatCount, unsigned int indexCount = 0);
+
+        virtual int GetTextureSlotsCount() const override;
+        virtual const char* GetSpecification() const override;
     };
 }

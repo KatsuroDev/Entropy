@@ -50,6 +50,8 @@ namespace Entropy {
 			m_Camera.SetMovementSpeed(defaultMovementSpeed);
 		}
 
+		// Hard coded controls
+		// TOOD: make this changeable
 		if (Input::IsKeyPressed(KeyCode::W))
 		{
 			m_Camera.SetVelocity(m_Camera.GetVelocity() + m_Camera.GetFrontVec() * elapsedTime * m_Camera.GetMovementSpeed());
@@ -86,6 +88,7 @@ namespace Entropy {
 			m_Camera.SetPosition(glm::vec3());
 			m_Camera.SetYaw(-90.0f);
 			m_Camera.SetPitch(0.0f);
+			NT_INFO("Teleported to world origin");
 		}
 
 		// Calculating friction loss

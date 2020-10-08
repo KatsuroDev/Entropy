@@ -9,8 +9,7 @@ namespace Entropy {
 	{
 		UpdateCameraVectors();
 
-		RecalculateViewMatrix();
-		RecalculateViewProjectionMatrix();
+		RecalculateProjectionMatrix();
 	}
 
 	void Camera::LookAt(const glm::vec3& orientation)
@@ -40,8 +39,6 @@ namespace Entropy {
 
 	void Camera::RecalculateViewProjectionMatrix()
 	{
-		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspectRatio, 0.001f, 1000.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
@@ -50,19 +47,27 @@ namespace Entropy {
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 	}
 
+	void Camera::RecalculateProjectionMatrix()
+	{
+		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
+		// make sure this aspect ratio is always valid
+		if (isnan(aspectRatio)) aspectRatio = 0.0f;
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspectRatio, 0.001f, 1000.0f);
+	}
+
 	void Camera::ProcessMouseScroll(float value)
 	{
-		float resultingFov = GetFov() - value * m_MouseScrollSensitivity;
+		float resultingFov = m_Fov - value * m_MouseScrollSensitivity;
 
 		if (resultingFov >= 0.001 && resultingFov <= 120)
 		{
 			SetFov(resultingFov);
-			RecalculateViewProjectionMatrix();
 		}
 	}
 
 	void Camera::ProcessWindowResize()
 	{
+		RecalculateProjectionMatrix();
 		RecalculateViewProjectionMatrix();
 	}
 }

@@ -40,6 +40,16 @@ namespace Entropy {
 			s_RenderingAPI->DrawInstanced(vertexArray, repeatCount, indexCount);
 		}
 
+		static int GetTextureSlotsCount()
+		{
+			return s_RenderingAPI->GetTextureSlotsCount();
+		}
+
+		static const char* GetSpecification()
+		{
+			return s_RenderingAPI->GetSpecification();
+		}
+
 	private:
 		static Scope<RenderingAPI> s_RenderingAPI;
 	};

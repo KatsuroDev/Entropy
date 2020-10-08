@@ -25,9 +25,8 @@ void main()
 
 	v_Position = transformedModelPosition.xyz;
 	v_TexCoord = a_TexCoord;
-
 	// TODO: compute this on cpu and pass as uniform (costly)
-	v_Normal = mat3(transpose(inverse(u_Model))) * a_Normal;
+	v_Normal = mat3(transpose(inverse(u_Model))) * transformedModelNormal.xyz;
 }
 
 #type fragment

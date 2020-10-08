@@ -15,8 +15,89 @@ namespace Entropy {
 	{
 	}
 
-	Mesh::~Mesh()
+	void Mesh::GenerateUnitCube()
 	{
+		m_VertexArray = VertexArray::Create();
+
+		// Init default layout
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
+			{ ShaderDataType::Float3, "a_Normal" }
+		};
+
+		float vertexBuffer[] = {
+			// front
+		   -0.5f, -0.5f,  0.5f,   0.0f, 0.0f,   0.0f,  0.0f,  1.0f,
+		    0.5f, -0.5f,  0.5f,   1.0f, 0.0f,   0.0f,  0.0f,  1.0f,
+		    0.5f,  0.5f,  0.5f,   1.0f, 1.0f,   0.0f,  0.0f,  1.0f,
+		   -0.5f,  0.5f,  0.5f,   0.0f, 1.0f,   0.0f,  0.0f,  1.0f,
+
+			// right
+		    0.5f, -0.5f,  0.5f,   0.0f, 0.0f,   1.0f,  0.0f,  0.0f,
+		    0.5f, -0.5f, -0.5f,   1.0f, 0.0f,   1.0f,  0.0f,  0.0f,
+		    0.5f,  0.5f, -0.5f,   1.0f, 1.0f,   1.0f,  0.0f,  0.0f,
+		    0.5f,  0.5f,  0.5f,   0.0f, 1.0f,   1.0f,  0.0f,  0.0f,
+
+			// back
+		    0.5f, -0.5f, -0.5f,   0.0f, 0.0f,   0.0f,  0.0f, -1.0f,
+		   -0.5f, -0.5f, -0.5f,   1.0f, 0.0f,   0.0f,  0.0f, -1.0f,
+		   -0.5f,  0.5f, -0.5f,   1.0f, 1.0f,   0.0f,  0.0f, -1.0f,
+		    0.5f,  0.5f, -0.5f,   0.0f, 1.0f,   0.0f,  0.0f, -1.0f,
+
+			// left
+		   -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,  -1.0f,  0.0f,  0.0f,
+		   -0.5f, -0.5f,  0.5f,   1.0f, 0.0f,  -1.0f,  0.0f,  0.0f,
+		   -0.5f,  0.5f,  0.5f,   1.0f, 1.0f,  -1.0f,  0.0f,  0.0f,
+		   -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,  -1.0f,  0.0f,  0.0f,
+
+			// bottom
+		   -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,   0.0f, -1.0f,  0.0f,
+		    0.5f, -0.5f, -0.5f,   1.0f, 0.0f,   0.0f, -1.0f,  0.0f,
+		    0.5f, -0.5f,  0.5f,   1.0f, 1.0f,   0.0f, -1.0f,  0.0f,
+		   -0.5f, -0.5f,  0.5f,   0.0f, 1.0f,   0.0f, -1.0f,  0.0f,
+
+			// top
+		   -0.5f,  0.5f,  0.5f,   0.0f, 0.0f,   0.0f,  1.0f,  0.0f,
+		    0.5f,  0.5f,  0.5f,   1.0f, 0.0f,   0.0f,  1.0f,  0.0f,
+		    0.5f,  0.5f, -0.5f,   1.0f, 1.0f,   0.0f,  1.0f,  0.0f,
+		   -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,   0.0f,  1.0f,  0.0f
+		};
+
+		unsigned int indexBuffer[] = {
+			// front
+			0, 2, 3,
+			1, 2, 0,
+
+			// right
+			4, 6, 7,
+			5, 6, 4,
+
+			// back
+			8, 10, 11,
+			9, 10, 8,
+
+			// left
+			12, 14, 15,
+			13, 14, 12,
+
+			// bottom
+			16, 18, 19,
+			17, 18, 16,
+
+			// top
+			20, 22, 23,
+			21, 22, 20
+		};
+
+		// Takes size in bytes
+		m_VertexBuffer = VertexBuffer::Create(vertexBuffer, sizeof(vertexBuffer));
+		m_VertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+		// Takes index count
+		m_IndexBuffer = IndexBuffer::Create(indexBuffer, sizeof(indexBuffer) / sizeof(unsigned int));
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 	}
 
 	void Mesh::GenerateTerrain(unsigned int scale, unsigned int seed)
@@ -140,6 +221,7 @@ namespace Entropy {
 
 	bool Mesh::LoadOBJFromFile(const char* filepath)
 	{
+		// return error if file is not readable
 		std::ifstream in(filepath, std::ios::in);
 		if (!in.is_open())
 			return false;
@@ -151,9 +233,10 @@ namespace Entropy {
 		std::string line;
 		std::vector<std::string> tokens;
 
+		// by default, smooth shading should always be true
 		bool smoothShaded = true;
 
-		// LOADING SECTION -------------------------------------------
+		// PHASE 1 - LOADING SECTION -------------------------------------------
 		while (true)
 		{
 			std::getline(in, line);
@@ -191,15 +274,15 @@ namespace Entropy {
 				if (line.substr(2, 3) == "off")
 				{
 					smoothShaded = false;
-					NT_INFO("Model has smooth shading disabled");
+					NT_INFO("Model is flat shaded");
 				}
 			}
 			else if (line.substr(0, 2) == "f ")
 				break;
 		}
 
-		// COMPUTING SECTION -------------------------------------------
-		size_t vertexBufferCount = positions.size() * 8;
+		// PHASE 2 - COMPUTING SECTION -------------------------------------------
+		const size_t vertexBufferCount = positions.size() * 8;
 		float* vertexBuffer = new float[vertexBufferCount];
 		std::vector<unsigned int> indexBuffer;
 

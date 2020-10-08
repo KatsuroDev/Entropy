@@ -21,11 +21,6 @@ namespace Entropy {
 		if (glewInit() != GLEW_OK)
 			NT_FATAL("Could not init glew");
 		NT_INFO("Initialized glew successfully!");
-
-		NT_INFO("OpenGL Info:\n");
-		std::stringstream ss;
-		ss << glGetString(GL_VENDOR) << '\n' << glGetString(GL_RENDERER) << '\n' << glGetString(GL_VERSION) << '\n';
-		NT_INFO(ss.str());
 	}
 
 	void OpenGLGraphicsContext::SwapBuffers()

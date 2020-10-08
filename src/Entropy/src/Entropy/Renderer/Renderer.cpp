@@ -23,6 +23,7 @@ namespace Entropy {
 	static RendererData s_Data;
 	Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
 
+	// Creates the vertex array
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
@@ -40,17 +41,18 @@ namespace Entropy {
 
 	void Renderer::Dispose()
 	{
+
 	}
 
-	void Renderer::BeginScene(const Camera& camera)
+	void Renderer::BeginBatch(const Camera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 		s_SceneData->CameraPosition = camera.GetPosition(); // TODO: get position from matrix
 	}
 
-	void Renderer::EndScene()
+	void Renderer::EndBatch()
 	{
-		// TODO: draw batch here instead of per call
+		// TODO: Draw calls here
 	}
 
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& va, const glm::mat4& transform)
@@ -60,6 +62,7 @@ namespace Entropy {
 		shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
 		shader->SetMat4("u_Model", transform);
 
+		// TODO: append this to batch
 		if (va != nullptr)
 		{
 			va->Attach();
@@ -69,6 +72,16 @@ namespace Entropy {
 		{
 			NT_WARN("A mesh was not rendered: VAO was nullptr");
 		}
+	}
+
+	int Renderer::GetTextureSlotsCount()
+	{
+		RenderCommand::GetTextureSlotsCount();
+	}
+
+	const char* Renderer::GetSpecification()
+	{
+		return RenderCommand::GetSpecification();
 	}
 
 	void Renderer::OnWindowResize(unsigned int width, unsigned int height)

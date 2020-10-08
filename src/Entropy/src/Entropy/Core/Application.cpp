@@ -13,10 +13,6 @@
 // Only to get time
 #include <GLFW/glfw3.h>
 
-#include "../../vendor/imgui/imgui.h"
-#include "../../vendor/imgui/imgui_impl_glfw.h"
-#include "../../vendor/imgui/imgui_impl_opengl3.h"
-
 namespace Entropy {
 
 	Application* Application::s_Instance = nullptr;
@@ -28,11 +24,12 @@ namespace Entropy {
 
 		m_Window = Window::Create(width, height, title);
 		m_Window->SetEventCallback(NT_ATTACH_EVENT_FN(Application::OnEvent));
-		m_Window->SetVSync(true);
+		m_Window->SetVSync(false);
 
 		// Setting title to Render API used
 		Application::GetWindow().SetTitle(Application::GetWindow().GetTitle() + " - " + RenderingAPI::GetName());
 
+		NT_INFO(Renderer::GetSpecification());
 		Renderer::Init();
 	}
 
@@ -74,9 +71,9 @@ namespace Entropy {
 
 	void Application::Run()
 	{
-		OnCreate();
-
 		RenderCommand::SetClearColor(EncodeSRGB(glm::vec4(0.0862f, 0.3764f, 0.6549f, 1.0f)));
+
+		OnCreate();
 
 		float fStartTime = 0.0f;
 
